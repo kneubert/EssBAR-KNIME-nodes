@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Kraken" version="1.0" docurl="http://ccb.jhu.edu/software/kraken/MANUAL.html" category="Metagenomics" >
+	<executableName>kraken</executableName>
+	<description>Kraken taxonomic sequence classification</description>
+	<manual></manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->
+		<clielement optionIdentifier="" isList="true">
+			<mapping referenceName="kraken.input-files" />
+		</clielement>	
+		<clielement optionIdentifier="--db" isList="false">
+			<mapping referenceName="kraken.db" />
+		</clielement>		
+		<clielement optionIdentifier="--output" isList="false">
+			<mapping referenceName="kraken.output" />
+		</clielement>	
+		<clielement optionIdentifier="--classified-out" isList="false">
+			<mapping referenceName="kraken.classified-output" />
+		</clielement>
+		<clielement optionIdentifier="--unclassified-out" isList="false">
+			<mapping referenceName="kraken.unclassified-output" />
+		</clielement>
+		<!-- Options for the app -->
+		<clielement optionIdentifier="--threads" isList="false">
+			<mapping referenceName="kraken.threads" />
+		</clielement>
+		<clielement optionIdentifier="--fasta-input" isList="false">
+			<mapping referenceName="kraken.fasta-input" />
+		</clielement>	
+		<clielement optionIdentifier="--fastq-input" isList="false">
+			<mapping referenceName="kraken.fastq-input" />
+		</clielement>	
+		<clielement optionIdentifier="--fastq-output" isList="false">
+			<mapping referenceName="kraken.fastq-output" />
+		</clielement>	
+		<clielement optionIdentifier="--gzip-compressed" isList="false">
+			<mapping referenceName="kraken.gzip-input" />
+		</clielement>	
+		<clielement optionIdentifier="--bzip2.compressed" isList="false">
+			<mapping referenceName="kraken.bzip2-input" />
+		</clielement>	
+		<clielement optionIdentifier="--quick" isList="false">
+			<mapping referenceName="kraken.quick" />
+		</clielement>	
+		<clielement optionIdentifier="--min-hits" isList="false">
+			<mapping referenceName="kraken.min-hits" />
+		</clielement>	
+		<clielement optionIdentifier="--out-fmt" isList="false">
+			<mapping referenceName="kraken.output-format" />
+		</clielement>	
+		<clielement optionIdentifier="--only-classified-output" isList="false">
+			<mapping referenceName="kraken.only-classified" />
+		</clielement>
+		<clielement optionIdentifier="--preload" isList="false">
+			<mapping referenceName="kraken.preload" />
+		</clielement>	
+		<clielement optionIdentifier="--paired" isList="false">
+			<mapping referenceName="kraken.paired" />
+		</clielement>	
+		<clielement optionIdentifier="--check-names" isList="false">
+			<mapping referenceName="kraken.check-names" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="kraken" description="Kraken taxonomic sequence classification">
+			<ITEMLIST name="input-files" value="" type="input-file" description="Input files" supported_formats="*.fasta,*.fa,*.fastq,*.fq,*.gz,*.bz2" required="true" advanced="false" />
+			<ITEM name="db" value="" type="input-prefix" description="Full path of precomputed Kraken DB" supported_formats="*" required="true" advanced="false" />
+			<ITEM name="output" value="" type="output-file" description="Output file that contains classification results for each sequence." supported_formats="*.kraken" required="true" advanced="false" />
+			<ITEM name="classified-output" value="" type="output-file" description="Output file that contains classified sequences." supported_formats="*.kraken" required="false" advanced="false" />
+			<ITEM name="unclassified-output" value="" type="output-file" description="Output file that contains unclassified sequences." supported_formats="*.kraken" required="false" advanced="false" />			
+			<ITEM name="threads" value="1" type="int" description="Number of threads" restrictions="1:" required="false" advanced="false" />
+			<ITEM name="fasta-input" value="false" type="string" description="Input is in FASTA format." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="fastq-input" value="false" type="string" description="Input is in FASTQ format." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="fastq-output" value="false" type="string" description="Output is in FASTQ format." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="gzip-input" value="false" type="string" description="Input is gzip compressed." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="bzip2-input" value="false" type="string" description="Input is bzip2 compressed." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="quick" value="false" type="string" description="Quick operation (use first hit or hits)." restrictions="true,false" required="false" advanced="false" />	
+			<ITEM name="min-hits" value="" type="int" description="In quick operation, number of hits required for classification NOTE: this is ignored if --quick is not specified." restrictions="1:" required="false" advanced="false" />
+			<ITEM name="output-format" value="legacy" type="string" description="Format for [un]classified sequence output (supported options are legacy, paired, interleaved)" restrictions="legacy,paired,interleaved" required="false" advanced="false" />
+			<ITEM name="only-classified" value="false" type="string" description="Print no Kraken output for unclassified sequences." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="preload" value="false" type="string" description="Loads DB into memory before classification." restrictions="true,false" required="false" advanced="false" />		
+			<ITEM name="paired" value="false" type="string" description="The two filenames provided are paired-end reads." restrictions="true,false" required="false" advanced="false" />	
+			<ITEM name="check-names" value="false" type="string" description="Ensure each pair of reads have names that agree with each other; ignored if --paired is not specified." restrictions="true,false" required="false" advanced="false" />				
+		</NODE>
+	</PARAMETERS>
+</tool>

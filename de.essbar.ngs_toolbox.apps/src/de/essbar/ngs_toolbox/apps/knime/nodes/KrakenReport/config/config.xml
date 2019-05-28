@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="KrakenReport" version="1.0" docurl="http://ccb.jhu.edu/software/kraken/MANUAL.html" category="Metagenomics" >
+	<executableName>kraken-report.sh</executableName>
+	<description>Kraken taxonomic sequence classification report</description>
+	<manual></manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="kraken_report.output" />
+		</clielement>
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="kraken_report.input-file" />
+		</clielement>	
+		<clielement optionIdentifier="--db" isList="false">
+			<mapping referenceName="kraken_report.db" />
+		</clielement>			
+		<!-- Options for the app -->
+		<clielement optionIdentifier="--show-zeros" isList="false">
+			<mapping referenceName="kraken_report.show-zeros" />
+		</clielement>	
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="kraken_report" description="Kraken taxonomic sequence classification report">
+			<ITEM name="output" value="" type="output-file" description="Output file that contains the Kraken report." supported_formats="*.kreport" required="true" advanced="false" />
+			<ITEM name="input-file" value="" type="input-file" description="Input file that contains classification results of Kraken." supported_formats="*.kraken" required="true" advanced="false" />
+			<ITEM name="db" value="" type="input-prefix" description="Full path of precomputed Kraken DB (must be the same as the one used to generate the Kraken results)." supported_formats="*" required="true" advanced="false" />
+			<ITEM name="show-zeros" value="false" type="string" description="By default, taxa with no reads assigned to (or under) them will not have any output produced. If you wish to have all taxa displayed, use this option." restrictions="true,false" required="false" advanced="false" />		
+		</NODE>
+	</PARAMETERS>
+</tool>

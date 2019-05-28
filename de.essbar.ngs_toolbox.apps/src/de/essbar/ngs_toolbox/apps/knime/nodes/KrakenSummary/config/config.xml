@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="KrakenSummary" version="1.0" category="Metagenomics" >
+	<executableName>kraken_summary.py</executableName>
+	<description>Summary table for Kraken taxonomic sequence classification reports from multiple samples</description>
+	<manual></manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->
+		<clielement optionIdentifier="--reports" isList="true">
+			<mapping referenceName="kraken_summary.reports" />
+		</clielement>	
+		<clielement optionIdentifier="--species_table" isList="false">
+			<mapping referenceName="kraken_summary.species_table" />
+		</clielement>		
+		<clielement optionIdentifier="--genus_table" isList="false">
+			<mapping referenceName="kraken_summary.genus_table" />
+		</clielement>	
+		<!-- Options for the app -->
+		<clielement optionIdentifier="--species_min_sum" isList="false">
+			<mapping referenceName="kraken_summary.species_min_sum" />
+		</clielement>	
+		<clielement optionIdentifier="--genus_min_sum" isList="false">
+			<mapping referenceName="kraken_summary.genus_min_sum" />
+		</clielement>
+		<clielement optionIdentifier="--log10" isList="false">
+			<mapping referenceName="kraken_summary.log10" />
+		</clielement>	
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="kraken_summary" description="Summary table for Kraken taxonomic sequence classification reports from multiple samples">
+			<ITEMLIST name="reports" value="" type="input-file" description="Input file that contains classification report from Kraken." supported_formats="*.kreport,*.txt" required="true" advanced="false" />
+			<ITEM name="species_table" value="" type="output-file" description="Output file that contains read counts on species level." supported_formats="*.tsv" required="true" advanced="false" />
+			<ITEM name="genus_table" value="" type="output-file" description="Output file that contains read counts on genus level." supported_formats="*.tsv" required="true" advanced="false" />
+			<ITEM name="species_min_sum" value="20" type="int" description="Minimum sum of reads for a species in all samples." restrictions="1:" required="false" advanced="false" />
+			<ITEM name="genus_min_sum" value="20" type="int" description="Minimum sum of reads for a genus in all samples." restrictions="1:" required="false" advanced="false" />			
+			<ITEM name="log10" value="false" type="string" description="Compute log10 of read counts." restrictions="true,false" required="false" advanced="false" />		
+		</NODE>
+	</PARAMETERS>
+</tool>

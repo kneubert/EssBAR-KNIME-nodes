@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin> 
+  <extension point="org.knime.workbench.repository.categories"> 
+    <category description="/community/EssBAR" icon="icons/category.png" level-id="EssBAR" name="EssBAR" path="/community"/>
+    <category description="/community/EssBAR/IO" icon="icons/category.png" level-id="IO" name="IO" path="/community/EssBAR"/>
+  </extension> 
+  <extension point="org.knime.workbench.repository.nodes"> 
+    <node factory-class="de.essbar.ngs_toolbox.IO.knime.nodes.IndexLoader.IndexLoaderNodeFactory" category-path="/community/EssBAR/IO"/> 
+    <node factory-class="de.essbar.ngs_toolbox.IO.knime.nodes.DirectoryLoader.DirectoryLoaderNodeFactory" category-path="/community/EssBAR/IO"/>
+    <node factory-class="de.essbar.ngs_toolbox.IO.knime.nodes.ListDirImporter.ListDirImporterNodeFactory" category-path="/community/EssBAR/IO"/>
+  </extension>  
+  <extension point="org.knime.base.filehandling.mimetypes"> 
+    <mimetype name="application/x-fastq">
+      <fileextension name="fq"/>
+      <fileextension name="fastq"/>
+    </mimetype>
+    <mimetype name="application/x-sam">
+      <fileextension name="sam"/>
+    </mimetype>
+    <mimetype name="application/x-bam">
+      <fileextension name="bam"/>
+    </mimetype>
+    <mimetype name="application/txt">
+      <fileextension name="txt"/>
+      <fileextension name="tsv"/>
+      <fileextension name="csv"/>
+    </mimetype>
+  </extension> 
+  <extension
+      point="com.genericworkflownodes.knime.mime.filesuffix.Checker">
+   <index-type name="krakenDB">
+      <suffix
+            suffix_string="kdb">
+      </suffix>
+      <suffix
+            suffix_string="idx">
+      </suffix>
+      <suffix
+            suffix_string="dmp">
+      </suffix>
+    </index-type>
+   </extension>
+
+</plugin>

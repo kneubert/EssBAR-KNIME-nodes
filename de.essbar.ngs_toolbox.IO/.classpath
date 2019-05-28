@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.genericworkflownodes.knime"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.genericworkflownodes.knime.config"/>
+	<classpathentry kind="lib" path="/home/kneubert/java_libs/org.eclipse.osgi_3.11.1.v20160708-1632.jar"/>
+	<classpathentry kind="lib" path="/home/kneubert/java_libs/org.apache.commons.lang3_3.2.1.jar"/>
+	<classpathentry kind="lib" path="/home/kneubert/java_libs/commons-httpclient-2.0.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

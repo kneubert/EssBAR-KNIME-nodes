@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin> 
+  <extension point="org.knime.workbench.repository.categories"> 
+    <category description="/community/EssBAR/NGSTools/Preprocessing" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Preprocessing" level-id="Preprocessing"/>
+    <category description="/community/EssBAR/NGSTools/Assembly" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Assembly" level-id="Assembly"/>
+    <category description="/community/EssBAR/NGSTools/Phylogeny" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Phylogeny" level-id="Phylogeny"/>
+    <category description="/community/EssBAR/NGSTools/Metagenomics" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Metagenomics" level-id="Metagenomics"/>
+    <category description="/community/EssBAR/NGSTools" icon="icons/category.png" path="/community/EssBAR" name="NGSTools" level-id="NGSTools"/>
+    <category description="/community/EssBAR" icon="icons/category.png" path="/community" name="EssBAR" level-id="EssBAR"/>
+  </extension>  
+  <extension point="org.knime.workbench.repository.nodes"> 
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Flexbar.FlexbarNodeFactory" category-path="/community/EssBAR/NGSTools/Preprocessing"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SPAdes.SPAdesNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
+  	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Prokka.ProkkaNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
+  	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.ProkkaDB.ProkkaDBNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
+  	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Parsnp.ParsnpNodeFactory" category-path="/community/EssBAR/NGSTools/Phylogeny"/>
+	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken.KrakenNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenReport.KrakenReportNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenSummary.KrakenSummaryNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm.SlimmNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SlimmDB.SlimmDBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm2Krona.Slimm2KronaNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+  </extension>  
+  <extension point="org.knime.product.splashExtension"></extension>  
+  <extension point="org.knime.base.filehandling.mimetypes"> 
+    <mimetype name="application/x-fastq">
+      <fileextension name="fq"/>
+      <fileextension name="fastq"/>
+    </mimetype>
+    <mimetype name="application/x-fastq_gz">
+      <fileextension name="fq.gz"/>
+      <fileextension name="fastq.gz"/>
+    </mimetype>
+    <mimetype name="application/x-bam">
+      <fileextension name="bam"/>
+    </mimetype>
+ 	<mimetype name="application/x-fasta">
+      <fileextension name="fa"/>
+      <fileextension name="fasta"/>
+      <fileextension name="fna"/>
+      <fileextension name="ffn"/>
+      <fileextension name="fsa"/>
+    </mimetype>
+    <mimetype name="application/x-gbk">
+      <fileextension name="gbk"/>
+    </mimetype>
+    <mimetype name="application/x-gff">
+      <fileextension name="gff"/>
+    </mimetype>
+    <mimetype name="application/x-bed">
+      <fileextension name="bed"/>
+    </mimetype>
+    <mimetype name="application/x-faa">
+      <fileextension name="faa"/>
+    </mimetype>
+    <mimetype name="application/x-sqn">
+      <fileextension name="sqn"/>
+    </mimetype>
+    <mimetype name="application/x-tbl">
+      <fileextension name="tbl"/>
+    </mimetype>
+    <mimetype name="application/x-err">
+      <fileextension name="err"/>
+    </mimetype>
+    <mimetype name="application/x-log">
+      <fileextension name="log"/>
+    </mimetype>
+    <mimetype name="application/x-txt">
+      <fileextension name="txt"/>
+    </mimetype>
+    <mimetype name="application/x-tsv">
+      <fileextension name="tsv"/>
+    </mimetype>    
+     <mimetype name="parsnp/x-gbk">
+      <fileextension name="gbk"/>
+    </mimetype>
+    <mimetype name="parsnp/x-tree">
+      <fileextension name="tree"/>
+    </mimetype>
+    <mimetype name="parsnp/x-vcf">
+      <fileextension name="vcf"/>
+    </mimetype>
+    <mimetype name="parsnp/x-ggr">
+      <fileextension name="ggr"/>
+    </mimetype>
+    <mimetype name="passnp/x-xmfa">
+      <fileextension name="xmfa"/>
+    </mimetype>
+    <mimetype name="passnp/x-ini">
+      <fileextension name="ini"/>
+    </mimetype>
+    <mimetype name="passnp/x-unaligned">
+      <fileextension name="unaligned"/>
+    </mimetype>
+  	<mimetype name="kraken/x-fasta">
+      <fileextension name="fa"/>
+      <fileextension name="fasta"/>
+    </mimetype>
+    <mimetype name="kraken/x-fastq">
+      <fileextension name="fq"/>
+      <fileextension name="fastq"/>
+    </mimetype>
+    <mimetype name="kraken/x-gzip">
+      <fileextension name="gz"/>
+    </mimetype>
+    <mimetype name="kraken/x-bzip2">
+      <fileextension name="bz2"/>
+    </mimetype>
+    <mimetype name="kraken/x-kraken">
+      <fileextension name="kraken"/>
+    </mimetype>
+        <mimetype name="kraken/x-report">
+      <fileextension name="kreport"/>
+    </mimetype>
+    <mimetype name="prokka/x-phd">
+      <fileextension name="phd"/>
+    </mimetype>
+    <mimetype name="prokka/x-phi">
+      <fileextension name="phi"/>
+    </mimetype>
+    <mimetype name="prokka/x-phr">
+      <fileextension name="phr"/>
+    </mimetype>
+    <mimetype name="prokka/x-pin">
+      <fileextension name="pin"/>
+    </mimetype>
+    <mimetype name="prokka/x-pog">
+      <fileextension name="pog"/>
+    </mimetype>
+    <mimetype name="prokka/x-psd">
+      <fileextension name="psd"/>
+    </mimetype>
+    <mimetype name="prokka/x-psi">
+      <fileextension name="psi"/>
+    </mimetype>
+    <mimetype name="prokka/x-psq">
+      <fileextension name="psq"/>
+    </mimetype>
+    <mimetype name="prokka/hmm">
+      <fileextension name="hmm"/>
+    </mimetype>
+    <mimetype name="slimm/sldb">
+      <fileextension name="sldb"/>
+    </mimetype>
+  </extension> 
+</plugin>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="ProkkaDB" version="1.0" docurl="https://github.com/rehrlich/prokka_database_maker" category="Assembly" >
+	<executableName>prokka_db.sh</executableName>
+	<description>Tool for creating databases for Prokka</description>
+	<manual></manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->	
+		<clielement optionIdentifier="--output" isList="false">
+			<mapping referenceName="prokka_db.output" />
+		</clielement>	
+		<!-- Options for the app -->
+		<clielement optionIdentifier="--archaea" isList="false">
+			<mapping referenceName="prokka_db.archaea" />
+		</clielement>	
+		<clielement optionIdentifier="--bacteria" isList="false">
+			<mapping referenceName="prokka_db.bacteria" />
+		</clielement>
+		<clielement optionIdentifier="--viruses" isList="false">
+			<mapping referenceName="prokka_db.viruses" />
+		</clielement>	
+		<clielement optionIdentifier="--fungi" isList="false">
+			<mapping referenceName="prokka_db.fungi" />
+		</clielement>
+		<clielement optionIdentifier="--genus" isList="false">
+			<mapping referenceName="prokka_db.genus" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="prokka_db" description="Tool for creating databases for Prokka">
+			<ITEM name="archaea" value="false" type="string" description="Include kingdom for Archaea." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="bacteria" value="true" type="string" description="Include kingdom for Bacteria." restrictions="true,false" required="false" advanced="false" />		
+			<ITEM name="viruses" value="false" type="string" description="Include kingdom for Viruses." restrictions="true,false" required="false" advanced="false" />	
+			<ITEM name="fungi" value="false" type="string" description="Include kingdom for Fungi" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="genus" value="" type="string" description="Genus names separated by ','" required="false" advanced="false" />
+			<ITEM name="output" value="" type="output-prefix" description="Output directory" supported_formats="*.*" required="true" advanced="false" />						
+		</NODE>
+	</PARAMETERS>
+</tool>

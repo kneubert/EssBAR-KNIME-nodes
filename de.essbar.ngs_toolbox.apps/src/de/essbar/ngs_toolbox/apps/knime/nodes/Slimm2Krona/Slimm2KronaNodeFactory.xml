@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Slimm2Krona</name>
+    
+    <shortDescription>
+        Conversion of a Slimm profile to Krona compatible text format.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+		<p>
+			<a href="http://www.seqan.de">Web Documentation for Slimm2Krona</a>
+		</p>
+
+        </intro>
+        
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="profile [tsv]">Profile file produced by Slimm. [tsv]</inPort>
+		<outPort index="0" name="output [tsv,Inactive]">Output file in Krona text format. [tsv,Inactive]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Slimm2Krona Std Output">The text sent to standard out during the execution of Slimm2Krona.</view>
+        <view index="1" name="Slimm2Krona Error Output">The text sent to standard error during the execution of Slimm2Krona. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Slimm2Krona" version="0.3.3" docurl="http://www.seqan.de" category="Metagenomics" >
+	<executableName>slimm2krona.py</executableName>
+	<description>Conversion of a Slimm profile to Krona compatible text format.</description>
+	<cli>
+		<clielement optionIdentifier="--profile" isList="false">
+			<mapping referenceName="slimm2krona.profile" />
+		</clielement>
+        <clielement optionIdentifier="--krona" isList="false">
+            <mapping referenceName="slimm2krona.output" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="slimm2krona" description="Conversion of Slimm profile output to krona compatible text input.">
+			<ITEM name="profile" value="" type="input-file" description="Profile file produced by Slimm." supported_formats="tsv" required="true" advanced="false" />
+			<ITEM name="output" value="" type="output-file" description="Output file in Krona text format." supported_formats="tsv" required="false" advanced="false" />
+		</NODE>
+	</PARAMETERS>
+</tool>

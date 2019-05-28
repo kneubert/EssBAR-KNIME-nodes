@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Parsnp" version="v1.2" docurl="http://harvest.readthedocs.io/en/latest/content/parsnp.html" category="Phylogeny" >
+	<executableName>parsnp</executableName>
+	<description>Rapid core genome multi-alignment and phylogeny</description>
+	<manual></manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->
+		<clielement optionIdentifier="-d" isList="false">
+			<mapping referenceName="parsnp.genome_dir" />
+		</clielement>		
+		<clielement optionIdentifier="-r" isList="false">
+			<mapping referenceName="parsnp.reference_genome" />
+		</clielement>	
+		<clielement optionIdentifier="-g" isList="false">
+			<mapping referenceName="parsnp.genbank_file" />
+		</clielement>	
+		<clielement optionIdentifier="-q" isList="false">
+			<mapping referenceName="parsnp.query_genome" />
+		</clielement>
+		<clielement optionIdentifier="-o" isList="false">
+			<mapping referenceName="parsnp.output" />
+		</clielement>
+		<!-- Options for the app -->
+		<clielement optionIdentifier="-c" isList="false">
+			<mapping referenceName="parsnp.curated" />
+		</clielement>
+		<clielement optionIdentifier="-U" isList="false">
+			<mapping referenceName="parsnp.max_MUMi" />
+		</clielement>	
+		<clielement optionIdentifier="-M" isList="false">
+			<mapping referenceName="parsnp.only_MUMi" />
+		</clielement>	
+		<clielement optionIdentifier="-i" isList="false">
+			<mapping referenceName="parsnp.max_MUMi_dist" />
+		</clielement>	
+		<clielement optionIdentifier="-a" isList="false">
+			<mapping referenceName="parsnp.min_anchor_length" />
+		</clielement>	
+		<clielement optionIdentifier="-C" isList="false">
+			<mapping referenceName="parsnp.max_cluster_D" />
+		</clielement>	
+		<clielement optionIdentifier="-z" isList="false">
+			<mapping referenceName="parsnp.min_LCB_size" />
+		</clielement>	
+		<!-- Advanced options for the app -->
+		<clielement optionIdentifier="-D" isList="false">
+			<mapping referenceName="parsnp.max_diagonal_dist" />
+		</clielement>	
+		<clielement optionIdentifier="-e" isList="false">
+			<mapping referenceName="parsnp.greedy_LCBs" />
+		</clielement>	
+		<clielement optionIdentifier="-n" isList="false">
+			<mapping referenceName="parsnp.alignment_program" />
+		</clielement>			
+		<clielement optionIdentifier="-u" isList="false">
+			<mapping referenceName="parsnp.unaligned" />
+		</clielement>		
+		<clielement optionIdentifier="-x" isList="false">
+			<mapping referenceName="parsnp.filtering" />
+		</clielement>	
+		<clielement optionIdentifier="-p" isList="false">
+			<mapping referenceName="parsnp.threads" />
+		</clielement>	
+		<clielement optionIdentifier="-P" isList="false">
+			<mapping referenceName="parsnp.max_partition_size" />
+		</clielement>			
+		<clielement optionIdentifier="-v" isList="false">
+			<mapping referenceName="parsnp.verbose" />
+		</clielement>	
+		<clielement optionIdentifier="-V" isList="false">
+			<mapping referenceName="parsnp.version" />
+		</clielement>	
+
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="parsnp" description="Rapid core genome multi-alignment and phylogeny">
+			<ITEM name="genome_dir" value="" type="input-file" description="directory containing genomes/contigs/scaffolds" supported_formats="*" required="true" advanced="false" />
+			<ITEM name="reference_genome" value="" type="input-file" description="Reference genome" supported_formats="*.fasta,*.fa,*.fna" required="true" advanced="false" />
+			<ITEM name="genbank_file" value="" type="input-file" description="Genbank file." supported_formats="*.gbk" required="false" advanced="false" />
+			<ITEM name="query_genome" value="" type="input-file" description="Specify (assembled) query genome to use, in addition to genomes found in genome directory (optional)." supported_formats="*.fasta,*.fa,*.fna" required="false" advanced="false" />			
+			<ITEM name="output" value="" type="output-prefix" description="Output directory" supported_formats="*" required="false" advanced="false" />
+			<ITEM name="curated" value="false" type="string" description="Curated genome directory, use all genomes in dir and ignore MUMi." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="max_MUMi" value="" type="float" description="Max MUMi distance value for MUMi distribution" restrictions="0:" required="false" advanced="false" />
+			<ITEM name="only_MUMi" value="false" type="string" description="Calculate MUMi and exit? overrides all other choices." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="max_MUMi_dist" value="" type="float" description="Max MUM(i) distance (default: autocutoff based on distribution of MUMi values)" restrictions="0:" required="false" advanced="false" />
+			<ITEM name="min_anchor_length" value="" type="int" description="Min ANCHOR length (default = 1.1*Log(S))" restrictions="" required="false" advanced="false" />
+			<ITEM name="max_cluster_D" value="100" type="int" description="Maximal cluster D value" restrictions="1:" required="false" advanced="false" />
+			<ITEM name="min_LCB_size" value="25" type="int" description="Min LCB size" restrictions="1:" required="false" advanced="false" />
+			<!-- Advanced options for the app -->
+			<ITEM name="max_diagonal_dist" value="0.12" type="float" description="Maximal diagonal difference in percentage" restrictions="0:1" required="false" advanced="true" />	
+			<ITEM name="greedy_LCBs" value="false" type="string" description="Greedily extend LCBs? experimental!" restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="alignment_program" value="libMUSCLE" type="string" description="Alignment program (default: libMUSCLE)" restrictions="" required="false" advanced="true" />
+			<ITEM name="unaligned" value="false" type="string" description="Output unaligned regions (in .unaligned)" restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="filtering" value="false" type="string" description="Enable filtering of SNPs located in PhiPack identified regions of recombination" restrictions="true,false" required="false" advanced="true" />		
+			<ITEM name="threads" value="1" type="int" description="Number of threads to use" restrictions="1:" required="false" advanced="true" />	
+			<ITEM name="max_partition_size" value="15000000" type="int" description="Max partition size (limits memory usage)" restrictions="1:" required="false" advanced="true" />	
+			<ITEM name="verbose" value="false" type="string" description="Verbose output" restrictions="true,false" required="false" advanced="true" />	
+			<ITEM name="version" value="false" type="string" description="output Version and exit." restrictions="true,false" required="false" advanced="true" />				
+		</NODE>
+	</PARAMETERS>
+</tool>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="fastqc_icon_small.png" type="QuickForm">
+    <name>FastQC</name>
+    
+    <shortDescription>
+        A quality control tool for high throughput sequence data.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>FastQC quality control</p>
+		<p>
+			<a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Web Documentation for FastQC</a>
+		</p>
+
+        </intro>
+        
+		<option name="version">Print the version of the program and exit</option>
+		<option name="noextract">Do not uncompress the output file after creating it.</option>
+		<option name="nogroup">Disable grouping of bases for reads &gt;50bp. All reports will show data for every base in the read.</option>
+		<option name="min_length">Sets an artificial lower limit on the length of the sequence to be shown in the report.</option>
+		<option name="format">Bypasses the normal sequence file format detection and forces the program to use the specified format.</option>
+		<option name="threads">Specifies the number of files which can be processed simultaneously. Each thread will be allocated 250MB of memory</option>
+		<option name="kmers">Specifies the length of Kmer to look for in the Kmer content module.</option>
+		
+    </fullDescription>
+	<interactiveView name="Generic JavaScript View">
+		The generic view executing the entered JavaScript.
+	</interactiveView>
+    <ports>
+		<inPort index="0" name="argument-0 [fq,fastq,sam,bam]">Input file. [fq,fastq,sam,bam]</inPort>
+		<inPort index="1" name="argument-1 [txt,tsv,csv]">Specifies a non-default file which contains the list of contaminants to screen overrepresented sequences against. The file must contain sets of named adapters in the form name[tab]sequence. [txt,tsv,csv,opt.]</inPort>
+		<inPort index="2" name="argument-2 [txt,tsv,csv]">Specifies a non-default file which contains the list of adapter sequences which will be explicity searched against the library. The file must contain sets of named contaminants in the form name[tab]sequence. [txt,tsv,csv,opt.]</inPort>
+ 		<outPort index="0" name="output [*,Inactive]">Output files [*,Inactive]</outPort>
+ 	</ports>
+    <views>
+        <view index="0" name="FastQC Std Output">The text sent to standard out during the execution of FastQC.</view>
+        <view index="1" name="FastQC Error Output">The text sent to standard error during the execution of FastQC. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+        <view index="2" name="FastQC HTML Report">Summary report for results.</view>
+    </views>    
+</knimeNode>

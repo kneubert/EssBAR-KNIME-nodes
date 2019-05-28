@@ -1,0 +1,3 @@
+document.open();
+document.write(knimeDataTable.getRows()[0].data);
+document.close();

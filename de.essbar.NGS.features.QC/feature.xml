@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.essbar.NGS.features.QC"
+      label="QC and Views"
+      version="0.0.3.qualifier"
+      provider-name="Freie Universitaet Berlin"
+      plugin="de.essbar.ngs_toolbox.QC">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="com.fasterxml.jackson.core.jackson-annotations"/>
+      <import plugin="org.knime.workbench.core"/>
+      <import plugin="com.genericworkflownodes.knime" version="0.8.100" match="compatible"/>
+      <import plugin="com.genericworkflownodes.knime.config" version="0.8.0" match="compatible"/>
+      <import plugin="org.knime.js.core" version="3.5.2" match="greaterOrEqual"/>
+      <import plugin="org.apache.commons.lang3" version="3.2.1" match="greaterOrEqual"/>
+      <import plugin="org.knime.base.filehandling" version="3.5.3" match="greaterOrEqual"/>
+      <import plugin="org.knime.base" version="3.5.3" match="greaterOrEqual"/>
+      <import plugin="org.knime.core.data.uritype"/>
+      <import plugin="org.knime.core"/>
+      <import plugin="org.knime.workbench.repository"/>
+      <import feature="org.knime.features.js.views" version="3.5.3.v201804031047"/>
+   </requires>
+
+   <plugin
+         id="de.essbar.ngs_toolbox.QC"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.essbar.ngs_toolbox.apps.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+</feature>

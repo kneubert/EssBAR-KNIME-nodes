@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="SlimmDB" version="0.3.3" docurl="http://www.seqan.de" category="Metagenomics" >
+	<executableName>slimm_db.py</executableName>
+	<description>Gets a reduced taxonomic information given a multi-fasta file using accession numbers</description>
+	<manual>SLIMM  Species Level Identification of Microbes from Metagenomes
+See  http://www.seqan.de/projects/slimm  for more information.
+(c) Copyright 2014-2017  by Temesgen H. Dadi.
+</manual>
+	<cli>
+		<clielement optionIdentifier="-o" isList="false">
+			<mapping referenceName="slimm_db.output-file" />
+		</clielement>
+                <clielement optionIdentifier="-b" isList="false">
+                        <mapping referenceName="slimm_db.batch" />
+                </clielement>
+		<!-- Following clielements are arguments. You should consider providing a help text to ease understanding. -->
+		<clielement optionIdentifier="-f" isList="false">
+			<mapping referenceName="slimm_db.argument-0" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="slimm_db" description="Gets a reduced taxonomic information given a multi-fasta file using accession numbers">
+			<ITEM name="output-file" value="slimm_db.sldb" type="output-file" description="The path to the output file." supported_formats="*.sldb" required="true" advanced="false" />
+			<ITEM name="batch" value="1000000" type="int" description="Maximum number of mapping to load to memory. (default=1000000)" required="false" advanced="false" />
+			<ITEM name="argument-0" value="" type="input-file" description="A multi-fasta file used as a reference for mapping" supported_formats="*.fq,*.fq.bgzf,*.fq.gz,*.fq.bz2,*.fastq,*.fastq.bgzf,*.fastq.gz,*.fastq.bz2,*.fa,*.fa.bgzf,*.fa.gz,*.fa.bz2,*.fasta,*.fasta.bgzf,*.fasta.gz,*.fasta.bz2,*.faa,*.faa.bgzf,*.faa.gz,*.faa.bz2,*.ffn,*.ffn.bgzf,*.ffn.gz,*.ffn.bz2,*.fna,*.fna.bgzf,*.fna.gz,*.fna.bz2,*.frn,*.frn.bgzf,*.frn.gz,*.frn.bz2,*.embl,*.embl.bgzf,*.embl.gz,*.embl.bz2,*.gbk,*.gbk.bgzf,*.gbk.gz,*.gbk.bz2,*.raw,*.raw.bgzf,*.raw.gz,*.raw.bz2,*.sam,*.sam.bgzf,*.sam.gz,*.sam.bz2,*.bam" required="true" advanced="false" />
+		</NODE>
+	</PARAMETERS>
+</tool>

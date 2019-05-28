@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>SlimmDB</name>
+    
+    <shortDescription>
+        Gets a reduced taxonomic information given a multi-fasta file using accession numbers
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>SLIMM  Species Level Identification of Microbes from Metagenomes</p><p>See  http://www.seqan.de/projects/slimm  for more information.</p><p>(c) Copyright 2014-2017  by Temesgen H. Dadi.</p>
+		<p>
+			<a href="http://www.seqan.de">Web Documentation for SlimmDB</a>
+		</p>
+
+        </intro>
+        
+		<option name="batch">Maximum number of mapping to load to memory. (default=1000000)</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="argument-0 [fq,fq.bgzf,fq.gz,fq.bz2,fastq,fastq.bgzf,fastq.gz,fastq.bz2,fa,fa.bgzf,fa.gz,fa.bz2,fasta,fasta.bgzf,fasta.gz,fasta.bz2,faa,faa.bgzf,faa.gz,faa.bz2,ffn,ffn.bgzf,ffn.gz,ffn.bz2,fna,fna.bgzf,fna.gz,fna.bz2,frn,frn.bgzf,frn.gz,frn.bz2,embl,embl.bgzf,embl.gz,embl.bz2,gbk,gbk.bgzf,gbk.gz,gbk.bz2,raw,raw.bgzf,raw.gz,raw.bz2,sam,sam.bgzf,sam.gz,sam.bz2,bam]">A multi-fasta file used as a reference for mapping [fq,fq.bgzf,fq.gz,fq.bz2,fastq,fastq.bgzf,fastq.gz,fastq.bz2,fa,fa.bgzf,fa.gz,fa.bz2,fasta,fasta.bgzf,fasta.gz,fasta.bz2,faa,faa.bgzf,faa.gz,faa.bz2,ffn,ffn.bgzf,ffn.gz,ffn.bz2,fna,fna.bgzf,fna.gz,fna.bz2,frn,frn.bgzf,frn.gz,frn.bz2,embl,embl.bgzf,embl.gz,embl.bz2,gbk,gbk.bgzf,gbk.gz,gbk.bz2,raw,raw.bgzf,raw.gz,raw.bz2,sam,sam.bgzf,sam.gz,sam.bz2,bam]</inPort>
+		<outPort index="0" name="output-file [sldb]">The path to the output file (default slimm_db.sldb) [sldb]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="SlimmDB Std Output">The text sent to standard out during the execution of SlimmDB.</view>
+        <view index="1" name="SlimmDB Error Output">The text sent to standard error during the execution of SlimmDB. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

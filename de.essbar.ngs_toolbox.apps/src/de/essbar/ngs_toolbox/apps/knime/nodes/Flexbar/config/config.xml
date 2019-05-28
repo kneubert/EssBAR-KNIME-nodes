@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Flexbar3" version="3.0" docurl="https://github.com/seqan/flexbar" category="Preprocessing" >
+	<executableName>flexbar.sh</executableName>
+	<description>flexible barcode and adapter removal</description>
+	<manual>Flexbar - flexible barcode and adapter removal</manual>
+	<cli>
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="flexbar.target" />
+		</clielement>
+		<clielement optionIdentifier="--full-help" isList="false">
+			<mapping referenceName="flexbar.full-help" />
+		</clielement>
+		<clielement optionIdentifier="--man-help" isList="false">
+			<mapping referenceName="flexbar.man-help" />
+		</clielement>
+		<clielement optionIdentifier="--versions" isList="false">
+			<mapping referenceName="flexbar.versions" />
+		</clielement>
+		<clielement optionIdentifier="--cite" isList="false">
+			<mapping referenceName="flexbar.cite" />
+		</clielement>
+		<clielement optionIdentifier="--threads" isList="false">
+			<mapping referenceName="flexbar.threads" />
+		</clielement>
+		<clielement optionIdentifier="--bundle" isList="false">
+			<mapping referenceName="flexbar.bundle" />
+		</clielement>
+		<clielement optionIdentifier="--reads" isList="false">
+			<mapping referenceName="flexbar.reads" />
+		</clielement>
+		<clielement optionIdentifier="--reads2" isList="false">
+			<mapping referenceName="flexbar.reads2" />
+		</clielement>
+		<clielement optionIdentifier="--barcodes" isList="false">
+			<mapping referenceName="flexbar.barcodes" />
+		</clielement>
+		<clielement optionIdentifier="--barcodes2" isList="false">
+			<mapping referenceName="flexbar.barcodes2" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-reads" isList="false">
+			<mapping referenceName="flexbar.barcode-reads" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-trim-end" isList="false">
+			<mapping referenceName="flexbar.barcode-trim-end" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-tail-length" isList="false">
+			<mapping referenceName="flexbar.barcode-tail-length" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-min-overlap" isList="false">
+			<mapping referenceName="flexbar.barcode-min-overlap" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-error-rate" isList="false">
+			<mapping referenceName="flexbar.barcode-error-rate" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-keep" isList="false">
+			<mapping referenceName="flexbar.barcode-keep" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-unassigned" isList="false">
+			<mapping referenceName="flexbar.barcode-unassigned" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-match" isList="false">
+			<mapping referenceName="flexbar.barcode-match" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-mismatch" isList="false">
+			<mapping referenceName="flexbar.barcode-mismatch" />
+		</clielement>
+		<clielement optionIdentifier="--barcode-gap" isList="false">
+			<mapping referenceName="flexbar.barcode-gap" />
+		</clielement>
+		<clielement optionIdentifier="--adapters" isList="false">
+			<mapping referenceName="flexbar.adapters" />
+		</clielement>
+		<clielement optionIdentifier="--adapters2" isList="false">
+			<mapping referenceName="flexbar.adapters2" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-seq" isList="false">
+			<mapping referenceName="flexbar.adapter-seq" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-read-set" isList="false">
+			<mapping referenceName="flexbar.adapter-read-set" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-revcomp" isList="false">
+			<mapping referenceName="flexbar.adapter-revcomp" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-trim-end" isList="false">
+			<mapping referenceName="flexbar.adapter-trim-end" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-tail-length" isList="false">
+			<mapping referenceName="flexbar.adapter-tail-length" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-relaxed" isList="false">
+			<mapping referenceName="flexbar.adapter-relaxed" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-min-overlap" isList="false">
+			<mapping referenceName="flexbar.adapter-min-overlap" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-error-rate" isList="false">
+			<mapping referenceName="flexbar.adapter-error-rate" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-match" isList="false">
+			<mapping referenceName="flexbar.adapter-match" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-mismatch" isList="false">
+			<mapping referenceName="flexbar.adapter-mismatch" />
+		</clielement>
+		<clielement optionIdentifier="--adapter-gap" isList="false">
+			<mapping referenceName="flexbar.adapter-gap" />
+		</clielement>
+		<clielement optionIdentifier="--max-uncalled" isList="false">
+			<mapping referenceName="flexbar.max-uncalled" />
+		</clielement>
+		<clielement optionIdentifier="--pre-trim-left" isList="false">
+			<mapping referenceName="flexbar.pre-trim-left" />
+		</clielement>
+		<clielement optionIdentifier="--pre-trim-right" isList="false">
+			<mapping referenceName="flexbar.pre-trim-right" />
+		</clielement>
+		<clielement optionIdentifier="--post-trim-length" isList="false">
+			<mapping referenceName="flexbar.post-trim-length" />
+		</clielement>
+		<clielement optionIdentifier="--min-read-length" isList="false">
+			<mapping referenceName="flexbar.min-read-length" />
+		</clielement>
+		<clielement optionIdentifier="--qtrim" isList="false">
+			<mapping referenceName="flexbar.qtrim" />
+		</clielement>
+		<clielement optionIdentifier="--qtrim-format" isList="false">
+			<mapping referenceName="flexbar.qtrim-format" />
+		</clielement>
+		<clielement optionIdentifier="--qtrim-threshold" isList="false">
+			<mapping referenceName="flexbar.qtrim-threshold" />
+		</clielement>
+		<clielement optionIdentifier="--qtrim-win-size" isList="false">
+			<mapping referenceName="flexbar.qtrim-win-size" />
+		</clielement>
+		<clielement optionIdentifier="--qtrim-post-removal" isList="false">
+			<mapping referenceName="flexbar.qtrim-post-removal" />
+		</clielement>
+		<clielement optionIdentifier="--fasta-output" isList="false">
+			<mapping referenceName="flexbar.fasta-output" />
+		</clielement>
+		<clielement optionIdentifier="--zip-output" isList="false">
+			<mapping referenceName="flexbar.zip-output" />
+		</clielement>
+		<clielement optionIdentifier="--length-dist" isList="false">
+			<mapping referenceName="flexbar.length-dist" />
+		</clielement>
+		<clielement optionIdentifier="--single-reads" isList="false">
+			<mapping referenceName="flexbar.single-reads" />
+		</clielement>
+		<clielement optionIdentifier="--single-reads-paired" isList="false">
+			<mapping referenceName="flexbar.single-reads-paired" />
+		</clielement>
+		<clielement optionIdentifier="--align-log" isList="false">
+			<mapping referenceName="flexbar.align-log" />
+		</clielement>
+		<clielement optionIdentifier="--stdout-log" isList="false">
+			<mapping referenceName="flexbar.stdout-log" />
+		</clielement>
+		<clielement optionIdentifier="--removal-tags" isList="false">
+			<mapping referenceName="flexbar.removal-tags" />
+		</clielement>
+		<clielement optionIdentifier="--number-tags" isList="false">
+			<mapping referenceName="flexbar.number-tags" />
+		</clielement>
+		<clielement optionIdentifier="--random-tags" isList="false">
+			<mapping referenceName="flexbar.random-tags" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="flexbar" description="flexible barcode and adapter removal">
+			<ITEM name="target" value="flexbarOut.fastq" type="output-file" description="Output file that contains interleaved reads." supported_formats="*.fastq,*.fq" required="true" advanced="false" />
+			<ITEM name="full-help" value="false" type="string" description="Display the help message with advanced options." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="man-help" value="false" type="string" description="Print advanced options as man document." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="versions" value="false" type="string" description="Print Flexbar and SeqAn version numbers." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="cite" value="false" type="string" description="Show program reference for citation." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="threads" value="1" type="int" description="Number of threads to employ." required="false" advanced="false" />
+			<ITEM name="bundle" value="256" type="int" description="Number of read pairs per thread." required="false" advanced="true" />
+			<ITEM name="reads" value="" type="input-file" description="Fasta/q file or stdin (-) with reads that may contain barcodes." required="true" advanced="false" supported_formats="*.fq,*.fastq,*.fq.gz"/>
+			<ITEM name="reads2" value="" type="input-file" description="Second input file of paired reads, gz and bz2 files supported." required="false" advanced="false" supported_formats="*.fq,*.fastq,*.fq.gz" />
+			<ITEM name="barcodes" value="" type="input-file" description="Fasta file with barcodes for demultiplexing, may contain N." required="false" advanced="false" />
+			<ITEM name="barcodes2" value="" type="input-file" description="Additional barcodes file for second read set in paired mode." required="false" advanced="true" />
+			<ITEM name="barcode-reads" value="" type="input-file" description="Fasta/q file containing separate barcode reads for detection." required="false" advanced="false" />
+			<ITEM name="barcode-trim-end" value="LTAIL" type="string" description="Type of detection, see section trim-end modes." required="false" advanced="false" />
+			<ITEM name="barcode-tail-length" value="" type="int" description="Region size in tail trim-end modes. Default: barcode length." required="false" advanced="true" />
+			<ITEM name="barcode-min-overlap" value="" type="int" description="Minimum overlap of barcode and read. Default: barcode length." required="false" advanced="false" />
+			<ITEM name="barcode-error-rate" value="0.1" type="double" description="Error rate threshold for mismatches and gaps." required="false" advanced="false" />
+			<ITEM name="barcode-keep" value="false" type="string" description="Keep barcodes within reads instead of removal." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="barcode-unassigned" value="false" type="string" description="Include unassigned reads in output generation." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="barcode-match" value="1" type="int" description="Alignment match score." required="false" advanced="true" />
+			<ITEM name="barcode-mismatch" value="-1" type="int" description="Alignment mismatch score." required="false" advanced="true" />
+			<ITEM name="barcode-gap" value="-9" type="int" description="Alignment gap score." required="false" advanced="true" />
+			<ITEM name="adapters" value="" type="input-file" description="Fasta file with adapters for removal that may contain N." required="false" advanced="false" />
+			<ITEM name="adapters2" value="" type="input-file" description="File with extra adapters for second read set in paired mode." required="false" advanced="true" />
+			<ITEM name="adapter-seq" value="" type="string" description="Single adapter sequence as alternative to adapters option." required="false" advanced="false" />
+			<ITEM name="adapter-read-set" value="" type="int" description="Consider only single read set for adapters." restrictions="1:2" required="false" advanced="true" />
+			<ITEM name="adapter-revcomp" value="false" type="string" description="Consider also reverse complement of each adapter in search." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="adapter-trim-end" value="RIGHT" type="string" description="Type of removal, see section trim-end modes." required="false" advanced="false" />
+			<ITEM name="adapter-tail-length" value="" type="int" description="Region size for tail trim-end modes. Default: adapter length." required="false" advanced="true" />
+			<ITEM name="adapter-relaxed" value="false" type="string" description="Skip restriction to pass read ends in right and left modes." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="adapter-min-overlap" value="3" type="int" description="Minimum overlap of adapter and read for removal." required="false" advanced="false" />
+			<ITEM name="adapter-error-rate" value="0.1" type="double" description="Error rate threshold for mismatches and gaps." required="false" advanced="false" />
+			<ITEM name="adapter-match" value="1" type="int" description="Alignment match score." required="false" advanced="true" />
+			<ITEM name="adapter-mismatch" value="-1" type="int" description="Alignment mismatch score." required="false" advanced="true" />
+			<ITEM name="adapter-gap" value="-6" type="int" description="Alignment gap score." required="false" advanced="true" />
+			<ITEM name="max-uncalled" value="0" type="int" description="Allowed uncalled bases N for each read." required="false" advanced="false" />
+			<ITEM name="pre-trim-left" value="" type="int" description="Trim given number of bases on 5&apos; read end before detection." required="false" advanced="false" />
+			<ITEM name="pre-trim-right" value="" type="int" description="Trim specified number of bases on 3&apos; end prior to detection." required="false" advanced="false" />
+			<ITEM name="post-trim-length" value="" type="int" description="Trim to specified read length from 3&apos; end after removal." required="false" advanced="true" />
+			<ITEM name="min-read-length" value="18" type="int" description="Minimum read length to remain after removal." required="false" advanced="false" />
+			<ITEM name="qtrim" value="" type="string" description="Quality-based trimming mode." restrictions="TAIL,WIN,BWA" required="false" advanced="false" />
+			<ITEM name="qtrim-format" value="" type="string" description="Quality format." restrictions="sanger,solexa,i1.3,i1.5,i1.8" required="false" advanced="false" />
+			<ITEM name="qtrim-threshold" value="20" type="int" description="Minimum quality as threshold for trimming." required="false" advanced="false" />
+			<ITEM name="qtrim-win-size" value="5" type="int" description="Region size for sliding window approach." required="false" advanced="true" />
+			<ITEM name="qtrim-post-removal" value="false" type="string" description="Perform quality-based trimming after removal steps." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="fasta-output" value="false" type="string" description="Prefer non-quality format fasta for output." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="zip-output" value="" type="string" description="Direct compression of output files." restrictions="GZ,BZ2" required="false" advanced="false" />
+			<ITEM name="length-dist" value="false" type="string" description="Generate length distribution for read output files." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="single-reads" value="false" type="string" description="Write single reads for too short counterparts in pairs." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="single-reads-paired" value="false" type="string" description="Write paired single reads with N for short counterparts." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="align-log" value="" type="string" description="Print chosen read alignments." restrictions="ALL,MOD,TAB" required="false" advanced="false" />
+			<ITEM name="stdout-log" value="true" type="string" description="Write statistics to console instead of target log file." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="removal-tags" value="false" type="string" description="Tag reads that are subject to adapter or barcode removal." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="number-tags" value="false" type="string" description="Replace read tags by ascending number to save space." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="random-tags" value="false" type="string" description="Capture read sequence at barcode or adapter N positions." restrictions="true,false" required="false" advanced="true" />
+		</NODE>
+	</PARAMETERS>
+</tool>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Kraken-report</name>
+    
+    <shortDescription>
+        Kraken taxonomic sequence classification report
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+		<p>
+			<a href="http://ccb.jhu.edu/software/kraken/MANUAL.html">Web Documentation for KrakenReport</a>
+		</p>
+
+        </intro>
+        
+		<option name="show-zeros">By default, taxa with no reads assigned to (or under) them will not have any output produced. If you wish to have all taxa displayed, use this option.</option>
+
+    </fullDescription>
+    
+    <ports>
+    	<inPort index="0" name="input-file [kraken]">Input file that contains classification results of Kraken. [kraken]</inPort>
+		<inPort index="1" name="db [*]">Full path of precomputed Kraken DB (must be the same as the one used to generate the Kraken results). [*]</inPort>
+		<outPort index="0" name="output [kreport]">Output file that contains the Kraken report. [kreport]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="KrakenReport Std Output">The text sent to standard out during the execution of KrakenReport.</view>
+        <view index="1" name="KrakenReport Error Output">The text sent to standard error during the execution of KrakenReport. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

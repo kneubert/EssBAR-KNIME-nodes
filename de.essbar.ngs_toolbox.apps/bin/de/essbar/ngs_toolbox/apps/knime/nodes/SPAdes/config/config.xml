@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="SPAdes" version="3.11.1" docurl="http://cab.spbu.ru/files/release3.11.1/manual.html" category="Assembly" >
+	<executableName>spades.sh</executableName>
+	<description>St. Petersburg genome assembler</description>
+	<manual>SPAdes – St. Petersburg genome assembler – is an assembly toolkit containing various assembly pipelines. The current version of SPAdes works with Illumina or IonTorrent reads and is capable of providing hybrid assemblies using PacBio, Oxford Nanopore and Sanger reads.</manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->	
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="spades.output" />
+		</clielement>	
+		<clielement optionIdentifier="--pe1-12" isList="false">
+			<mapping referenceName="spades.paired_read_lib" />
+		</clielement>	
+		<clielement optionIdentifier="--pe1-s" isList="false">
+			<mapping referenceName="spades.paired_read_lib_unpaired" />
+		</clielement>	
+		<clielement optionIdentifier="--mp1-12" isList="false">
+			<mapping referenceName="spades.mate_pair_lib" />
+		</clielement>
+		<clielement optionIdentifier="--s1" isList="false">
+			<mapping referenceName="spades.single_read_lib" />
+		</clielement>	
+		<clielement optionIdentifier="--pacbio" isList="false">
+			<mapping referenceName="spades.pacbio" />
+		</clielement>
+		<clielement optionIdentifier="--nanopore" isList="false">
+			<mapping referenceName="spades.nanopore" />
+		</clielement>		
+		<clielement optionIdentifier="--sanger" isList="false">
+			<mapping referenceName="spades.sanger" />
+		</clielement>	
+		<!-- Options for the app -->
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="spades.paired_read_or" />
+		</clielement>
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="spades.mate_pair_or" />
+		</clielement>		
+		<clielement optionIdentifier="--sc" isList="false">
+			<mapping referenceName="spades.single_cell" />
+		</clielement>		
+		<clielement optionIdentifier="--meta" isList="false">
+			<mapping referenceName="spades.meta" />
+		</clielement>	
+		<clielement optionIdentifier="--plasmid" isList="false">
+			<mapping referenceName="spades.plasmid" />
+		</clielement>	
+		<clielement optionIdentifier="--rna" isList="false">
+			<mapping referenceName="spades.rna" />
+		</clielement>
+		<clielement optionIdentifier="--iontorrent" isList="false">
+			<mapping referenceName="spades.iontorrent" />
+		</clielement>
+		<clielement optionIdentifier="--version" isList="false">
+			<mapping referenceName="spades.version" />
+		</clielement>
+		<clielement optionIdentifier="--only-error-correction" isList="false">
+			<mapping referenceName="spades.only_ec" />
+		</clielement>		
+		<clielement optionIdentifier="--only-assembler" isList="false">
+			<mapping referenceName="spades.only_assembly" />
+		</clielement>
+		<clielement optionIdentifier="--disable-gzip-output" isList="false">
+			<mapping referenceName="spades.no_gzip" />
+		</clielement>
+		<clielement optionIdentifier="--careful" isList="false">
+			<mapping referenceName="spades.careful" />
+		</clielement>
+		<!-- Advanced options for the app -->
+		<clielement optionIdentifier="--threads" isList="false">
+			<mapping referenceName="spades.threads" />
+		</clielement>
+		<clielement optionIdentifier="--memory" isList="false">
+			<mapping referenceName="spades.memory" />
+		</clielement>
+		<clielement optionIdentifier="-k" isList="false">
+			<mapping referenceName="spades.kmers" />
+		</clielement>
+		<clielement optionIdentifier="--cov-cutoff" isList="false">
+			<mapping referenceName="spades.cov_cutoff" />
+		</clielement>
+		<clielement optionIdentifier="--phred-offset" isList="false">
+			<mapping referenceName="spades.phred_offset" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="spades" description="St. Petersburg genome assembler">
+			<ITEM name="paired_read_lib" value="" type="input-file" description="File with interlaced reads for paired-read library" supported_formats="*.fastq,*.fq" required="true" advanced="false" />
+			<ITEM name="paired_read_lib_unpaired" value="" type="input-file" description="File with interlaced reads with unpaired reads from paired-end library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />
+			<ITEM name="mate_pair_lib" value="" type="input-file" description="File with interlaced reads for mate-pair library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />			
+			<ITEM name="single_read_lib" value="" type="input-file" description="File for single-read library" supported_formats="*.fastq,*.fq,*.bam" required="false" advanced="false" />
+			<ITEM name="pacbio" value="" type="input-file" description=" File with PacBio CLR reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />			
+			<ITEM name="nanopore" value="" type="input-file" description=" File with Oxford Nanopore reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />					
+			<ITEM name="sanger" value="" type="input-file" description=" File with Sanger reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />	
+			<ITEM name="output" value="" type="output-file" description="Assembly file" supported_formats="*.*" required="true" advanced="false" />
+			<ITEM name="paired_read_or" value="" type="string" description="Orientation of reads for paired-end library, the default orientation for paired-end libraries is forward-reverse." restrictions="--pe1-fr,--pe1-rf,--pe1-ff" required="false" advanced="false" />
+			<ITEM name="mate_pair_or" value="" type="string" description="Orientation of reads for mate-pair library, the default orientation for mate-pair libraries is reverse-forward." restrictions="--mp1-fr,--mp1-rf,--mp-ff" required="false" advanced="false" />
+			<ITEM name="single_cell" value="false" type="string" description="This flag is required for MDA (single-cell) data. " restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="meta" value="false" type="string" description="This flag is recommended when assembling metagenomic data sets (runs metaSPAdes)." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="plasmid" value="false" type="string" description="This flag is required when assembling only plasmids from WGS data sets (runs plasmidSPAdes)." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="rna" value="false" type="string" description="This flag should be used when assembling RNA-Seq data sets (runs rnaSPAdes)." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="iontorrent" value="false" type="string" description="This flag is required when assembling IonTorrent data. Allows BAM files as input." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="version" value="false" type="string" description="Prints SPAdes version." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="only_ec" value="false" type="string" description="Performs read error correction only." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="only_assembly" value="false" type="string" description="Runs assembly module only." restrictions="true,false" required="false" advanced="false" />		
+			<ITEM name="no_gzip" value="false" type="string" description="Forces read error correction module not to compress the corrected reads. If this options is not set, corrected reads will be in *.fastq.gz format." restrictions="true,false" required="false" advanced="false" />																	
+			<ITEM name="careful" value="false" type="string" description="Tries to reduce the number of mismatches and short indels. Also runs MismatchCorrector – a post processing tool, which uses BWA tool. This option is recommended only for assembly of small genomes." restrictions="true,false" required="false" advanced="false" />	
+			<ITEM name="threads" value="16" type="int" description="Number of threads" restrictions="1:" required="false" advanced="true" />	
+			<ITEM name="memory" value="250" type="int" description="Set memory limit in Gb. SPAdes terminates if it reaches this limit." restrictions="1:" required="false" advanced="true" />	
+			<ITEM name="kmers" value="" type="string" description="Comma-separated list of k-mer sizes to be used (all values must be odd, less than 128 and listed in ascending order)." required="false" advanced="true" />				
+			<ITEM name="cov_cutoff" value="" type="string" description="Read coverage cutoff value. Must be a positive float value, or 'auto', or 'off'. Default value is 'off'. When set to 'auto' SPAdes automatically computes coverage threshold using conservative strategy." required="false" advanced="true" />
+			<ITEM name="phred_offset" value="" type="string" description="Alignment match score." required="33,64" advanced="true" />
+		</NODE>
+	</PARAMETERS>
+</tool>

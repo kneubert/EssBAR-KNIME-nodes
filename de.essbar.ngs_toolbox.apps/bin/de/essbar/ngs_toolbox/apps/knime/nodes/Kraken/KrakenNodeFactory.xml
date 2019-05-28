@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Kraken</name>
+    
+    <shortDescription>
+        Kraken taxonomic sequence classification
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+        Kraken taxonomic sequence classification
+		<p>
+			<a href="http://ccb.jhu.edu/software/kraken/MANUAL.html">Web Documentation for Kraken</a>
+		</p>
+
+        </intro>
+        
+		<option name="threads">Number of threads</option>
+		<option name="fasta-input">Input is in FASTA format.</option>
+		<option name="fastq-input">Input is in FASTQ format.</option>
+		<option name="fastq-output">Output is in FASTQ format.</option>
+		<option name="gzip-input">Input is gzip compressed.</option>
+		<option name="bzip2-input">Input is bzip2 compressed.</option>
+		<option name="quick">Quick operation (use first hit or hits).</option>
+		<option name="min-hits">In quick operation, number of hits required for classification NOTE: this is ignored if --quick is not specified.</option>
+		<option name="output-format">Format for [un]classified sequence output (supported options are legacy, paired, interleaved)</option>
+		<option name="only-classified">Print no Kraken output for unclassified sequences.</option>
+		<option name="preload">Loads DB into memory before classification.</option>
+		<option name="paired">The two filenames provided are paired-end reads.</option>
+		<option name="check-names">Ensure each pair of reads have names that agree with each other; ignored if --paired is not specified.</option>
+
+    </fullDescription>
+    
+    <ports>
+    	<inPort index="0" name="input-files [fasta,fa,fastq,fq,gz,bz2]">Input files [fasta,fa,fastq,fq,gz,bz2]</inPort>
+		<inPort index="1" name="db [*]">Full path of precomputed Kraken DB [*]</inPort>
+		<outPort index="0" name="output [kraken]">Output file that contains classification results for each sequence. [kraken]</outPort>
+		<outPort index="1" name="classified-output [kraken,Inactive]">Output file that contains classified sequences. [kraken,Inactive]</outPort>
+		<outPort index="2" name="unclassified-output [kraken,Inactive]">Output file that contains unclassified sequences. [kraken,Inactive]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Kraken Std Output">The text sent to standard out during the execution of Kraken.</view>
+        <view index="1" name="Kraken Error Output">The text sent to standard error during the execution of Kraken. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

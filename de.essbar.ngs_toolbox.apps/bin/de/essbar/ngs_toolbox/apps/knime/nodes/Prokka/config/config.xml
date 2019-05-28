@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Prokka" version="1.14" docurl="https://github.com/tseemann/prokka" category="Assembly" >
+	<executableName>prokka.sh</executableName>
+	<description>Prokka: rapid prokaryotic genome annotation</description>
+	<manual></manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->	
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="prokka.assembly" />
+		</clielement>	
+		<clielement optionIdentifier="--dbdir" isList="false">
+			<mapping referenceName="prokka.dbdir" />
+		</clielement>
+		<clielement optionIdentifier="--proteins" isList="false">
+			<mapping referenceName="prokka.proteins" />
+		</clielement>
+		<clielement optionIdentifier="--hmms" isList="false">
+			<mapping referenceName="prokka.hmms" />
+		</clielement>
+		<clielement optionIdentifier="--outdir" isList="false">
+			<mapping referenceName="prokka.outdir" />
+		</clielement>	
+		<!-- Options for the app -->
+		<clielement optionIdentifier="--version" isList="false">
+			<mapping referenceName="prokka.version" />
+		</clielement>	
+		<clielement optionIdentifier="--debug" isList="false">
+			<mapping referenceName="prokka.debug" />
+		</clielement>
+		<clielement optionIdentifier="--listdb" isList="false">
+			<mapping referenceName="prokka.listdb" />
+		</clielement>	
+		<clielement optionIdentifier="--setupdb" isList="false">
+			<mapping referenceName="prokka.setupdb" />
+		</clielement>
+		<clielement optionIdentifier="--cleandb" isList="false">
+			<mapping referenceName="prokka.cleandb" />
+		</clielement>	
+		<clielement optionIdentifier="--prefix" isList="false">
+			<mapping referenceName="prokka.prefix" />
+		</clielement>
+		<clielement optionIdentifier="--addgenes" isList="false">
+			<mapping referenceName="prokka.addgenes" />
+		</clielement>
+		<clielement optionIdentifier="--addmrna" isList="false">
+			<mapping referenceName="prokka.addmrna" />
+		</clielement>
+		<clielement optionIdentifier="--locustag" isList="false">
+			<mapping referenceName="prokka.locustag" />
+		</clielement>
+		<clielement optionIdentifier="--increment" isList="false">
+			<mapping referenceName="prokka.increment" />
+		</clielement>
+		<clielement optionIdentifier="--gffver" isList="false">
+			<mapping referenceName="prokka.gffver" />
+		</clielement>
+		<clielement optionIdentifier="--compliant" isList="false">
+			<mapping referenceName="prokka.compliant" />
+		</clielement>
+		<clielement optionIdentifier="--centre" isList="false">
+			<mapping referenceName="prokka.centre" />
+		</clielement>
+		<clielement optionIdentifier="--accver" isList="false">
+			<mapping referenceName="prokka.accver" />
+		</clielement>
+		<clielement optionIdentifier="--genus" isList="false">
+			<mapping referenceName="prokka.genus" />
+		</clielement>
+		<clielement optionIdentifier="--species" isList="false">
+			<mapping referenceName="prokka.species" />
+		</clielement>
+		<clielement optionIdentifier="--strain" isList="false">
+			<mapping referenceName="prokka.strain" />
+		</clielement>
+		<clielement optionIdentifier="--plasmid" isList="false">
+			<mapping referenceName="prokka.plasmid" />
+		</clielement>
+		<clielement optionIdentifier="--kingdom" isList="false">
+			<mapping referenceName="prokka.kingdom" />
+		</clielement>
+		<clielement optionIdentifier="--gcode" isList="false">
+			<mapping referenceName="prokka.gcode" />
+		</clielement>
+		<clielement optionIdentifier="--gram" isList="false">
+			<mapping referenceName="prokka.gram" />
+		</clielement>
+		<clielement optionIdentifier="--usegenus" isList="false">
+			<mapping referenceName="prokka.usegenus" />
+		</clielement>		
+		<clielement optionIdentifier="--metagenome" isList="false">
+			<mapping referenceName="prokka.metagenome" />
+		</clielement>
+		<clielement optionIdentifier="--rawproduct" isList="false">
+			<mapping referenceName="prokka.rawproduct" />
+		</clielement>
+		<clielement optionIdentifier="--cdsrnaolap" isList="false">
+			<mapping referenceName="prokka.cdsrnaolap" />
+		</clielement>
+		<!-- Advanced options for the app -->
+		<clielement optionIdentifier="--cpus" isList="false">
+			<mapping referenceName="prokka.cpus" />
+		</clielement>
+		<clielement optionIdentifier="--fast" isList="false">
+			<mapping referenceName="prokka.fast" />
+		</clielement>
+		<clielement optionIdentifier="--noanno" isList="false">
+			<mapping referenceName="prokka.noanno" />
+		</clielement>
+		<clielement optionIdentifier="--mincontiglen" isList="false">
+			<mapping referenceName="prokka.mincontiglen" />
+		</clielement>
+		<clielement optionIdentifier="--evalue" isList="false">
+			<mapping referenceName="prokka.evalue" />
+		</clielement>
+		<clielement optionIdentifier="--rfam" isList="false">
+			<mapping referenceName="prokka.rfam" />
+		</clielement>
+		<clielement optionIdentifier="--norrna" isList="false">
+			<mapping referenceName="prokka.norrna" />
+		</clielement>
+		<clielement optionIdentifier="--notrna" isList="false">
+			<mapping referenceName="prokka.notrna" />
+		</clielement>
+		<clielement optionIdentifier="--rnammer" isList="false">
+			<mapping referenceName="prokka.rnammer" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="prokka" description="Prokka: rapid prokaryotic genome annotation">
+			<ITEM name="version" value="false" type="string" description="Print version and exit." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="debug" value="false" type="string" description="Debug mode: keep all temporary files." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="listdb" value="false" type="string" description="List all configured databases." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="setupdb" value="false" type="string" description="Index all installed databases." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="cleandb" value="false" type="string" description="Remove all database indices." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="prefix" value="" type="string" description="Filename output prefix" required="false" advanced="false" />
+			<ITEM name="addgenes" value="false" type="string" description="Add 'gene' features for each 'CDS' feature." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="addmrna" value="false" type="string" description=" Add 'mRNA' features for each 'CDS' feature." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="locustag" value="PROKKA" type="string" description="Locus tag prefix" required="false" advanced="false" />
+			<ITEM name="increment" value="1" type="int" description="Locus tag counter increment" restrictions="1:" required="false" advanced="false" />
+			<ITEM name="gffver" value="3" type="int" description="GFF version (default '3')" restrictions="1:" required="false" advanced="false" />
+			<ITEM name="compliant" value="false" type="string" description="Force Genbank/ENA/DDJB compliance: --genes --mincontiglen 200 --centre XXX (default OFF)" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="centre" value="" type="string" description="Sequencing centre ID." required="false" advanced="false" />
+			<ITEM name="accver" value="1" type="int" description="Version to put in Genbank file." restrictions="1:" required="false" advanced="false" />
+			<ITEM name="genus" value="Genus" type="string" description="Genus name" required="false" advanced="false" />
+			<ITEM name="species" value="species" type="string" description="Species name" required="false" advanced="false" />
+			<ITEM name="strain" value="strain" type="string" description="Strain name" required="false" advanced="false" />
+			<ITEM name="plasmid" value="" type="string" description="Plasmid name or identifier" required="false" advanced="false" />
+			<ITEM name="kingdom" value="Bacteria" type="string" description="Annotation mode: Archaea|Bacteria|Mitochondria|Viruses" restrictions="Archaea,Bacteria,Mitochondria,Viruses" required="false" advanced="false" />
+			<ITEM name="gcode" value="0" type="int" description="Genetic code / Translation table (set if --kingdom is set)" required="false" advanced="false" />
+			<ITEM name="gram" value="" type="string" description="Gram: -/neg +/pos" required="false" advanced="true" />
+			<ITEM name="usegenus" value="false" type="string" description="Use genus-specific BLAST databases (needs --genus)." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="metagenome" value="false" type="string" description="Improve gene predictions for highly fragmented genomes." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="rawproduct" value="false" type="string" description="Do not clean up /product annotation." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="cdsrnaolap" value="false" type="string" description="Allow [tr]RNA to overlap CDS." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="cpus" value="8" type="int" description="Number of CPUs to use [0=all]." restrictions="0:" required="false" advanced="true" />
+			<ITEM name="fast" value="false" type="string" description="Fast mode - skip CDS /product searching." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="noanno" value="false" type="string" description="For CDS just set product='unannotated protein'." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="mincontiglen" value="1" type="int" description="Minimum contig size [NCBI needs 200]." restrictions="1:" required="false" advanced="true" />
+			<ITEM name="evalue" value="1e-06" type="float" description="Similarity e-value cut-off" restrictions="0:" required="false" advanced="true" />
+			<ITEM name="rfam" value="false" type="string" description="Enable searching for ncRNAs with Infernal+Rfam (SLOW!)." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="norrna" value="false" type="string" description="Don't run rRNA search (default OFF)." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="notrna" value="false" type="string" description="Don't run tRNA search (default OFF)." restrictions="true,false" required="false" advanced="true" />
+			<ITEM name="rnammer" value="false" type="string" description="Prefer RNAmmer over Barrnap for rRNA prediction (default OFF)." restrictions="true,false" required="false" advanced="true" />																																																																																														
+			<ITEM name="outdir" value="" type="output-prefix" description="Output directory" supported_formats="*.*" required="false" advanced="false" />		
+			<ITEM name="assembly" value="" type="input-file" description="Assembly (contigs or scaffolds)" supported_formats="*.fasta,*.fa,*.fna" required="true" advanced="false" />	
+			<ITEM name="dbdir" value="" type="input-prefix" description="Prokka database root folder." supported_formats="*" required="true" advanced="false" />
+			<ITEM name="proteins" value="" type="input-file" description="FASTA or GBK file to use as 1st priority." supported_formats="*.fasta,*.fa,*.fna,*.gbk" required="false" advanced="false" />
+			<ITEM name="hmms" value="" type="input-file" description="Trusted HMM to first annotate from." supported_formats="*.fasta,*.fa,*.fna" required="false" advanced="false" />
+		</NODE>
+	</PARAMETERS>
+</tool>

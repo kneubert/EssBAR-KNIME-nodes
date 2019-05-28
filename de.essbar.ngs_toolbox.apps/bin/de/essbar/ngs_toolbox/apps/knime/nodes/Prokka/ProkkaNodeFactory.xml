@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Prokka</name>
+    
+    <shortDescription>
+        Prokka: rapid prokaryotic genome annotation
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+        Prokka: rapid prokaryotic genome annotation
+		<p>
+			<a href="https://github.com/tseemann/prokka">Web Documentation for Prokka</a>
+		</p>
+
+        </intro>
+        
+		<option name="version">Print version and exit.</option>
+		<option name="debug">Debug mode: keep all temporary files.</option>
+		<option name="listdb">List all configured databases.</option>
+		<option name="setupdb">Index all installed databases.</option>
+		<option name="cleandb">Remove all database indices.</option>
+		<option name="prefix">Filename output prefix</option>
+		<option name="addgenes">Add 'gene' features for each 'CDS' feature.</option>
+		<option name="addmrna"> Add 'mRNA' features for each 'CDS' feature.</option>
+		<option name="locustag">Locus tag prefix</option>
+		<option name="increment">Locus tag counter increment</option>
+		<option name="gffver">GFF version (default '3')</option>
+		<option name="compliant">Force Genbank/ENA/DDJB compliance: --genes --mincontiglen 200 --centre XXX (default OFF)</option>
+		<option name="centre">Sequencing centre ID.</option>
+		<option name="accver">Version to put in Genbank file.</option>
+		<option name="genus">Genus name</option>
+		<option name="species">Species name</option>
+		<option name="strain">Strain name</option>
+		<option name="plasmid">Plasmid name or identifier</option>
+		<option name="kingdom">Annotation mode: Archaea|Bacteria|Mitochondria|Viruses</option>
+		<option name="gcode">Genetic code / Translation table (set if --kingdom is set)</option>
+		<option name="gram">Gram: -/neg +/pos</option>
+		<option name="usegenus">Use genus-specific BLAST databases (needs --genus).</option>
+		<option name="metagenome">Improve gene predictions for highly fragmented genomes.</option>
+		<option name="rawproduct">Do not clean up /product annotation.</option>
+		<option name="cdsrnaolap">Allow [tr]RNA to overlap CDS.</option>
+		<option name="cpus">Number of CPUs to use [0=all].</option>
+		<option name="fast">Fast mode - skip CDS /product searching.</option>
+		<option name="noanno">For CDS just set product='unannotated protein'.</option>
+		<option name="mincontiglen">Minimum contig size [NCBI needs 200].</option>
+		<option name="evalue">Similarity e-value cut-off</option>
+		<option name="rfam">Enable searching for ncRNAs with Infernal+Rfam (SLOW!).</option>
+		<option name="norrna">Don't run rRNA search (default OFF).</option>
+		<option name="notrna">Don't run tRNA search (default OFF).</option>
+		<option name="rnammer">Prefer RNAmmer over Barrnap for rRNA prediction (default OFF).</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="assembly [fasta,fa,fna]">Assembly (contigs or scaffolds) [fasta,fa,fna]</inPort>
+		<inPort index="1" name="dbdir [*,pin,phd,psi,phi,psd,pog,psq,phr,hmm]">Prokka database root folder. [*,pin,phd,psi,phi,psd,pog,psq,phr,hmm]</inPort>
+		<inPort index="2" name="proteins [fasta,fa,fna,gbk]">FASTA or GBK file to use as 1st priority. [fasta,fa,fna,gbk,opt.]</inPort>
+		<inPort index="3" name="hmms [fasta,fa,fna]">Trusted HMM to first annotate from. [fasta,fa,fna,opt.]</inPort>
+		<outPort index="0" name="outdir [*,Inactive]">Output directory [*,Inactive]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Prokka Std Output">The text sent to standard out during the execution of Prokka.</view>
+        <view index="1" name="Prokka Error Output">The text sent to standard error during the execution of Prokka. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

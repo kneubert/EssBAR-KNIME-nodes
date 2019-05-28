@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Parsnp</name>
+    
+    <shortDescription>
+        Rapid core genome multi-alignment and phylogeny
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+        Rapid core genome multi-alignment and phylogeny
+		<p>
+			<a href="http://harvest.readthedocs.io/en/latest/content/parsnp.html">Web Documentation for Parsnp</a>
+		</p>
+
+        </intro>
+        
+		<option name="curated">Curated genome directory, use all genomes in dir and ignore MUMi.</option>
+		<option name="max_MUMi">Max MUMi distance value for MUMi distribution</option>
+		<option name="only_MUMi">Calculate MUMi and exit? overrides all other choices.</option>
+		<option name="max_MUMi_dist">Max MUM(i) distance (default: autocutoff based on distribution of MUMi values)</option>
+		<option name="min_anchor_length">Min ANCHOR length (default = 1.1*Log(S))</option>
+		<option name="max_cluster_D">Maximal cluster D value</option>
+		<option name="min_LCB_size">Min LCB size</option>
+		<option name="max_diagonal_dist">Maximal diagonal difference in percentage</option>
+		<option name="greedy_LCBs">Greedily extend LCBs? experimental!</option>
+		<option name="alignment_program">Alignment program (default: libMUSCLE)</option>
+		<option name="unaligned">Output unaligned regions (in .unaligned)</option>
+		<option name="filtering">Enable filtering of SNPs located in PhiPack identified regions of recombination</option>
+		<option name="threads">Number of threads to use</option>
+		<option name="max_partition_size">Max partition size (limits memory usage)</option>
+		<option name="verbose">Verbose output</option>
+		<option name="version">output Version and exit.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="genome_dir [*]">directory containing genomes/contigs/scaffolds [*]</inPort>
+		<inPort index="1" name="reference_genome [fasta,fa,fna]">Reference genome [fasta,fa,fna,opt.]</inPort>
+		<inPort index="2" name="genbank_file [gbk]">Genbank file. [gbk,opt.]</inPort>
+		<inPort index="3" name="query_genome [fasta,fa,fna]">Specify (assembled) query genome to use, in addition to genomes found in genome directory (optional). [fasta,fa,fna,opt.]</inPort>
+		<outPort index="0" name="output [*,Inactive]">Output directory [*,Inactive]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Parsnp Std Output">The text sent to standard out during the execution of Parsnp.</view>
+        <view index="1" name="Parsnp Error Output">The text sent to standard error during the execution of Parsnp. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Slimm" version="0.3.3" docurl="http://www.seqan.de" category="Metagenomics" >
+	<executableName>slimm</executableName>
+	<description>Species Level Identification of Microbes from Metagenomes</description>
+	<manual>SLIMM  Species Level Identification of Microbes from Metagenomes
+See  http://www.seqan.de/projects/slimm  for more information.
+(c) Copyright 2014-2017  by Temesgen H. Dadi.
+</manual>
+	<cli>
+		<clielement optionIdentifier="--version-check" isList="false">
+			<mapping referenceName="slimm.version-check" />
+		</clielement>
+		<clielement optionIdentifier="--output-prefix" isList="false">
+			<mapping referenceName="slimm.output-prefix" />
+		</clielement>
+		<clielement optionIdentifier="--bin-width" isList="false">
+			<mapping referenceName="slimm.bin-width" />
+		</clielement>
+		<clielement optionIdentifier="--min-reads" isList="false">
+			<mapping referenceName="slimm.min-reads" />
+		</clielement>
+		<clielement optionIdentifier="--rank" isList="false">
+			<mapping referenceName="slimm.rank" />
+		</clielement>
+		<clielement optionIdentifier="--cov-cut-off" isList="false">
+			<mapping referenceName="slimm.cov-cut-off" />
+		</clielement>
+		<clielement optionIdentifier="--abundance-cut-off" isList="false">
+			<mapping referenceName="slimm.abundance-cut-off" />
+		</clielement>
+		<clielement optionIdentifier="--raw-output" isList="false">
+			<mapping referenceName="slimm.raw-output" />
+		</clielement>
+		<clielement optionIdentifier="--verbose" isList="false">
+			<mapping referenceName="slimm.verbose" />
+		</clielement>
+		<!-- Following clielements are arguments. You should consider providing a help text to ease understanding. -->
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="slimm.argument-0" />
+		</clielement>
+		<clielement optionIdentifier="" isList="true">
+			<mapping referenceName="slimm.argument-1" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="slimm" description="Species Level Identification of Microbes from Metagenomes">
+			<ITEM name="version-check" value="1" type="string" description="Turn this option off to disable version update notifications of the application. " restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="output-prefix" value="" type="output-prefix" description="output path prefix." supported_formats="*.*" required="false" advanced="false" />
+			<ITEM name="bin-width" value="0" type="int" description="Set the width of a single bin in neuclotides." required="false" advanced="false" />
+			<ITEM name="min-reads" value="0" type="int" description="Minimum number of matching reads to consider a reference present." required="false" advanced="false" />
+			<ITEM name="rank" value="species" type="string" description="The taxonomic rank of identification" restrictions="strains,species,genus,family,order,class,phylum,superkingdom" required="false" advanced="false" />
+			<ITEM name="cov-cut-off" value="0.95" type="double" description="the quantile of coverages to use as a cutoff smaller value means bigger threshold." restrictions="0.0:1.0" required="false" advanced="false" />
+			<ITEM name="abundance-cut-off" value="0.01" type="double" description="do not report abundances below this value" restrictions="0.0:10.0" required="false" advanced="false" />
+			<ITEM name="raw-output" value="false" type="string" description="Output raw reference statstics" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="verbose" value="false" type="string" description="Enable verbose output." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="argument-0" value="" type="input-file" description="Slimm database" supported_formats="*.sldb" required="true" advanced="false" />
+			<ITEM name="argument-1" value="" type="input-file" description="Mapped reads" supported_formats="*.bam,*.sam" required="true" advanced="false" />
+		</NODE>
+	</PARAMETERS>
+</tool>

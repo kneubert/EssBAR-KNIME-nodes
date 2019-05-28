@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>ProkkaDB</name>
+    
+    <shortDescription>
+        Tool for creating databases for Prokka
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+        The tool creates protein reference databases for Prokka with the given kingdoms (archae, bacteria, viruses, fungi) and an optional list of genus databases.
+		<p>
+			<a href="https://github.com/rehrlich/prokka_database_maker">Web Documentation for ProkkaDB</a>
+		</p>
+
+        </intro>
+        
+		<option name="archaea">Include kingdom for Archaea.</option>
+		<option name="bacteria">Include kingdom for Bacteria.</option>
+		<option name="viruses">Include kingdom for Viruses.</option>
+		<option name="fungi">Include kingdom for Fungi</option>
+		<option name="genus">Genus names separated by ','</option>
+
+    </fullDescription>
+    
+    <ports>
+		<outPort index="0" name="output [*]">Output directory [*]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="ProkkaDB Std Output">The text sent to standard out during the execution of ProkkaDB.</view>
+        <view index="1" name="ProkkaDB Error Output">The text sent to standard error during the execution of ProkkaDB. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="krona_logo.png" type="QuickForm">
+    <name>KronaText</name>
+    
+    <shortDescription>
+        Krona Tools importing Text files
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>KronaText (ktImportText)</p>
+		<p>
+			<a href="https://github.com/marbl/Krona/wiki/KronaTools">Web Documentation for KtImportText</a>
+		</p>
+
+        </intro>
+        
+		<option name="highest_level">Name of the highest level [Default: 'all']</option>
+		<option name="combine_data">Combine data from each file, rather than creating separate datasets within the chart.</option>
+		<option name="no_quantity">Files do not have a field for quantity.</option>
+		<option name="krona_url">URL of Krona resources to use instead of bundling them with the chart (e.g. 'http://krona.sourceforge.net'). Reduces size of charts and allows updates, though charts will not work without access to this URL.</option>
+		<option name="name">A name to show in the list of datasets in the Krona chart. By default, the basename of the file will be used.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="input-files [tsv,txt]">Tab-delimited text files. [tsv,txt]</inPort>
+		<outPort index="0" name="output-file [html,Inactive]">Output file name. [html,Inactive]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="KtImportText Std Output">The text sent to standard out during the execution of KtImportText.</view>
+        <view index="1" name="KtImportText Error Output">The text sent to standard error during the execution of KtImportText. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

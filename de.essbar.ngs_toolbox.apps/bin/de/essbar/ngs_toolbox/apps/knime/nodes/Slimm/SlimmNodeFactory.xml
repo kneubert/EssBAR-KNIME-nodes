@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Slimm</name>
+    
+    <shortDescription>
+        Species Level Identification of Microbes from Metagenomes
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>SLIMM - Species Level Identification of Microbes from Metagenomes</p><p>See  http://www.seqan.de/projects/slimm  for more information.</p><p>(c) Copyright 2014-2017  by Temesgen H. Dadi.</p>
+		<p>
+			<a href="https://github.com/seqan/slimm/wiki">Web Documentation for Slimm</a>
+		</p>
+
+        </intro>
+        
+		<option name="version-check">Turn this option off to disable version update notifications of the application. </option>
+		<option name="bin-width">Set the width of a single bin in neucleotides.</option>
+		<option name="min-reads">Minimum number of matching reads to consider a reference present.</option>
+		<option name="rank">The taxonomic rank of identification</option>
+		<option name="cov-cut-off">the quantile of coverages to use as a cutoff smaller value means bigger threshold.</option>
+		<option name="abundance-cut-off">do not report abundances below this value</option>
+		<option name="raw-output">Output raw reference statstics</option>
+		<option name="verbose">Enable verbose output.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="argument-0 [sldb]"> [sldb]</inPort>
+		<inPort index="1" name="argument-1 [bam,sam]"> [bam,sam]</inPort>
+		<outPort index="0" name="output-prefix [*,Inactive]">output path prefix. [*,Inactive]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Slimm Std Output">The text sent to standard out during the execution of Slimm.</view>
+        <view index="1" name="Slimm Error Output">The text sent to standard error during the execution of Slimm. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>
