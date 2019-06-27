@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: EssBAR NGSToolbox: QC and Views - linux-x86_64 Fragment
-Bundle-SymbolicName: de.essbar.ngs_toolbox.QC.linux.x86_64;singleton:=true
-Bundle-Version: 0.0.2
-Bundle-Vendor: Freie Universitaet Berlin, Universitaet Tuebingen
-Fragment-Host: de.essbar.ngs_toolbox.QC;bundle-version="0.0.1"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Eclipse-PlatformFilter: (& (osgi.arch=x86_64) (osgi.os=linux))

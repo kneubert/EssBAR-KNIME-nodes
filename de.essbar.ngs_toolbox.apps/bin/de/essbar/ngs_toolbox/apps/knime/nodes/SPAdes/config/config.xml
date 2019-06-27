@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tool name="SPAdes" version="3.11.1" docurl="http://cab.spbu.ru/files/release3.11.1/manual.html" category="Assembly" >
-	<executableName>spades.sh</executableName>
+	<executableName>spades.py</executableName>
 	<description>St. Petersburg genome assembler</description>
-	<manual>SPAdes – St. Petersburg genome assembler – is an assembly toolkit containing various assembly pipelines. The current version of SPAdes works with Illumina or IonTorrent reads and is capable of providing hybrid assemblies using PacBio, Oxford Nanopore and Sanger reads.</manual>
+	<manual></manual>
 	<cli>
 		<!-- Following clielements are arguments. You should consider
-		providing a help text to ease understanding. -->	
-		<clielement optionIdentifier="" isList="false">
-			<mapping referenceName="spades.output" />
-		</clielement>	
+		providing a help text to ease understanding. -->
+		<clielement optionIdentifier="--s1" isList="false">
+			<mapping referenceName="spades.single_read_lib" />
+		</clielement>		
 		<clielement optionIdentifier="--pe1-12" isList="false">
 			<mapping referenceName="spades.paired_read_lib" />
 		</clielement>	
@@ -18,9 +18,6 @@
 		<clielement optionIdentifier="--mp1-12" isList="false">
 			<mapping referenceName="spades.mate_pair_lib" />
 		</clielement>
-		<clielement optionIdentifier="--s1" isList="false">
-			<mapping referenceName="spades.single_read_lib" />
-		</clielement>	
 		<clielement optionIdentifier="--pacbio" isList="false">
 			<mapping referenceName="spades.pacbio" />
 		</clielement>
@@ -29,7 +26,10 @@
 		</clielement>		
 		<clielement optionIdentifier="--sanger" isList="false">
 			<mapping referenceName="spades.sanger" />
-		</clielement>	
+		</clielement>
+		<clielement optionIdentifier="--output_dir" isList="false">
+			<mapping referenceName="spades.output_dir" />
+		</clielement>		
 		<!-- Options for the app -->
 		<clielement optionIdentifier="" isList="false">
 			<mapping referenceName="spades.paired_read_or" />
@@ -86,14 +86,14 @@
 	</cli>
 	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		<NODE name="spades" description="St. Petersburg genome assembler">
-			<ITEM name="paired_read_lib" value="" type="input-file" description="File with interlaced reads for paired-read library" supported_formats="*.fastq,*.fq" required="true" advanced="false" />
+			<ITEM name="single_read_lib" value="" type="input-file" description="File for single-read library" supported_formats="*.fastq,*.fq,*.bam" required="false" advanced="false" />
+			<ITEM name="paired_read_lib" value="" type="input-file" description="File with interlaced reads for paired-read library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />
 			<ITEM name="paired_read_lib_unpaired" value="" type="input-file" description="File with interlaced reads with unpaired reads from paired-end library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />
 			<ITEM name="mate_pair_lib" value="" type="input-file" description="File with interlaced reads for mate-pair library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />			
-			<ITEM name="single_read_lib" value="" type="input-file" description="File for single-read library" supported_formats="*.fastq,*.fq,*.bam" required="false" advanced="false" />
 			<ITEM name="pacbio" value="" type="input-file" description=" File with PacBio CLR reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />			
 			<ITEM name="nanopore" value="" type="input-file" description=" File with Oxford Nanopore reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />					
 			<ITEM name="sanger" value="" type="input-file" description=" File with Sanger reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />	
-			<ITEM name="output" value="" type="output-file" description="Assembly file" supported_formats="*.*" required="true" advanced="false" />
+			<ITEM name="output_dir" value="" type="output-prefix" description="Output prefix of results" supported_formats="*.*" required="false" advanced="false" />
 			<ITEM name="paired_read_or" value="" type="string" description="Orientation of reads for paired-end library, the default orientation for paired-end libraries is forward-reverse." restrictions="--pe1-fr,--pe1-rf,--pe1-ff" required="false" advanced="false" />
 			<ITEM name="mate_pair_or" value="" type="string" description="Orientation of reads for mate-pair library, the default orientation for mate-pair libraries is reverse-forward." restrictions="--mp1-fr,--mp1-rf,--mp-ff" required="false" advanced="false" />
 			<ITEM name="single_cell" value="false" type="string" description="This flag is required for MDA (single-cell) data. " restrictions="true,false" required="false" advanced="false" />
