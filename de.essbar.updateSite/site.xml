@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/de.essbar.ngs_toolbox.apps.feature_0.0.2.201907020455.jar" id="de.essbar.ngs_toolbox.apps.feature" version="0.0.2.201907020455" os="linux" arch="x86_64">
+   <feature url="features/de.essbar.ngs_toolbox.apps.feature_0.0.2.201907021402.jar" id="de.essbar.ngs_toolbox.apps.feature" version="0.0.2.201907021402" os="linux" arch="x86_64">
       <category name="NGS-APPs"/>
    </feature>
-   <feature url="features/de.essbar.ngs_toolbox.QC.feature_0.0.2.201907020502.jar" id="de.essbar.ngs_toolbox.QC.feature" version="0.0.2.201907020502" os="linux" arch="x86_64">
+   <feature url="features/de.essbar.ngs_toolbox.QC.feature_0.0.2.201907021402.jar" id="de.essbar.ngs_toolbox.QC.feature" version="0.0.2.201907021402" os="linux" arch="x86_64">
       <category name="NGS-QC"/>
    </feature>
    <category-def name="NGS-APPs" label="NGS applications"/>
