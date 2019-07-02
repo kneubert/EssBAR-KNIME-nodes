@@ -29,10 +29,6 @@
 		<option name="java_mem_size">Set Java memory heap size e.g. 4G for a very large bam file.</option>
 
     </fullDescription>
-    
-    <interactiveView name="Report view">
-		QUAST report view.
-	</interactiveView>  
 	  
     <ports>
 		<inPort index="0" name="bam_file [bam]">Input mapping file in BAM format (sorted by position). [bam]</inPort>

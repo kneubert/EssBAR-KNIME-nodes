@@ -24,9 +24,6 @@
 		<option name="kmers">Specifies the length of Kmer to look for in the Kmer content module.</option>
 		
     </fullDescription>
-	<interactiveView name="Generic JavaScript View">
-		The generic view executing the entered JavaScript.
-	</interactiveView>
     <ports>
 		<inPort index="0" name="argument-0 [fq,fastq,sam,bam]">Input file. [fq,fastq,sam,bam]</inPort>
 		<inPort index="1" name="argument-1 [txt,tsv,csv]">Specifies a non-default file which contains the list of contaminants to screen overrepresented sequences against. The file must contain sets of named adapters in the form name[tab]sequence. [txt,tsv,csv,opt.]</inPort>
