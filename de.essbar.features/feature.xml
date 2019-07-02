@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.essbar.features"
+      id="de.essbar.ngs_toolbox.apps.feature"
       label="EssBAR KNIME features"
-      version="0.0.3.qualifier"
-      provider-name="Freie Universitaet Berlin">
+      version="0.0.2.qualifier"
+      provider-name="Freie Universitaet Berlin"
+      plugin="de.essbar.ngs_toolbox.apps">
 
    <description>
       This feature contains a collection of tools to analyse sequence data. It bundles SeqAn nodes and several NGS tools.
@@ -924,7 +925,7 @@ DAMAGE.
    </license>
 
    <url>
-      <update label="EssBAR update-site" url="https://userpage.fu-berlin.de/neubertk/essbar/site.p2"/>
+      <update label="EssBAR update-site" url="https://userpage.fu-berlin.de/neubertk/essbar/updateSite"/>
    </url>
 
    <requires>
@@ -950,13 +951,6 @@ DAMAGE.
    </requires>
 
    <plugin
-         id="de.essbar.ngs_toolbox.QC"
-         download-size="0"
-         install-size="0"
-         version="0.0.2"
-         unpack="false"/>
-
-   <plugin
          id="de.essbar.ngs_toolbox.apps.linux.x86_64"
          download-size="0"
          install-size="0"
@@ -964,21 +958,7 @@ DAMAGE.
          fragment="true"/>
 
    <plugin
-         id="de.essbar.ngs_toolbox.QC.linux.x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.2"
-         fragment="true"/>
-
-   <plugin
          id="de.essbar.ngs_toolbox.apps"
-         download-size="0"
-         install-size="0"
-         version="0.0.2"
-         unpack="false"/>
-
-   <plugin
-         id="de.essbar.ngs_toolbox.IO"
          download-size="0"
          install-size="0"
          version="0.0.2"

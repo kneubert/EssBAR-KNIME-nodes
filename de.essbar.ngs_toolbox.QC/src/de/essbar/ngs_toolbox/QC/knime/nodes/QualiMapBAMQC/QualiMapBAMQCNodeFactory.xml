@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="qualimap_logo_cut2_small.png" type="QuickForm">
+    <name>QualiMap BAMQC</name>
+    
+    <shortDescription>
+        Qualimap 2 for quality control of alignment data from Whole-genome or Whole-exome sequencing.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>QualiMap BAM QC</p>
+		<p>
+			<a href="http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#bam-qc">Web Documentation for QualiMapBAMQC</a>
+		</p>
+
+        </intro>
+        
+		<option name="paint_Climits">Paint chromosome limits inside charts.</option>
+		<option name="species_comp">Species to compare with genome GC distribution.</option>
+		<option name="minhomo_size">Minimum size for a homopolymer to be considered in indel analysis.</option>
+		<option name="collect_overlap_pairs">Activate this option to collect statistics of overlapping paired-end reads.</option>
+		<option name="chunk_size">Number of reads analyzed in a chunk.</option>
+		<option name="threads">Number of threads.</option>
+		<option name="windows">Number of windows.</option>
+		<option name="outside_stats">Report information for the regions outside those defined by feature-file  (ignored when -gff option is not set).</option>
+		<option name="sequencing_protocol">Sequencing library protocol.</option>
+		<option name="skip_duplicated">Skip duplicated alignments from the analysis. If the duplicates are not flagged in the BAM file, then they will be detected by Qualimap and can be selected for skipping.</option>
+		<option name="sdmode">Specific type of duplicated alignments to skip: only flagged duplicates (0), only estimated by Qualimap (1), both flagged and estimated (2)</option>
+		<option name="java_mem_size">Set Java memory heap size e.g. 4G for a very large bam file.</option>
+
+    </fullDescription>
+    
+    <interactiveView name="Report view">
+		QUAST report view.
+	</interactiveView>  
+	  
+    <ports>
+		<inPort index="0" name="bam_file [bam]">Input mapping file in BAM format (sorted by position). [bam]</inPort>
+		<inPort index="1" name="gff_file [gff,gtf,bed]">Feature file with regions of interest in GFF/GTF or BED format. [gff,gtf,bed,opt.]</inPort>
+		<outPort index="0" name="outdir [*]">Output folder for HTML report and raw data. [*]</outPort>
+		<outPort index="1" name="coverage_file [tsv]">File to save per base non-zero coverage. [tsv]</outPort>
+	</ports>
+    <views>
+        <view index="0" name="QualiMapBAMQC Std Output">The text sent to standard out during the execution of QualiMapBAMQC.</view>
+        <view index="1" name="QualiMapBAMQC Error Output">The text sent to standard error during the execution of QualiMapBAMQC. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>
+
