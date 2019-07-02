@@ -36,9 +36,6 @@
 		<option name="pdf">Creates PDF report with 'simple' template. Requires Pandoc to be installed.</option>
 		
     </fullDescription>
-    <interactiveView name="Generic JavaScript View">
-		The generic view executing the entered JavaScript.
-	</interactiveView>
     <ports>
 		<inPort index="0" name="argument-0 [*]">Input directories [*]</inPort>
 		<inPort index="1" name="argument-1 [*]">Input directory (optional) [*]</inPort>

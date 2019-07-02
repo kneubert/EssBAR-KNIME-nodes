@@ -30,9 +30,6 @@
 		<option name="query_url">Url to send query IDs to (instead of listing them) for each wedge. The query IDs will be sent as a comma separated list in the POST variable 'queries', with the current dataset index (from 0) in the POST variable 'dataset'.</option>
 
     </fullDescription>
-    <interactiveView name="Generic JavaScript View">
-		The generic view executing the entered JavaScript.
-	</interactiveView>
     <ports>
 		<inPort index="0" name="input-files [kraken,*]">Input files that contains taxonomy IDs. [kraken,*]</inPort>
 		<inPort index="1" name="taxonDB [*]">Path to directory containing a taxonomy database to use. [*,opt.]</inPort>

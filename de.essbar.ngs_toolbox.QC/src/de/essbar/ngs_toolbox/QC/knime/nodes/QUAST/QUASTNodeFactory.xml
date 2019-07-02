@@ -50,9 +50,6 @@
 		<option name="version">Print version.</option>
 
     </fullDescription>
-    <interactiveView name="Report view">
-		QUAST report view.
-	</interactiveView>
 
     <ports>
 		<inPort index="0" name="assemblies [fasta,gz,zip]">Assembly (contigs or scaffolds) [fasta,gz,zip]</inPort>
