@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class SRST2NodeModel extends GenericKnimeNodeModel {  
     protected SRST2NodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"fastq" ,"fq" ,"gz" }, {"fastq" ,"fq" ,"gz" }, {"fasta" ,"fa" }, {"txt" }, {"fasta" ,"fa" },}, new String[][]{{"*", "inactive"}});
+        super(nodeConfig, pluginConfig, new String[][]{{"fastq" ,"fq" ,"gz" }, {"fastq" ,"fq" ,"gz" }, {"fasta" ,"fa" }, {"txt" }, {"fasta" ,"fa" },}, new String[][]{{"*"}});
     }
 }

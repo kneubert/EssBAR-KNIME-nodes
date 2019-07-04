@@ -50,7 +50,7 @@
 		<inPort index="2" name="mlst_db [fasta,fa]">Fasta file of MLST alleles (optional). [fasta,fa,opt.]</inPort>
 		<inPort index="3" name="mlst_def [txt]">ST definitions for MLST scheme (required if mlst_db supplied and you want to calculate STs) [txt,opt.]</inPort>
 		<inPort index="4" name="gene_db [fasta,fa]">Fasta file/s for gene databases (optional). [fasta,fa,opt.]</inPort>
-		<outPort index="0" name="output [*,inactive]">Prefix for srst2 output files. []</outPort>
+		<outPort index="0" name="output [*]">Prefix for srst2 output files. []</outPort>
  </ports>
     <views>
         <view index="0" name="SRST2 Std Output">The text sent to standard out during the execution of SRST2.</view>

@@ -141,7 +141,7 @@
             <ITEM name="mlst_db" value="" type="input-file" description="Fasta file of MLST alleles (optional)." supported_formats="*.fasta,*.fa" required="false" advanced="false" />
             <ITEM name="mlst_def" value="" type="input-file" description="ST definitions for MLST scheme (required if mlst_db supplied and you want to calculate STs)" supported_formats="*.txt" required="false" advanced="false" />          
             <ITEM name="gene_db" value="" type="input-file" description="Fasta file/s for gene databases (optional)." supported_formats="*.fasta,*.fa" required="false" advanced="false" />
-            <ITEM name="output" value="" type="output-prefix" description="Prefix for srst2 output files." required="false" advanced="false" />
+            <ITEM name="output" value="" type="output-prefix" description="Prefix for srst2 output files." required="true" advanced="false" />
         </NODE>
     </PARAMETERS>
 </tool>
