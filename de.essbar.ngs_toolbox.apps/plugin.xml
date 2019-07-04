@@ -7,6 +7,7 @@
     <category description="/community/EssBAR/NGSTools/Assembly" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Assembly" level-id="Assembly"/>
     <category description="/community/EssBAR/NGSTools/Phylogeny" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Phylogeny" level-id="Phylogeny"/>
     <category description="/community/EssBAR/NGSTools/Metagenomics" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Metagenomics" level-id="Metagenomics"/>
+    <category description="/community/EssBAR/NGSTools/Sequence typing" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Sequence typing" level-id="Sequence typing"/>
     <category description="/community/EssBAR/NGSTools" icon="icons/category.png" path="/community/EssBAR" name="NGSTools" level-id="NGSTools"/>
     <category description="/community/EssBAR" icon="icons/category.png" path="/community" name="EssBAR" level-id="EssBAR"/>
   </extension>  
@@ -22,6 +23,7 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm.SlimmNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SlimmDB.SlimmDBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm2Krona.Slimm2KronaNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SRST2.SRST2NodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
   </extension>  
   <extension point="org.knime.product.splashExtension"></extension>  
   <extension point="org.knime.base.filehandling.mimetypes"> 
