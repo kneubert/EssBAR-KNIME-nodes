@@ -19,9 +19,9 @@
 		<option name="merge">Switch on if all the input read sets belong to a single sample, and you want to merge their data to get a single result.</option>
 		<option name="forward">Designator for forward reads (only used if NOT in MiSeq format sample_S1_L001_R1_001.fastq.gz; otherwise expect forward reads as sample_1.fastq.gz).</option>
 		<option name="reverse">Designator for reverse reads (only used if NOT in MiSeq format sample_S1_L001_R2_001.fastq.gz; otherwise expect reverse reads as sample_2.fastq.gz).</option>
-		<option name="read_type">Read file type (for bowtie2; default is fastq</option>
-		<option name="mlst_delimiter">Character(s) separating gene name from allele number in MLST database (default -, as in arcc-1)</option>
-		<option name="max_mismatch">Maximum number of mismatches per read for MLST allele calling (default 10)</option>
+		<option name="read_type">Read file type (for bowtie2; default is q=fastq; other options: qseq=solexa, f=fasta).</option>
+		<option name="mlst_delimiter">Character(s) separating gene name from allele number in MLST database (default -, as in arcc-1).</option>
+		<option name="max_mismatch">Maximum number of mismatches per read for MLST allele calling (default 10).</option>
 		<option name="no_gene_details">Switch OFF verbose reporting of gene typing.</option>
 		<option name="gene_max_mismatch">Maximum number of mismatches per read for gene detection and allele calling (default 10).</option>
 		<option name="min_coverage">Minimum %coverage cutoff for gene reporting (default 90).</option>

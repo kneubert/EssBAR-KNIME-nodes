@@ -113,9 +113,9 @@
             <ITEM name="merge" value="false" type="string" required="false" restrictions="true,false" description="Switch on if all the input read sets belong to a single sample, and you want to merge their data to get a single result." />
             <ITEM name="forward" value="_1" type="string" required="false" description="Designator for forward reads (only used if NOT in MiSeq format sample_S1_L001_R1_001.fastq.gz; otherwise expect forward reads as sample_1.fastq.gz)." />
             <ITEM name="reverse" value="_2" type="string" required="false" description="Designator for reverse reads (only used if NOT in MiSeq format sample_S1_L001_R2_001.fastq.gz; otherwise expect reverse reads as sample_2.fastq.gz)." />  
-            <ITEM name="read_type" value="fasta" type="string" required="false" description="Read file type (for bowtie2; default is fastq" restrictions="fastq,fasta,solexa" />
-            <ITEM name="mlst_delimiter" value="-" type="string" required="false" description="Character(s) separating gene name from allele number in MLST database (default -, as in arcc-1)" />
-            <ITEM name="max_mismatch" value="10" type="int" required="false" description="Maximum number of mismatches per read for MLST allele calling (default 10)" restrictions="1:" />
+            <ITEM name="read_type" value="q" type="string" required="false" description="Read file type (for bowtie2; default is q=fastq; other options: qseq=solexa, f=fasta)." restrictions="q,qseq,f" />
+            <ITEM name="mlst_delimiter" value="-" type="string" required="false" description="Character(s) separating gene name from allele number in MLST database (default -, as in arcc-1)." />
+            <ITEM name="max_mismatch" value="10" type="int" required="false" description="Maximum number of mismatches per read for MLST allele calling (default 10)." restrictions="1:" />
             <ITEM name="no_gene_details" value="false" type="string" required="false" description="Switch OFF verbose reporting of gene typing." restrictions="true,false" advanced="false" />
             <ITEM name="gene_max_mismatch" value="10" type="int" required="false" description="Maximum number of mismatches per read for gene detection and allele calling (default 10)." restrictions="1:" />
             <ITEM name="min_coverage" value="90" type="int" required="false" description="Minimum %coverage cutoff for gene reporting (default 90)." restrictions="1:" />
