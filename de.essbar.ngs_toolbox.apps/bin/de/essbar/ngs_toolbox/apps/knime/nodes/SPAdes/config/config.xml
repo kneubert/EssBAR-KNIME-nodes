@@ -27,7 +27,7 @@
 		<clielement optionIdentifier="--sanger" isList="false">
 			<mapping referenceName="spades.sanger" />
 		</clielement>
-		<clielement optionIdentifier="--output_dir" isList="false">
+		<clielement optionIdentifier="-o" isList="false">
 			<mapping referenceName="spades.output_dir" />
 		</clielement>		
 		<!-- Options for the app -->
@@ -93,7 +93,7 @@
 			<ITEM name="pacbio" value="" type="input-file" description=" File with PacBio CLR reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />			
 			<ITEM name="nanopore" value="" type="input-file" description=" File with Oxford Nanopore reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />					
 			<ITEM name="sanger" value="" type="input-file" description=" File with Sanger reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />	
-			<ITEM name="output_dir" value="" type="output-prefix" description="Output prefix of results" supported_formats="*.*" required="false" advanced="false" />
+			<ITEM name="output_dir" value="" type="output-prefix" description="Output prefix of results" supported_formats="*.*" required="true" advanced="false" />
 			<ITEM name="paired_read_or" value="" type="string" description="Orientation of reads for paired-end library, the default orientation for paired-end libraries is forward-reverse." restrictions="--pe1-fr,--pe1-rf,--pe1-ff" required="false" advanced="false" />
 			<ITEM name="mate_pair_or" value="" type="string" description="Orientation of reads for mate-pair library, the default orientation for mate-pair libraries is reverse-forward." restrictions="--mp1-fr,--mp1-rf,--mp-ff" required="false" advanced="false" />
 			<ITEM name="single_cell" value="false" type="string" description="This flag is required for MDA (single-cell) data. " restrictions="true,false" required="false" advanced="false" />

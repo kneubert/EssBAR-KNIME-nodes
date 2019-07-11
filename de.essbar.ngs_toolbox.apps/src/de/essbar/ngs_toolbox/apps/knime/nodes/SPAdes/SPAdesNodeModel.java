@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class SPAdesNodeModel extends GenericKnimeNodeModel {  
     protected SPAdesNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"fastq" ,"fq" ,"bam" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" },}, new String[][]{{"*" ,"inactive" },});
+        super(nodeConfig, pluginConfig, new String[][]{{"fastq" ,"fq" ,"bam" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" }, {"fastq" ,"fq" },}, new String[][]{{"*"},});
     }
 }

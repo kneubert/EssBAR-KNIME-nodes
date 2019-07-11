@@ -27,7 +27,7 @@
 		<option name="only_ec">Performs read error correction only.</option>
 		<option name="only_assembly">Runs assembly module only.</option>
 		<option name="no_gzip">Forces read error correction module not to compress the corrected reads. If this options is not set, corrected reads will be in *.fastq.gz format.</option>
-		<option name="careful">Tries to reduce the number of mismatches and short indels. Also runs MismatchCorrector &ndash; a post processing tool, which uses BWA tool. This option is recommended only for assembly of small genomes.</option>
+		<option name="careful">Tries to reduce the number of mismatches and short indels. Also runs MismatchCorrector, a post processing tool, which uses BWA tool. This option is recommended only for assembly of small genomes.</option>
 		<option name="threads">Number of threads</option>
 		<option name="memory">Set memory limit in Gb. SPAdes terminates if it reaches this limit.</option>
 		<option name="kmers">Comma-separated list of k-mer sizes to be used (all values must be odd, less than 128 and listed in ascending order).</option>
@@ -44,7 +44,7 @@
 		<inPort index="4" name="pacbio [fastq,fq]"> File with PacBio CLR reads for hybrid assembly [fastq,fq]</inPort>
 		<inPort index="5" name="nanopore [fastq,fq]">File with Oxford Nanopore reads for hybrid assembly [fastq,fq]</inPort>
 		<inPort index="6" name="sanger [fastq,fq]">File with Sanger reads for hybrid assembly [fastq,fq]</inPort>
-		<outPort index="0" name="assembly [fasta]">Assembly contains resulting scaffolds.[fasta]</outPort>
+		<outPort index="0" name="output">Assembly results.[*]</outPort>
  </ports>
     <views>
         <view index="0" name="SPAdes Std Output">The text sent to standard out during the execution of SPAdes.</view>
