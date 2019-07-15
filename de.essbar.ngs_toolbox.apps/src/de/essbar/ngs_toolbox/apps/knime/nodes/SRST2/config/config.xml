@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="SRST2" version="0.2.0" category="Sequence typing"
+      docurl="https://github.com/katholt/srst2">
+	<executableName>srst2</executableName>
+	<description>Short Read Sequence Typing for Bacterial Pathogens.</description>
+	<manual><![CDATA[SRST2]]></manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="--version" isList="false">
+            <mapping referenceName="srst2.version" />
+        </clielement>
+        <clielement optionIdentifier="--merge-paired" isList="false">
+            <mapping referenceName="srst2.merge" />
+        </clielement>
+        <clielement optionIdentifier="--forward" isList="false">
+            <mapping referenceName="srst2.forward" />
+        </clielement>
+        <clielement optionIdentifier="--reverse" isList="false">
+            <mapping referenceName="srst2.reverse" />
+        </clielement>
+        <clielement optionIdentifier="--read_type" isList="false">
+            <mapping referenceName="srst2.read_type" />
+        </clielement>
+        <clielement optionIdentifier="--mlst_delimiter" isList="false">
+            <mapping referenceName="srst2.mlst_delimiter" />
+        </clielement>
+        <clielement optionIdentifier="--mlst_max_mismatch" isList="false">
+            <mapping referenceName="srst2.max_mismatch" />
+        </clielement>
+        <clielement optionIdentifier="--gene_max_mismatch" isList="false">
+            <mapping referenceName="srst2.gene_max_mismatch" />
+        </clielement>
+        <clielement optionIdentifier="--mlst_max_mismatch" isList="false">
+            <mapping referenceName="srst2.max_mismatch" />
+        </clielement>
+        <clielement optionIdentifier="--min_coverage" isList="false">
+            <mapping referenceName="srst2.min_coverage" />
+        </clielement>
+        <clielement optionIdentifier="--max_divergence" isList="false">
+            <mapping referenceName="srst2.max_divergence" />
+        </clielement>
+        <clielement optionIdentifier="--min_depth" isList="false">
+            <mapping referenceName="srst2.min_depth" />
+        </clielement>
+        <clielement optionIdentifier="--min_edge_depth" isList="false">
+            <mapping referenceName="srst2.min_edge_depth" />
+        </clielement>
+        <clielement optionIdentifier="--prob_err" isList="false">
+            <mapping referenceName="srst2.prob_err" />
+        </clielement>
+        <clielement optionIdentifier="--truncation_score_tolerance" isList="false">
+            <mapping referenceName="srst2.truncation_score_tolerance" />
+        </clielement>
+        <clielement optionIdentifier="--stop_after" isList="false">
+            <mapping referenceName="srst2.stop_after" />
+        </clielement>
+        <clielement optionIdentifier="--other" isList="false">
+            <mapping referenceName="srst2.other" />
+        </clielement>
+        <clielement optionIdentifier="--max_unaligned_overlap" isList="false">
+            <mapping referenceName="srst2.max_unaligned_overlap" />
+        </clielement>
+        <clielement optionIdentifier="--mapq" isList="false">
+            <mapping referenceName="srst2.mapq" />
+        </clielement>      
+        <clielement optionIdentifier="--baseq" isList="false">
+            <mapping referenceName="srst2.baseq" />
+        </clielement>
+        <clielement optionIdentifier="--samtools_args" isList="false">
+            <mapping referenceName="srst2.samtools_args" />
+        </clielement>
+        <clielement optionIdentifier="--save_scores" isList="false">
+            <mapping referenceName="srst2.save_scores" />
+        </clielement>
+        <clielement optionIdentifier="--report_new_consensus" isList="false">
+            <mapping referenceName="srst2.report_new_consensus" />
+        </clielement>
+        <clielement optionIdentifier="--report_all_consensus" isList="false">
+            <mapping referenceName="srst2.report_all_consensus" />
+        </clielement>
+        <clielement optionIdentifier="--keep_iterim_alignments" isList="false">
+            <mapping referenceName="srst2.keep_alignments" />
+        </clielement>
+        <clielement optionIdentifier="--threads" isList="false">
+            <mapping referenceName="srst2.threads" />
+        </clielement>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. -->    
+        <clielement optionIdentifier="--input_se" isList="true">
+            <mapping referenceName="srst2.input_se" />
+        </clielement>
+        <clielement optionIdentifier="--input_pe" isList="true">
+            <mapping referenceName="srst2.input_pe" />
+        </clielement>
+        <clielement optionIdentifier="--mlst_db" isList="false">
+            <mapping referenceName="srst2.mlst_db" />
+        </clielement>
+        <clielement optionIdentifier="--mlst_definitions" isList="false">
+            <mapping referenceName="srst2.mlst_def" />
+        </clielement>
+        <clielement optionIdentifier="--gene_db" isList="false">
+            <mapping referenceName="srst2.gene_db" />
+        </clielement>
+        <clielement optionIdentifier="--output" isList="false">
+            <mapping referenceName="srst2.output" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="srst2" description="Short Read Sequence Typing for Bacterial Pathogens">
+            <ITEM name="version" value="false" type="string" required="false" restrictions="true,false" description="Show program's version number and exit."/>
+            <ITEM name="merge" value="false" type="string" required="false" restrictions="true,false" description="Switch on if all the input read sets belong to a single sample, and you want to merge their data to get a single result." />
+            <ITEM name="forward" value="_1" type="string" required="false" description="Designator for forward reads (only used if NOT in MiSeq format sample_S1_L001_R1_001.fastq.gz; otherwise expect forward reads as sample_1.fastq.gz)." />
+            <ITEM name="reverse" value="_2" type="string" required="false" description="Designator for reverse reads (only used if NOT in MiSeq format sample_S1_L001_R2_001.fastq.gz; otherwise expect reverse reads as sample_2.fastq.gz)." />  
+            <ITEM name="read_type" value="q" type="string" required="false" description="Read file type (for bowtie2; default is q=fastq; other options: qseq=solexa, f=fasta)." restrictions="q,qseq,f" />
+            <ITEM name="mlst_delimiter" value="_" type="string" required="false" description="Character(s) separating gene name from allele number in MLST database (default _, as in arcc_1)" />
+            <ITEM name="max_mismatch" value="10" type="int" required="false" description="Maximum number of mismatches per read for MLST allele calling (default 10)" restrictions="0:" />
+            <ITEM name="no_gene_details" value="false" type="string" required="false" description="Switch OFF verbose reporting of gene typing." restrictions="true,false" advanced="false" />
+            <ITEM name="gene_max_mismatch" value="10" type="int" required="false" description="Maximum number of mismatches per read for gene detection and allele calling (default 10)." restrictions="0:" />
+            <ITEM name="min_coverage" value="90" type="int" required="false" description="Minimum %coverage cutoff for gene reporting (default 90)." restrictions="1:" />
+            <ITEM name="max_divergence" value="10" type="int" required="false" description="Maximum %divergence cutoff for gene reporting (default 10)." restrictions="0:" />
+            <ITEM name="min_depth" value="5" type="int" required="false" description="Minimum mean depth to flag as dubious allele call (default 5)." restrictions="1:" />
+            <ITEM name="min_edge_depth" value="2" type="int" required="false" description="Minimum edge depth to flag as dubious allele call (default: 2)." restrictions="1:" />
+            <ITEM name="prob_err" value="0.01" type="float" required="false" description="Probability of sequencing error (default 0.01)." restrictions="0:" />
+            <ITEM name="truncation_score_tolerance" value="50" type="int" required="false" description="% increase in score allowed to choose non-truncated allele" restrictions="1:" />
+            <ITEM name="stop_after" value="10000000" type="int" required="false" description="Stop mapping after this number of reads have been mapped." restrictions="1000:" advanced="true"/>      
+            <ITEM name="other" value="" type="string" required="false" description="Other arguments to pass to bowtie2 (must be escaped, e.g. --no-mixed)." advanced="true" />
+            <ITEM name="max_unaligned_overlap" value="10" type="int" required="false" description="Read discarded from alignment if either of its ends has unaligned overlap with the reference that is longer than this value (default 10)." restrictions="1:" advanced="true"/>            
+            <ITEM name="mapq" value="1" type="int" required="false" description="Samtools -q parameter (default 1)." restrictions="1:" advanced="true" />
+            <ITEM name="baseq" value="20" type="int" required="false" description="Samtools -Q parameter (default 20)." restrictions="1:" advanced="true" />      
+            <ITEM name="samtools_args" value="" type="string" required="false" description="Other arguments to pass to samtools mpileup (must be escaped, e.g. -A)." advanced="true" />                  
+            <ITEM name="save_scores" value="false" type="string" required="false" description="Switch ON verbose reporting of all scores." restrictions="true,false" advanced="true" />
+            <ITEM name="report_new_consensus" value="false" type="string" required="false" description="If a matching alleles is not found, report the consensus allele. Note, only SNP differences are considered, not indels." restrictions="true,false" advanced="true" />
+            <ITEM name="report_all_consensus" value="false" type="string" required="false" description="Report the consensus allele for the most likely allele. Note, only SNP differences are considered, not indels." restrictions="true,false" advanced="true" />            
+            <ITEM name="keep_alignments" value="false" type="string" required="false" description="Keep interim files (sam and unsorted bam)." restrictions="true,false" advanced="true" />
+            <ITEM name="threads" value="1" type="int" required="false" description="Use multiple threads in Bowtie and Samtools." restrictions="1:"/>
+            <!-- Following clielements are arguments.-->    
+            <ITEMLIST name="input_se" value="" type="input-file" description="Single end read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="false" advanced="false" />
+            <ITEMLIST name="input_pe" value="" type="input-file" description="Paired end read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="false" advanced="false" />            
+            <ITEM name="mlst_db" value="" type="input-file" description="Fasta file of MLST alleles." supported_formats="*.fasta,*.fa" required="true" advanced="false" />
+            <ITEM name="mlst_def" value="" type="input-file" description="ST definitions for MLST scheme" supported_formats="*.txt" required="true" advanced="false" />          
+            <ITEM name="gene_db" value="" type="input-file" description="Fasta file/s for gene databases (optional)." supported_formats="*.fasta,*.fa" required="false" advanced="false" />
+            <ITEM name="output" value="" type="output-prefix" description="Prefix for srst2 output files." supported_formats="*.*" required="true" advanced="false" />
+        </NODE>
+    </PARAMETERS>
+</tool>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="MultiQC" version="1.6" category="QC"
+      docurl="http://multiqc.info/">
+	<executableName>multiqc.sh</executableName>
+	<description>Aggregate results from bioinformatics analyses across many samples into a single report.</description>
+	<manual>MultiQC quality control</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		     providing a help text to ease understanding. -->
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="multiqc.argument-0" />
+		</clielement>
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="multiqc.argument-1" />
+		</clielement>
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="multiqc.argument-2" />
+		</clielement>
+		<clielement optionIdentifier="--filename" isList="false">
+			<mapping referenceName="multiqc.filename" />
+		</clielement>
+		<clielement optionIdentifier="--version" isList="false">
+			<mapping referenceName="multiqc.version" />
+        </clielement>
+        <clielement optionIdentifier="--force" isList="false">
+			<mapping referenceName="multiqc.force" />
+        </clielement>
+        <clielement optionIdentifier="--dirs" isList="false">
+			<mapping referenceName="multiqc.dirs" />
+        </clielement>
+		<clielement optionIdentifier="--dirs-depth" isList="false">
+			<mapping referenceName="multiqc.dirs-depth" />
+        </clielement>
+        <clielement optionIdentifier="--fullnames" isList="false">
+			<mapping referenceName="multiqc.fullnames" />
+        </clielement>
+        <clielement optionIdentifier="--title" isList="false">
+			<mapping referenceName="multiqc.title" />
+        </clielement>
+        <clielement optionIdentifier="--comment" isList="false">
+			<mapping referenceName="multiqc.comment" />
+        </clielement>
+        <clielement optionIdentifier="--template" isList="false">
+        	<mapping referenceName="multiqc.template" />
+        </clielement>
+        <clielement optionIdentifier="--tag" isList="false">
+        	<mapping referenceName="multiqc.tag" />
+        </clielement>
+        <clielement optionIdentifier="--ignore" isList="false">
+        	<mapping referenceName="multiqc.ignore" />
+        </clielement>
+        <clielement optionIdentifier="--ignore-samples" isList="false">
+        	<mapping referenceName="multiqc.ignore-samples" />
+        </clielement>
+        <clielement optionIdentifier="--exclude" isList="false">
+        	<mapping referenceName="multiqc.exclude" />
+        </clielement>
+        <clielement optionIdentifier="--module" isList="false">
+        	<mapping referenceName="multiqc.module" />
+        </clielement>
+        <clielement optionIdentifier="--data-format" isList="false">
+        	<mapping referenceName="multiqc.format" />
+        </clielement>       
+        <clielement optionIdentifier="--zip-data-dir" isList="false">
+        	<mapping referenceName="multiqc.zip" />
+        </clielement>
+        <clielement optionIdentifier="--export" isList="false">
+        	<mapping referenceName="multiqc.export" />
+        </clielement>
+        <clielement optionIdentifier="--flat" isList="false">
+        	<mapping referenceName="multiqc.flat" />
+        </clielement>
+        <clielement optionIdentifier="--interactive" isList="false">
+        	<mapping referenceName="multiqc.interactive" />
+        </clielement>
+        <clielement optionIdentifier="--pdf" isList="false">
+        	<mapping referenceName="multiqc.pdf" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+	            xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+	            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	 <NODE name="multiqc" description="Aggregate results from different methods across samples.">
+		<ITEM name="version" value="false" type="string" required="false" description="Show the version and exit." restrictions="true,false" advanced="false"/>
+	    <ITEM name="force" value="false" type="string" required="false" description="Overwrite any existing reports." restrictions="true,false" advanced="false"/>
+        <ITEM name="dirs" value="0" type="string" required="false" description="Prepend directory to sample names." restrictions="true,false" advanced="false"/>
+	    <ITEM name="dirs-depth" value="" type="int" required="false" description="Prepend [INT] directories to sample names. Negative number to take from start of path." restrictions="-10:10" advanced="false"/>
+        <ITEM name="fullnames" value="0" type="string" required="false" description="Do not clean the sample names (leave as full file name)" restrictions="true,false" advanced="false"/>
+        <ITEM name="title" value="" type="string" required="false" description="Report title. Printed as page header, used for filename if not otherwise specified." advanced="false" />
+        <ITEM name="comment" value="" type="string" required="false" description="Custom comment, will be printed at the top of the report." advanced="false" />
+        <ITEM name="template" value="default" type="string" required="false" description="Report template to use." restrictions="default,default_dev,geo,simple,sections" advanced="false" />
+        <ITEM name="tag" value="" type="string" required="false" description="Use only modules which tagged with this keyword, eg. RNA." advanced="false" />
+        <ITEM name="ignore" value="" type="string" required="false" description="Ignore analysis files (glob expression)." advanced="true" />
+        <ITEM name="ignore-samples" value="" type="string" required="false" description="Ignore sample names (glob expression)." advanced="true" />        
+        <ITEM name="exclude" value="" type="string" required="false" description="Do not use this module. Can specify multiple times." advanced="true" />        
+        <ITEM name="module" value="" type="string" required="false" description="Use only this module. Can specify multiple tines." advanced="true" />    
+        <ITEM name="format" value="tsv" type="string" required="false" description="Output parsed data in a different format (default: tsv)." restrictions="tsv,yaml,json" advanced="false" />
+        <ITEM name="zip" value="false" type="string" required="false" description="Compress the data directory." restrictions="true,false"  advanced="false" />      
+        <ITEM name="export" value="false" type="string" required="false" description="Export plots as static images in addition to the report." restrictions="true,false"  advanced="false" />      
+        <ITEM name="flat" value="false" type="string" required="false" description="Use only flat plots (static images)." restrictions="true,false"  advanced="false" />      
+        <ITEM name="interactive" value="false" type="string" required="false" description="Use only interactive plots (HighCharts Javascript)." restrictions="true,false"  advanced="false" />      
+        <ITEM name="pdf" value="false" type="string" required="false" description="Creates PDF report with 'simple' template. Requires Pandoc to be installed." restrictions="true,false"  advanced="false" />            
+        <ITEM name="argument-0" value="" type="input-prefix" required="true" description="Input directories" supported_formats="*" />
+        <ITEM name="argument-1" value="" type="input-prefix" required="false" description="Optional input directory" supported_formats="*" />
+        <ITEM name="argument-2" value="" type="input-prefix" required="false" description="Optional input directory" supported_formats="*" />
+        <ITEM name="argument-3" value="" type="input-prefix" required="false" description="Optional input directory" supported_formats="*" />
+		<ITEM name="filename" value="" type="output-prefix" description="Output files" supported_formats="*.*" required="false" advanced="false" />
+	 </NODE>
+    </PARAMETERS>
+</tool>

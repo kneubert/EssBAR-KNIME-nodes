@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="MultiQC_logo_square.png" type="QuickForm">
+    <name>MultiQC</name>
+    
+    <shortDescription>
+        Aggregate results from bioinformatics analyses across many samples into a single report.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>MultiQC quality control</p>
+		<p>
+			<a href="http://multiqc.info/">Web Documentation for multiQC</a>
+		</p>
+
+        </intro>
+        
+		<option name="version">Show the version and exit.</option>
+		<option name="force">Overwrite any existing reports.</option>
+		<option name="dirs">Prepend directory to sample names.</option>
+		<option name="dirs-depth">Prepend [INT] directories to sample names. Negative number to take from start of path.</option>
+		<option name="fullnames">Do not clean the sample names (leave as full file name)</option>
+		<option name="title">Report title. Printed as page header, used for filename if not otherwise specified.</option>
+		<option name="comment">Custom comment, will be printed at the top of the report.</option>
+		<option name="template">Report template to use.</option>
+		<option name="tag">Use only modules which tagged with this keyword, eg. RNA.</option>
+		<option name="ignore">Ignore analysis files (glob expression).</option>
+		<option name="ignore-samples">Ignore sample names (glob expression).</option>
+		<option name="exclude">Do not use this module. Can specify multiple times.</option>
+		<option name="module">Use only this module. Can specify multiple tines.</option>
+		<option name="format">Output parsed data in a different format (default: tsv).</option>
+		<option name="zip">Compress the data directory.</option>
+		<option name="export">Export plots as static images in addition to the report.</option>
+		<option name="flat">Use only flat plots (static images).</option>
+		<option name="interactive">Use only interactive plots (HighCharts Javascript).</option>
+		<option name="pdf">Creates PDF report with 'simple' template. Requires Pandoc to be installed.</option>
+		
+    </fullDescription>
+    <ports>
+		<inPort index="0" name="argument-0 [*]">Input directories [*]</inPort>
+		<inPort index="1" name="argument-1 [*]">Input directory (optional) [*]</inPort>
+		<inPort index="2" name="argument-2 [*]">Input directory (optional) [*]</inPort>
+		<inPort index="3" name="argument-3 [*]">Input directory (optional) [*]</inPort>
+		<outPort index="0" name="output-port [*,Inactive]">Outputs [*,Inactive]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="MultiQC Std Output">The text sent to standard out during the execution of multiQC.</view>
+        <view index="1" name="MultiQC Error Output">The text sent to standard error during the execution of multiQC. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+        <view index="2" name="MultiQC HTML Report">Summary report for results.</view>
+    </views>    
+</knimeNode>

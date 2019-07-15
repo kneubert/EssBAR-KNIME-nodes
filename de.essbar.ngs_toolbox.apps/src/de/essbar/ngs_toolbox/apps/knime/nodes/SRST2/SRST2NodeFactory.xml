@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>SRST2</name>
+    
+    <shortDescription>
+        Short Read Sequence Typing for Bacterial Pathogens.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>SRST2</p>
+		<p>
+			<a href="https://github.com/katholt/srst2">Web Documentation for SRST2</a>
+		</p>
+
+        </intro>
+        
+		<option name="version">Show program's version number and exit.</option>
+		<option name="merge">Switch on if all the input read sets belong to a single sample, and you want to merge their data to get a single result.</option>
+		<option name="forward">Designator for forward reads (only used if NOT in MiSeq format sample_S1_L001_R1_001.fastq.gz; otherwise expect forward reads as sample_1.fastq.gz).</option>
+		<option name="reverse">Designator for reverse reads (only used if NOT in MiSeq format sample_S1_L001_R2_001.fastq.gz; otherwise expect reverse reads as sample_2.fastq.gz).</option>
+		<option name="read_type">Read file type (for bowtie2; default is fastq</option>
+		<option name="mlst_delimiter">Character(s) separating gene name from allele number in MLST database (default -, as in arcc-1)</option>
+		<option name="max_mismatch">Maximum number of mismatches per read for MLST allele calling (default 10)</option>
+		<option name="no_gene_details">Switch OFF verbose reporting of gene typing.</option>
+		<option name="gene_max_mismatch">Maximum number of mismatches per read for gene detection and allele calling (default 10).</option>
+		<option name="min_coverage">Minimum %coverage cutoff for gene reporting (default 90).</option>
+		<option name="max_divergence">Maximum %divergence cutoff for gene reporting (default 10).</option>
+		<option name="min_depth">Minimum mean depth to flag as dubious allele call (default 5).</option>
+		<option name="min_edge_depth">Minimum edge depth to flag as dubious allele call (default: 2).</option>
+		<option name="prob_err">Probability of sequencing error (default 0.01).</option>
+		<option name="truncation_score_tolerance">% increase in score allowed to choose non-truncated allele</option>
+		<option name="stop_after">Stop mapping after this number of reads have been mapped.</option>
+		<option name="other">Other arguments to pass to bowtie2 (must be escaped, e.g. \--no-mixed).</option>
+		<option name="max_unaligned_overlap">Read discarded from alignment if either of its ends has unaligned overlap with the reference that is longer than this value (default 10).</option>
+		<option name="mapq">Samtools -q parameter (default 1).</option>
+		<option name="baseq">Samtools -Q parameter (default 20).</option>
+		<option name="samtools_args">Other arguments to pass to samtools mpileup (must be escaped, e.g. \-A).</option>
+		<option name="save_scores">Switch ON verbose reporting of all scores.</option>
+		<option name="report_new_consensus">If a matching alleles is not found, report the consensus allele. Note, only SNP differences are considered, not indels.</option>
+		<option name="report_all_consensus">Report the consensus allele for the most likely allele. Note, only SNP differences are considered, not indels.</option>
+		<option name="keep_alignments">Keep interim files (sam and unsorted bam).</option>
+		<option name="threads">Use multiple threads in Bowtie and Samtools.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="input_se [fastq,fq,gz]">Single end read file(s) for analysing (may be gzipped). [fastq,fq,gz,opt.]</inPort>
+		<inPort index="1" name="input_pe [fastq,fq,gz]">Paired end read file(s) for analysing (may be gzipped). [fastq,fq,gz,opt.]</inPort>
+		<inPort index="2" name="mlst_db [fasta,fa]">Fasta file of MLST alleles. [fasta,fa]</inPort>
+		<inPort index="3" name="mlst_def [txt]">ST definitions for MLST scheme. [txt]</inPort>
+		<inPort index="4" name="gene_db [fasta,fa]">Fasta file/s for gene databases (optional). [fasta,fa,opt.]</inPort>
+		<outPort index="0" name="output [*]">Prefix for srst2 output files. [*]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="SRST2 Std Output">The text sent to standard out during the execution of SRST2.</view>
+        <view index="1" name="SRST2 Error Output">The text sent to standard error during the execution of SRST2. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

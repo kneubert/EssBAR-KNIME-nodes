@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="KtImportText" version="2.7" category="Metagenomics"
+      docurl="https://github.com/marbl/Krona/wiki/KronaTools">
+	<executableName>ktImportText</executableName>
+	<description><![CDATA[Krona Tools importing Text files]]></description>
+	<manual><![CDATA[ktImportText]]></manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="-n" isList="false">
+            <mapping referenceName="ktImportText.highest_level" />
+        </clielement>
+        <clielement optionIdentifier="-c" isList="false">
+            <mapping referenceName="ktImportText.combine_data" />
+        </clielement>
+        <clielement optionIdentifier="-q" isList="false">
+            <mapping referenceName="ktImportText.no_quantity" />
+        </clielement>
+        <clielement optionIdentifier="-u" isList="false">
+            <mapping referenceName="ktImportText.krona_url" />
+        </clielement>
+		<!-- Following clielements are arguments. You should consider
+		     providing a help text to ease understanding. -->
+		<clielement optionIdentifier="-o" isList="false">
+			<mapping referenceName="ktImportText.output-file" />
+		</clielement>
+		<clielement optionIdentifier="" isList="true">
+			<mapping referenceName="ktImportText.input-files" />
+		</clielement>
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="ktImportText.name" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+	            xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+	            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="ktImportText" description="Creates a Krona chart from text files listing quantities and lineages.">
+            <ITEM name="highest_level" value="all" type="string" required="false" description="Name of the highest level [Default: 'all']"/>
+            <ITEM name="combine_data" value="false" type="string" required="false" description="Combine data from each file, rather than creating separate datasets within the chart." restrictions="true,false" />
+			<ITEM name="no_quantity" value="false" type="string" required="false" description="Files do not have a field for quantity." restrictions="true,false"/>
+            <ITEM name="krona_url" value="" type="string" required="false" description="URL of Krona resources to use instead of bundling them with the chart (e.g. 'http://krona.sourceforge.net'). Reduces size of charts and allows updates, though charts will not work without access to this URL."/>
+ 			<ITEMLIST name="input-files" value="" type="input-file" description="Tab-delimited text files." supported_formats="*.tsv,*.txt" required="true" advanced="false" />
+   			<ITEM name="output-file" value="" type="output-file" description="Output file name." supported_formats="*.html" required="false" advanced="false" />
+   			<ITEM name="name" value="" type="string" required="false" description="A name to show in the list of datasets in the Krona chart. By default, the basename of the file will be used."/>
+        </NODE>
+    </PARAMETERS>
+</tool>

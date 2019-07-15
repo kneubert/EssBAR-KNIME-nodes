@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="FastQC" version="0.11.7" category="QC"
+      docurl="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">
+	<executableName>fastqc.sh</executableName>
+	<description>A quality control tool for high throughput sequence data.</description>
+	<manual>FastQC quality control</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+				<!-- Following clielements are arguments. You should consider
+		     	providing a help text to ease understanding. -->
+				<clielement optionIdentifier="" isList="false">
+					<mapping referenceName="fastqc.argument-0" />
+				</clielement>
+                <clielement optionIdentifier="--contaminants" isList="false">
+                        <mapping referenceName="fastqc.argument-1" />
+				</clielement>
+                <clielement optionIdentifier="--adapters" isList="false">
+                        <mapping referenceName="fastqc.argument-2" />
+                </clielement>
+                <clielement optionIdentifier="-o" isList="false">
+					<mapping referenceName="fastqc.output" />
+				</clielement>
+        		<clielement optionIdentifier="--version" isList="false">
+        			<mapping referenceName="fastqc.version" />
+        		</clielement>
+                <clielement optionIdentifier="--noextract" isList="false">
+                        <mapping referenceName="fastqc.noextract" />
+                </clielement>
+                <clielement optionIdentifier="--nogroup" isList="false">
+                        <mapping referenceName="fastqc.nogroup" />
+                </clielement>
+                <clielement optionIdentifier="--min_length" isList="false">
+                        <mapping referenceName="fastqc.min_length" />
+                </clielement>
+                <clielement optionIdentifier="--format" isList="false">
+                        <mapping referenceName="fastqc.format" />
+                </clielement>
+                <clielement optionIdentifier="--threads" isList="false">
+                        <mapping referenceName="fastqc.threads" />
+                </clielement>
+                <clielement optionIdentifier="--kmers" isList="false">
+                        <mapping referenceName="fastqc.kmers" />
+                </clielement>
+
+	</cli>
+	<PARAMETERS version="1.4"
+	            xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+	            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<NODE name="fastqc" description="Sequence data quality control">
+        <ITEM name="version" value="0" type="string" required="false" description="Print the version of the program and exit" restrictions="true,false" advanced="false"/>
+	    <ITEM name="noextract" value="0" type="string" required="false" description="Do not uncompress the output file after creating it." restrictions="true,false" advanced="false"/>
+        <ITEM name="nogroup" value="0" type="string" required="false" description="Disable grouping of bases for reads >50bp. All reports will show data for every base in the read." restrictions="true,false" advanced="false"/>
+	    <ITEM name="min_length" value="1" type="int" required="false" description="Sets an artificial lower limit on the length of the sequence to be shown in the report." restrictions="1:2000" advanced="false"/>
+        <ITEM name="format" value="fastq" type="string" required="false" description="Bypasses the normal sequence file format detection and forces the program to use the specified format." restrictions="fastq,sam,bam" advanced="false"/>
+        <ITEM name="threads" value="1" type="int" required="false" description="Specifies the number of files which can be processed simultaneously. Each thread will be allocated 250MB of memory" restrictions="1:2048" advanced="false"/>
+        <ITEM name="kmers" value="7" type="int" required="false" description="Specifies the length of Kmer to look for in the Kmer content module." restrictions="2:10" advanced="false"/>  
+        <ITEM name="argument-0" value="" type="input-file" required="true" description="Input file" supported_formats="*.fq,*.fastq,*.sam,*.bam" />
+        <ITEM name="argument-1" value="" type="input-file" required="false" description="Specifies a non-default file which contains the list of contaminants to screen overrepresented sequences against. The file must contain sets of named adapters in the form name[tab]sequence." supported_formats="*.txt,*.tsv,*.csv" />
+        <ITEM name="argument-2" value="" type="input-file" required="false" description="Specifies a non-default file which contains the list of adapter sequences which will be explicity searched against the library. The file must contain sets of named contaminants in the form name[tab]sequence." supported_formats="*.txt,*.tsv,*.csv" />
+        <ITEM name="output" value="" type="output-prefix" description="Output files" supported_formats="*.html,*.zip" required="false" advanced="false" />
+        </NODE>
+    </PARAMETERS>
+</tool>

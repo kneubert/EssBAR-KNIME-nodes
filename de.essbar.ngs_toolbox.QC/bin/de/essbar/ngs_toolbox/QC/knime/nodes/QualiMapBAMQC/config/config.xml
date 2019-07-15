@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="QualiMapBAMQC" version="2.2.1" category="QC"
+      docurl="http://qualimap.bioinfo.cipf.es/doc_html/analysis.html#bam-qc">
+	<executableName>qualimap_bamqc.sh</executableName>
+	<description>Qualimap 2 for quality control of alignment data from Whole-genome or Whole-exome sequencing.</description>
+	<manual><![CDATA[QualiMap BAM QC]]></manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		     providing a help text to ease understanding. -->
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="qualimapBAMQC.coverage_file" />
+		</clielement>
+		<clielement optionIdentifier="-bam" isList="false">
+			<mapping referenceName="qualimapBAMQC.bam_file" />
+		</clielement>	
+		<clielement optionIdentifier="-gff" isList="false">
+			<mapping referenceName="qualimapBAMQC.gff_file" />
+		</clielement>
+		<clielement optionIdentifier="-outdir" isList="false">
+			<mapping referenceName="qualimapBAMQC.outdir" />
+		</clielement>
+        <clielement optionIdentifier="-c" isList="false">
+            <mapping referenceName="qualimapBAMQC.paint_Climits" />
+        </clielement>
+        <clielement optionIdentifier="-gd" isList="false">
+            <mapping referenceName="qualimapBAMQC.species_comp" />
+        </clielement>
+        <clielement optionIdentifier="-hm" isList="false">
+            <mapping referenceName="qualimapBAMQC.minhomo_size" />
+        </clielement>
+        <clielement optionIdentifier="-ip" isList="false">
+            <mapping referenceName="qualimapBAMQC.collect_overlap_pairs" />
+        </clielement>
+        <clielement optionIdentifier="-nr" isList="false">
+            <mapping referenceName="qualimapBAMQC.chunk_size" />
+        </clielement>
+        <clielement optionIdentifier="-nt" isList="false">
+            <mapping referenceName="qualimapBAMQC.threads" />
+        </clielement>
+        <clielement optionIdentifier="-nw" isList="false">
+            <mapping referenceName="qualimapBAMQC.windows" />
+        </clielement>
+        <clielement optionIdentifier="-os" isList="false">
+            <mapping referenceName="qualimapBAMQC.outside_stats" />
+        </clielement>
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="qualimapBAMQC.sequencing_protocol" />
+        </clielement>
+        <clielement optionIdentifier="-sd" isList="false">
+            <mapping referenceName="qualimapBAMQC.skip_duplicated" />
+        </clielement>
+        <clielement optionIdentifier="-sdmode" isList="false">
+            <mapping referenceName="qualimapBAMQC.sdmode" />
+        </clielement>
+        <clielement optionIdentifier="--java-mem-size=" isList="false">
+            <mapping referenceName="qualimapBAMQC.java_mem_size" />
+        </clielement>
+
+	</cli>
+	<PARAMETERS version="1.4"
+	            xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+	            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="qualimapBAMQC" description="Qualimap 2 for quality control of alignment data from Whole-genome or Whole-exome sequencing">
+            <ITEM name="paint_Climits" value="false" type="string" required="false" restrictions="true,false" description="Paint chromosome limits inside charts."/>
+            <ITEM name="species_comp" value="mm9" type="string" required="false" description="Species to compare with genome GC distribution." restrictions="hg19,mm9,mm10" />
+            <ITEM name="minhomo_size" value="3" type="int" required="false" description="Minimum size for a homopolymer to be considered in indel analysis." restrictions="2:" />
+			<ITEM name="collect_overlap_pairs" value="false" type="string" required="false" description="Activate this option to collect statistics of overlapping paired-end reads." restrictions="true,false" advanced="false" />
+            <ITEM name="chunk_size" value="1000" type="int" required="false" description="Number of reads analyzed in a chunk." restrictions="100:"/>      
+            <ITEM name="threads" value="2" type="int" required="false" description="Number of threads." restrictions="1:"/>
+            <ITEM name="windows" value="400" type="int" required="false" description="Number of windows." restrictions="1:"/>  
+            <ITEM name="outside_stats" value="false" type="string" required="false" description="Report information for the regions outside those defined by feature-file  (ignored when -gff option is not set)." restrictions="true,false"/>
+            <ITEM name="sequencing_protocol" value="non-strand-specific" type="string" required="false" description="Sequencing library protocol." restrictions="strand-specific-forward,strand-specific-reverse,non-strand-specific"/>
+            <ITEM name="skip_duplicated" value="false" type="string" required="false" description="Skip duplicated alignments from the analysis. If the duplicates are not flagged in the BAM file, then they will be detected by Qualimap and can be selected for skipping." restrictions="true,false"/>
+            <ITEM name="sdmode" value="0" type="int" required="false" description="Specific type of duplicated alignments to skip: only flagged duplicates (0), only estimated by Qualimap (1), both flagged and estimated (2)" restrictions="0:2"/>
+            <ITEM name="java_mem_size" value="1200M" type="string" required="false" description="Set Java memory heap size e.g. 4G for a very large bam file."/>
+			<ITEM name="bam_file" value="" type="input-file" description="Input mapping file in BAM format (sorted by position)." supported_formats="*.bam" required="true" advanced="false" />
+			<ITEM name="gff_file" value="" type="input-file" description="Feature file with regions of interest in GFF/GTF or BED format." supported_formats="*.gff,*.gtf,*.bed" required="false" advanced="false" />
+			<ITEM name="outdir" value="output" type="output-prefix" description="Output folder for HTML report and raw data." supported_formats="*.*" required="true" advanced="false" />
+       		<ITEM name="coverage_file" value="coverage.tsv" type="output-file" description="File to save per base non-zero coverage." supported_formats="*.tsv" required="false" advanced="false" />
+        </NODE>
+    </PARAMETERS>
+</tool>
