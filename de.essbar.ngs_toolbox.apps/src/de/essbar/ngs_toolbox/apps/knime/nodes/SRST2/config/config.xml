@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tool name="SRST2" version="0.2.0" category="Sequence typing"
       docurl="https://github.com/katholt/srst2">
-	<executableName>srst2</executableName>
+	<executableName>srst2.sh</executableName>
 	<description>Short Read Sequence Typing for Bacterial Pathogens.</description>
 	<manual><![CDATA[SRST2]]></manual>
 	<docurl>Direct links in docs</docurl>
 	<cli>
+	    <clielement optionIdentifier="--fwd" isList="true">
+            <mapping referenceName="srst2.fwd_reads" />
+        </clielement>
+        <clielement optionIdentifier="--rev" isList="true">
+            <mapping referenceName="srst2.rev_reads" />
+        </clielement>
         <clielement optionIdentifier="--version" isList="false">
             <mapping referenceName="srst2.version" />
         </clielement>
@@ -86,12 +92,6 @@
         </clielement>
         <!-- Following clielements are arguments. You should consider
         providing a help text to ease understanding. -->    
-        <clielement optionIdentifier="--input_se" isList="true">
-            <mapping referenceName="srst2.input_se" />
-        </clielement>
-        <clielement optionIdentifier="--input_pe" isList="true">
-            <mapping referenceName="srst2.input_pe" />
-        </clielement>
         <clielement optionIdentifier="--mlst_db" isList="false">
             <mapping referenceName="srst2.mlst_db" />
         </clielement>
@@ -135,11 +135,11 @@
             <ITEM name="report_all_consensus" value="false" type="string" required="false" description="Report the consensus allele for the most likely allele. Note, only SNP differences are considered, not indels." restrictions="true,false" advanced="true" />            
             <ITEM name="keep_alignments" value="false" type="string" required="false" description="Keep interim files (sam and unsorted bam)." restrictions="true,false" advanced="true" />
             <ITEM name="threads" value="1" type="int" required="false" description="Use multiple threads in Bowtie and Samtools." restrictions="1:"/>
-            <!-- Following clielements are arguments.-->    
-            <ITEMLIST name="input_se" value="" type="input-file" description="Single end read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="false" advanced="false" />
-            <ITEMLIST name="input_pe" value="" type="input-file" description="Paired end read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="false" advanced="false" />            
-            <ITEM name="mlst_db" value="" type="input-file" description="Fasta file of MLST alleles." supported_formats="*.fasta,*.fa" required="true" advanced="false" />
-            <ITEM name="mlst_def" value="" type="input-file" description="ST definitions for MLST scheme" supported_formats="*.txt" required="true" advanced="false" />          
+            <!-- Following clielements are arguments.-->   
+            <ITEMLIST name="fwd_reads" value="" type="input-file" description="Single-end of forward read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="true" advanced="false" />            
+            <ITEMLIST name="rev_reads" value="" type="input-file" description="Reverse read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="false" advanced="false" />  
+            <ITEM name="mlst_db" value="" type="input-file" description="Fasta file of MLST alleles (required to calculate STs)." supported_formats="*.fasta,*.fa" required="false" advanced="false" />
+            <ITEM name="mlst_def" value="" type="input-file" description="ST definitions for MLST scheme (required to calculate STs)." supported_formats="*.txt" required="false" advanced="false" />          
             <ITEM name="gene_db" value="" type="input-file" description="Fasta file/s for gene databases (optional)." supported_formats="*.fasta,*.fa" required="false" advanced="false" />
             <ITEM name="output" value="" type="output-prefix" description="Prefix for srst2 output files." supported_formats="*.*" required="true" advanced="false" />
         </NODE>

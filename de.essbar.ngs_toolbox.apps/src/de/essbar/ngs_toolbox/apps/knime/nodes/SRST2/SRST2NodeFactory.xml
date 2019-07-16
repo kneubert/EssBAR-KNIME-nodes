@@ -45,10 +45,10 @@
     </fullDescription>
     
     <ports>
-		<inPort index="0" name="input_se [fastq,fq,gz]">Single end read file(s) for analysing (may be gzipped). [fastq,fq,gz,opt.]</inPort>
-		<inPort index="1" name="input_pe [fastq,fq,gz]">Paired end read file(s) for analysing (may be gzipped). [fastq,fq,gz,opt.]</inPort>
-		<inPort index="2" name="mlst_db [fasta,fa]">Fasta file of MLST alleles. [fasta,fa]</inPort>
-		<inPort index="3" name="mlst_def [txt]">ST definitions for MLST scheme. [txt]</inPort>
+		<inPort index="0" name="fwd_reads [fastq,fq,gz]">Single-end or forward read file(s) for analysing (may be gzipped). [fastq,fq,gz]</inPort>
+		<inPort index="1" name="rev_reads [fastq,fq,gz]">Reverse read file(s) for analysing (may be gzipped). [fastq,fq,gz,opt.]</inPort>
+		<inPort index="2" name="mlst_db [fasta,fa]">Fasta file of MLST alleles (required to calculate STs). [fasta,fa,opt.]</inPort>
+		<inPort index="3" name="mlst_def [txt]">ST definitions for MLST scheme (required to calculate STs). [txt,opt.]</inPort>
 		<inPort index="4" name="gene_db [fasta,fa]">Fasta file/s for gene databases (optional). [fasta,fa,opt.]</inPort>
 		<outPort index="0" name="output [*]">Prefix for srst2 output files. [*]</outPort>
  </ports>
