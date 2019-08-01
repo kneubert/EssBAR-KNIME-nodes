@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>PubMLST</name>
+    
+    <shortDescription>
+        Download MLST datasets by species from pubmlst.org.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>PubMLST</p>
+		<p>
+			<a href="https://github.com/katholt/srst2">Web Documentation for PubMLST</a>
+		</p>
+
+        </intro>
+        
+		<option name="species">The name of the species that you want to download (e.g. Escherichia coli).</option>
+		<option name="scheme">Force downloading of specific scheme name.</option>
+		<option name="url">URL for MLST repository XML index.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<outPort index="0" name="fasta [fa,fasta]">Output fasta file with allele sequences. [fa,fasta]</outPort>
+		<outPort index="1" name="profile [txt]">Output file with allele profiles. [txt]</outPort>
+		<outPort index="2" name="config [txt]">Configuration file for allele sequences and profiles. [txt]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="PubMLST Std Output">The text sent to standard out during the execution of PubMLST.</view>
+        <view index="1" name="PubMLST Error Output">The text sent to standard error during the execution of PubMLST. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

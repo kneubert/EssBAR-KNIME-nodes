@@ -24,6 +24,7 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SlimmDB.SlimmDBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm2Krona.Slimm2KronaNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SRST2.SRST2NodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.PubMLST.PubMLSTNodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
   </extension>  
   <extension point="org.knime.product.splashExtension"></extension>  
   <extension point="org.knime.base.filehandling.mimetypes"> 

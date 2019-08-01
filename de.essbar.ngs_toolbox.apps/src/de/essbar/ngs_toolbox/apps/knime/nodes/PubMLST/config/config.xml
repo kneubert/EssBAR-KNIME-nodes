@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="PubMLST" version="0.2.0" category="Sequence typing"
+      docurl="https://github.com/katholt/srst2">
+	<executableName>pubMLST.py</executableName>
+	<description>Download MLST datasets by species from pubmlst.org.</description>
+	<manual><![CDATA[PubMLST]]></manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="-s" isList="false">
+            <mapping referenceName="pubmlst.species" />
+        </clielement>
+        <clielement optionIdentifier="-n" isList="false">
+            <mapping referenceName="pubmlst.scheme" />
+        </clielement>
+        <clielement optionIdentifier="-r" isList="false">
+            <mapping referenceName="pubmlst.url" />
+        </clielement>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. -->    
+        <clielement optionIdentifier="-f" isList="false">
+            <mapping referenceName="pubmlst.fasta" />
+        </clielement>
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="pubmlst.profile" />
+        </clielement>
+        <clielement optionIdentifier="-c" isList="false">
+            <mapping referenceName="pubmlst.config" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="pubmlst" description="Download MLST datasets by speciesfrom pubmlst.org.">
+            <ITEM name="species" value="" type="string" required="true" description="The name of the species that you want to download (e.g. Escherichia coli)."/>
+            <ITEM name="scheme" value="" type="string" required="false" description="Force downloading of specific scheme name." />
+            <ITEM name="url" value="" type="string" required="false" description="URL for MLST repository XML index." />
+            <!-- Following clielements are arguments.-->    
+            <ITEM name="fasta" value="alleles.fasta" type="output-file" description="Output fasta file with allele sequences." supported_formats="*.fa,*.fasta" required="false" advanced="false" />
+            <ITEM name="profile" value="profile.txt" type="output-file" description="Output file with allele profiles." supported_formats="*.txt" required="false" advanced="false" />            
+            <ITEM name="config" value="config.txt" type="output-file" description="Configuration file for allele sequences and profiles." supported_formats="*.txt" required="false" advanced="false" />
+        </NODE>
+    </PARAMETERS>
+</tool>
