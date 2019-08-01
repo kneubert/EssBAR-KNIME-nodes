@@ -4,16 +4,16 @@ Bundle-Name: EssBAR NGSToolbox: Applications
 Bundle-SymbolicName: de.essbar.ngs_toolbox.apps;singleton:=true
 Bundle-Version: 0.0.2
 Bundle-Activator: de.essbar.ngs_toolbox.apps.knime.PluginActivator
-Bundle-Vendor: Freie Universitaet Berlin
+Bundle-Vendor: Freie Universitaet Berlin, Universitaet Tuebingen
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
- org.knime.workbench.core;bundle-version="[3.0.0,4.0.0)",
- org.knime.workbench.repository;bundle-version="[3.0.0,4.0.0)",
- org.knime.base;bundle-version="[3.0.0,4.0.0)",
- com.genericworkflownodes.knime;bundle-version="[0.8.100,1.0.0)",
- com.genericworkflownodes.knime.config;bundle-version="[0.8.0,1.0.0)",
+ org.knime.workbench.core;bundle-version="[3.0.0,5.0.0)",
+ org.knime.workbench.repository;bundle-version="[3.0.0,5.0.0)",
+ org.knime.base;bundle-version="[3.0.0,5.0.0)",
  org.eclipse.help;resolution:=optional,
  org.eclipse.help.ui;resolution:=optional,
- org.knime.base.filehandling;bundle-version="3.5.3"
+ org.knime.base.filehandling;bundle-version="3.5.3",
+ com.genericworkflownodes.knime;bundle-version="0.8.100",
+ com.genericworkflownodes.knime.config;bundle-version="0.8.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.knime.core.data.uri
