@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="stringMLST" version="0.2.0" category="Sequence typing"
+      docurl="https://github.com/jordanlab/stringMLST">
+	<executableName>stringMLST_wrapper.py</executableName>
+	<description>Fast k-mer based tool for multi locus sequence typing (MLST).</description>
+	<manual><![CDATA[stringMLST]]></manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="--coverage" isList="false">
+            <mapping referenceName="stringmlst.coverage" />
+        </clielement>
+        <clielement optionIdentifier="-k" isList="false">
+            <mapping referenceName="stringmlst.kmer" />
+        </clielement>
+        <clielement optionIdentifier="-z" isList="false">
+            <mapping referenceName="stringmlst.fuzzy" />
+        </clielement>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. -->    
+        <clielement optionIdentifier="--fastq1" isList="false">
+            <mapping referenceName="stringmlst.fastq1" />
+        </clielement>
+        <clielement optionIdentifier="--fastq2" isList="false">
+            <mapping referenceName="stringmlst.fastq2" />
+        </clielement>
+        <clielement optionIdentifier="--config" isList="false">
+            <mapping referenceName="stringmlst.config" />
+        </clielement>
+        <clielement optionIdentifier="--output" isList="false">
+            <mapping referenceName="stringmlst.output" />
+        </clielement>
+        <clielement optionIdentifier="-r" isList="false">
+            <mapping referenceName="stringmlst.reads" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="stringmlst" description="Fast k-mer based tool for multi locus sequence typing (MLST).">
+            <ITEM name="coverage" value="false" type="string" required="false" restrictions="true,false" description="Calculate seqence coverage for each allele. Turns off fuzzy (-z 1). Requires bwa, bamtools and samtools."/>
+            <ITEM name="kmer" value="35" type="int" required="false" description="Kmer length for the stringMLST database which is used for assigning STs to input sample files." />
+            <ITEM name="fuzzy" value="300" type="int" required="false" description="Threshold for reporting a fuzzy match. For higher coverage reads this threshold should be set higher to avoid indicating fuzzy match when exact match was more likely. For lower coverage reads, threshold smaller or equal to 100 is recommended" />
+            <!-- Following clielements are arguments.-->    
+            <ITEM name="fastq1" value="" type="input-file" description="Path to first fastq file for paired end sample and path to the fastq file for single end file." supported_formats="*.fq,*.fastq,*.gz" required="true" advanced="false" />
+            <ITEM name="fastq2" value="" type="input-file" description="Path to second fastq file for paired end sample." supported_formats="*.fq,*.fastq,*.gz" required="false" advanced="false" />
+            <ITEM name="config" value="" type="input-file" description="Config file: is a tab delimited file which has the information for typing scheme i.e. loci, its multifasta file and profile definition file." supported_formats="*.txt" required="true" advanced="false" />
+            <ITEM name="output" value="" type="output-file" description="Output file with alleles and sequence types." supported_formats="*.txt,*.tsv,*.csv" required="true" advanced="false" />            
+            <ITEM name="reads" value="" type="output-file" description="A seperate reads file is created which has all the reads covering all the locus." supported_formats="*.fq,*.fastq" required="false" advanced="false" />   
+        </NODE>
+    </PARAMETERS>
+</tool>

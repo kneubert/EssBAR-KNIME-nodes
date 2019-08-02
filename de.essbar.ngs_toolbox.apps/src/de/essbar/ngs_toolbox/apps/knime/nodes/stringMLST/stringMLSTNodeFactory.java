@@ -1,0 +1,52 @@
+// THIS CODE WAS GENERATED WITH THE GENERIC WORKFLOW NODES FOR KNIME NODE GENERATOR
+// DO NOT MODIFY
+package de.essbar.ngs_toolbox.apps.knime.nodes.stringMLST;
+
+import java.io.InputStream;
+
+import org.knime.core.node.NodeLogger;
+
+import com.genericworkflownodes.knime.config.INodeConfiguration;
+import com.genericworkflownodes.knime.generic_node.GenericKnimeNodeDialog;
+import com.genericworkflownodes.knime.generic_node.GenericKnimeNodeFactory;
+
+import de.essbar.ngs_toolbox.apps.knime.PluginActivator;
+
+/**
+    @brief stringMLST Node Factory.
+*/
+public class stringMLSTNodeFactory extends GenericKnimeNodeFactory {
+    
+    private static final NodeLogger logger = NodeLogger.getLogger(stringMLSTNodeFactory.class);
+    
+    @Override
+    public stringMLSTNodeModel createNodeModel() {
+        INodeConfiguration tmpConfig;
+        try {
+            tmpConfig = getNodeConfiguration();
+            return new stringMLSTNodeModel(tmpConfig, PluginActivator
+                    .getInstance().getPluginConfiguration());
+        } catch (Exception e) {
+            logger.error("stringMLST model instantiation failed", e);
+        }
+        return null;
+
+    }
+
+    @Override
+    public GenericKnimeNodeDialog createNodeDialogPane() {
+        INodeConfiguration tmpConfig;
+        try {
+            tmpConfig = getNodeConfiguration();
+            return new stringMLSTNodeDialog(tmpConfig);
+        } catch (Exception e) {
+            logger.error("stringMLST dialog instantiation failed", e);
+        }
+        return null;
+    }
+
+    @Override
+    protected InputStream getConfigAsStream() {
+        return this.getClass().getResourceAsStream("config/config.xml");
+    }
+}
