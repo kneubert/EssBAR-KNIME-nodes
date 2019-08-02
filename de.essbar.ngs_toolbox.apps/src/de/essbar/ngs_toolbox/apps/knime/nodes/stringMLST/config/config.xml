@@ -2,8 +2,8 @@
 <tool name="stringMLST" version="0.2.0" category="Sequence typing"
       docurl="https://github.com/jordanlab/stringMLST">
 	<executableName>stringMLST_wrapper.py</executableName>
-	<description>Fast k-mer based tool for multi locus sequence typing (MLST).</description>
-	<manual><![CDATA[stringMLST]]></manual>
+	<description>Multi locus sequence typing (MLST).</description>
+	<manual>Fast k-mer based tool for multi locus sequence typing (MLST).</manual>
 	<docurl>Direct links in docs</docurl>
 	<cli>
         <clielement optionIdentifier="--coverage" isList="false">
