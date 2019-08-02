@@ -35,9 +35,7 @@ def handle_args():
                               dest='config', 
                               default = default_config,
                               help='configuration file for allele sequences and profiles')
-    #args = parser.parse_args(sys.argv[1:])
     return parser.parse_args()
-    #return args
 
 
 def create_config(output_dir):
@@ -72,16 +70,12 @@ def main(options):
     os.chdir(output_dir)
     print("run getMLST.py for " + options.species + "...")
     if options.scheme:
-       #print('getmlst.py --repository_url \"%s\" --species %s --force_scheme_name \"%s\"' % (options.url, options.species, options.scheme ))
-       #os.system('getmlst.py --repository_url \"%s\" --species %s --force_scheme_name \"%s\"' % (options.url, options.species, options.scheme ))
        command = 'getmlst.py --repository_url \"%s\" --species %s --force_scheme_name \"%s\"' % (options.url, options.species, options.scheme )
        print(command)
        p = subprocess.Popen(["getmlst.py","--species", options.species,"--repository_url", options.url,"--force_scheme_name", options.scheme], stdout=subprocess.PIPE)
        out = p.stdout.read()
        print out
     else:
-       #print('getmlst.py --repository_url \"%s\" --species %s --force_scheme_name \"%s\"' % (options.url, options.species, options.scheme ))
-       #os.system('getmlst.py --repository_url %s --species \"%s\"' % (options.url, options.species))
        command = 'getmlst.py --repository_url %s --species \"%s\"' % (options.url, options.species)
        print command
        p = subprocess.Popen(["getmlst.py","--species", options.species,"--repository_url", options.url], stdout=subprocess.PIPE)
