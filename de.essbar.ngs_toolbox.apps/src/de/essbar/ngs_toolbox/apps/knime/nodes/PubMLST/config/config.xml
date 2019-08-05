@@ -17,11 +17,11 @@
         </clielement>
         <!-- Following clielements are arguments. You should consider
         providing a help text to ease understanding. -->    
-        <clielement optionIdentifier="-f" isList="false">
-            <mapping referenceName="pubmlst.fasta" />
+        <clielement optionIdentifier="-o" isList="false">
+            <mapping referenceName="pubmlst.output" />
         </clielement>
-        <clielement optionIdentifier="-p" isList="false">
-            <mapping referenceName="pubmlst.profile" />
+        <clielement optionIdentifier="-b" isList="false">
+            <mapping referenceName="pubmlst.blast" />
         </clielement>
         <clielement optionIdentifier="-c" isList="false">
             <mapping referenceName="pubmlst.config" />
@@ -35,8 +35,8 @@
             <ITEM name="scheme" value="" type="string" required="false" description="Force downloading of specific scheme name." />
             <ITEM name="url" value="" type="string" required="false" description="URL for MLST repository XML index." />
             <!-- Following clielements are arguments.-->    
-            <ITEM name="fasta" value="alleles.fasta" type="output-file" description="Output fasta file with allele sequences." supported_formats="*.fa,*.fasta" required="false" advanced="false" />
-            <ITEM name="profile" value="profile.txt" type="output-file" description="Output file with allele profiles." supported_formats="*.txt" required="false" advanced="false" />            
+            <ITEM name="output" value="" type="output-prefix" description="Output directory with allele sequences and profiles." supported_formats="*.*" required="true" advanced="false" />
+            <ITEM name="blast" value="" type="output-prefix" description="Output directory with blast database of allele sequences." supported_formats="*.*" required="false" advanced="false" />            
             <ITEM name="config" value="config.txt" type="output-file" description="Configuration file for allele sequences and profiles." supported_formats="*.txt" required="false" advanced="false" />
         </NODE>
     </PARAMETERS>

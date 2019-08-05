@@ -6,9 +6,9 @@ import subprocess
 def handle_args():
     import argparse
     dirpath = os.getcwd()
-    default_fasta = os.path.join(dirpath, 'alleles.fasta')
-    default_profile = os.path.join(dirpath, 'profiles.txt')
-    default_config = os.path.join(dirpath, 'config.txt')
+    default_output = dirpath
+    default_blast_output = os.path.join(dirpath, "blast")
+    default_config = os.path.join(dirpath, "config.txt")
     usage = ""
     usage += "Download MLST datasets by species from pubmlst.org."
     parser = argparse.ArgumentParser(description = usage )
@@ -23,14 +23,14 @@ def handle_args():
                               dest='url', 
                               default = 'http://pubmlst.org/data/dbases.xml',
                               help='URL for MLST repository XML index')
-    parser.add_argument('-f', 
-                              dest='fasta', 
-                              default = default_fasta,
-                              help='output fasta file with allele sequences')
-    parser.add_argument('-p', 
-                              dest='profile', 
-                              default = default_profile,
-                              help='output file with allele profiles')
+    parser.add_argument('-o', 
+                              dest='output', 
+                              default = default_output,
+                              help='output directory for allele sequences and profiles')
+    parser.add_argument('-b', 
+                              dest='blast', 
+                              default = default_blast_output,
+                              help='output directory for blast database of allele sequences')
     parser.add_argument('-c', 
                               dest='config', 
                               default = default_config,
@@ -38,55 +38,27 @@ def handle_args():
     return parser.parse_args()
 
 
-def create_config(output_dir):
-    print("create config file for MLST data in " + output_dir)
-    allele_files = glob.glob('*.tfa')
-    output_dir_profile=os.path.dirname(options.profile)
-    if output_dir_profile == '':
-       output_dir_profile = os.getcwd()
-    profile_file = os.path.join(output_dir_profile, os.path.basename(options.profile))
-    f = open(options.config, "w")
-    f.write("[loci]\n")
-    for file in allele_files:
-       file_path = os.path.join(output_dir, file)
-       locus = os.path.splitext(file)[0]
-       f.write(locus)
-       f.write("\t")
-       f.write(file_path)
-       f.write("\n")
-    f.write("[profile]\n")
-    f.write("profile")
-    f.write("\t")
-    f.write(profile_file)
-    f.write("\n")
-    f.close()
-    
     
 def main(options):
-    output_dir=os.path.dirname(options.fasta)
-    if output_dir == '':
-       output_dir = os.getcwd()
-    os.chdir(output_dir)
-    print("run getMLST.py for " + options.species + "...")
+    print("run getMLST_DB.py for " + options.species + "...")
     if options.scheme:
-       command = 'getmlst.py --repository_url \"%s\" --species %s --force_scheme_name \"%s\"' % (options.url, options.species, options.scheme )
-       print(command)
-       p = subprocess.Popen(["getmlst.py","--species", options.species,"--repository_url", options.url,"--force_scheme_name", options.scheme], stdout=subprocess.PIPE)
+       command_args = ["getmlst_DB.py","--species", options.species,"--repository_url", options.url,"--force_scheme_name", options.scheme, "--output_dir", options.output, "--config", options.config]
+       print " ".join(command_args)
+       p = subprocess.Popen(command_args, stdout=subprocess.PIPE)
        out = p.stdout.read()
        print out
     else:
-       command = 'getmlst.py --repository_url %s --species \"%s\"' % (options.url, options.species)
-       print command
-       p = subprocess.Popen(["getmlst.py","--species", options.species,"--repository_url", options.url], stdout=subprocess.PIPE)
-       out = p.stdout.read()
-       print out
-    output_fasta = glob.glob('*.fasta')
-    output_fasta = os.path.join(output_dir, output_fasta[0])
-    os.rename(output_fasta, options.fasta)
-    output_profile = glob.glob('*.txt')
-    output_profile = os.path.join(output_dir, output_profile[0])
-    os.rename(output_profile, options.profile)
-    create_config(output_dir)
+	   command_args = ["getmlst_DB.py","--species", options.species,"--repository_url", options.url, "--output_dir", options.output, "--config", options.config]
+	   print " ".join(command_args)
+	   p = subprocess.Popen(command_args, stdout=subprocess.PIPE)
+	   out = p.stdout.read()
+	   print out
+    print("Create blast db...")
+    command_args = ["mlst-make_blast_db", options.output, options.blast]
+    print " ".join(command_args)
+    p = subprocess.Popen(command_args, stdout=subprocess.PIPE)
+    out = p.stdout.read()
+    print out
 
 if __name__ == '__main__':
     options = handle_args()

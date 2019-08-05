@@ -22,8 +22,8 @@
     </fullDescription>
     
     <ports>
-		<outPort index="0" name="fasta [fa,fasta]">Output fasta file with allele sequences. [fa,fasta]</outPort>
-		<outPort index="1" name="profile [txt]">Output file with allele profiles. [txt]</outPort>
+		<outPort index="0" name="output [*]">Output directory with allele sequences and profiles. [*]</outPort>
+		<outPort index="1" name="blast [*]">Output directory with blast database of allele sequences. [*]</outPort>
 		<outPort index="2" name="config [txt]">Configuration file for allele sequences and profiles. [txt]</outPort>
  </ports>
     <views>

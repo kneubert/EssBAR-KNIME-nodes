@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class PubMLSTNodeModel extends GenericKnimeNodeModel {  
     protected PubMLSTNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{}, new String[][]{{"fa" ,"fasta" }, {"txt" }, {"txt" },});
+        super(nodeConfig, pluginConfig, new String[][]{}, new String[][]{{"*" }, {"*" }, {"txt" },});
     }
 }
