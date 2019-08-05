@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="contigMLST" version="0.2.0" category="Sequence typing"
+      docurl="https://github.com/tseemann/mlst">
+	<executableName>contigMLST.sh</executableName>
+	<description>mlst</description>
+	<manual>Scan contig files against traditional PubMLST typing schemes</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. --> 
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="mlst.output" />
+        </clielement>
+        <clielement optionIdentifier="--datadir" isList="false">
+            <mapping referenceName="mlst.mlst-db" />
+        </clielement>
+        <clielement optionIdentifier="--blastdb" isList="false">
+            <mapping referenceName="mlst.blast-db" />
+        </clielement>
+        <clielement optionIdentifier="--json" isList="false">
+            <mapping referenceName="mlst.json" />
+        </clielement>
+        <clielement optionIdentifier="--novel" isList="false">
+            <mapping referenceName="mlst.novel" />
+        </clielement>
+   
+        <clielement optionIdentifier="--threads" isList="false">
+            <mapping referenceName="mlst.threads" />
+        </clielement>
+        <clielement optionIdentifier="--debug" isList="false">
+            <mapping referenceName="mlst.debug" />
+        </clielement>
+        <clielement optionIdentifier="--csv" isList="false">
+            <mapping referenceName="mlst.csv" />
+        </clielement>
+        <clielement optionIdentifier="--minid" isList="false">
+            <mapping referenceName="mlst.minid" />
+        </clielement>
+        <clielement optionIdentifier="--mincov" isList="false">
+            <mapping referenceName="mlst.mincov" />
+        </clielement>
+        <clielement optionIdentifier="--minscore" isList="false">
+            <mapping referenceName="mlst.minscore" />
+        </clielement>
+        <clielement optionIdentifier="" isList="true">
+            <mapping referenceName="mlst.fasta" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="mlst" description="Scan contig files against traditional PubMLST typing schemes.">
+            <!-- Following clielements are arguments.-->    
+            <ITEM name="output" value="" type="output-file" description="Output file with alleles and sequence types." supported_formats="*.txt,*.tsv,*.csv" required="true" advanced="false" />    
+            <ITEM name="mlst-db" value="" type="input-prefix" description="PubMLST data." supported_formats="*" required="true" advanced="false" />
+            <ITEM name="blast-db" value="" type="input-prefix" description="BLAST database." supported_formats="*" required="true" advanced="false" />
+            <ITEM name="json" value="" type="output-file" description="Also write results to this file in JSON format." supported_formats="*.json" required="false" advanced="false" />
+            <ITEM name="novel" value="" type="output-file" description=" Save novel alleles to this FASTA file." supported_formats="*.fa,*.fasta" required="false" advanced="false" />
+            <ITEM name="threads" value="1" type="int" description="Number of BLAST threads." required="false" restrictions="1:" advanced="false" />            
+            <ITEM name="debug" value="false" type="string" description="Verbose debug output to stderr." required="false" restrictions="true,false" advanced="false" />     
+            <ITEM name="csv" value="false" type="string" description="Output CSV instead of TSV." required="false" restrictions="true,false" advanced="false" />  
+            <ITEM name="minid" value="95" type="float" description="DNA %identity of full allelle to consider 'similar'." required="false" advanced="false" />    
+            <ITEM name="mincov" value="10" type="float" description="DNA %cov to report partial allele at all." required="false" advanced="false" /> 
+            <ITEM name="minscore" value="50" type="int" description="Minumum score out of 100 to match a scheme (when auto --scheme)." required="false" advanced="false" /> 
+            <ITEMLIST name="fasta" value="300" type="input-file" required="true" description="assembled contigs" supported_formats="*.fa,*.fasta,*.gbk,*.embl,*.gz"/>
+
+        </NODE>
+    </PARAMETERS>
+</tool>

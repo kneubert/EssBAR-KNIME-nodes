@@ -22,8 +22,8 @@
     </fullDescription>
     
     <ports>
-		<outPort index="0" name="output [*]">Output directory with allele sequences and profiles. [*]</outPort>
-		<outPort index="1" name="blast [*]">Output directory with blast database of allele sequences. [*]</outPort>
+		<outPort index="0" name="mlst-db [*]">Output directory with allele sequences and profiles. [*]</outPort>
+		<outPort index="1" name="blast-db [*]">Output directory with blast database of allele sequences. [*]</outPort>
 		<outPort index="2" name="config [txt]">Configuration file for allele sequences and profiles. [txt]</outPort>
  </ports>
     <views>

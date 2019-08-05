@@ -18,10 +18,10 @@
         <!-- Following clielements are arguments. You should consider
         providing a help text to ease understanding. -->    
         <clielement optionIdentifier="-o" isList="false">
-            <mapping referenceName="pubmlst.output" />
+            <mapping referenceName="pubmlst.mlst-db" />
         </clielement>
         <clielement optionIdentifier="-b" isList="false">
-            <mapping referenceName="pubmlst.blast" />
+            <mapping referenceName="pubmlst.blast-db" />
         </clielement>
         <clielement optionIdentifier="-c" isList="false">
             <mapping referenceName="pubmlst.config" />
@@ -35,9 +35,9 @@
             <ITEM name="scheme" value="" type="string" required="false" description="Force downloading of specific scheme name." />
             <ITEM name="url" value="" type="string" required="false" description="URL for MLST repository XML index." />
             <!-- Following clielements are arguments.-->    
-            <ITEM name="output" value="" type="output-prefix" description="Output directory with allele sequences and profiles." supported_formats="*.*" required="true" advanced="false" />
-            <ITEM name="blast" value="" type="output-prefix" description="Output directory with blast database of allele sequences." supported_formats="*.*" required="false" advanced="false" />            
-            <ITEM name="config" value="config.txt" type="output-file" description="Configuration file for allele sequences and profiles." supported_formats="*.txt" required="false" advanced="false" />
+            <ITEM name="mlst-db" value="" type="output-prefix" description="Output directory with allele sequences and profiles." supported_formats="*.*" required="true" advanced="false" />
+            <ITEM name="blast-db" value="" type="output-prefix" description="Output directory with blast database of allele sequences." supported_formats="*.*" required="false" advanced="false" />            
+            <ITEM name="config" value="" type="output-file" description="Configuration file for allele sequences and profiles." supported_formats="*.txt" required="false" advanced="false" />
         </NODE>
     </PARAMETERS>
 </tool>

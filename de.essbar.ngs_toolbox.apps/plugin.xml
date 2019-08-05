@@ -26,6 +26,7 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SRST2.SRST2NodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.PubMLST.PubMLSTNodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.stringMLST.stringMLSTNodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing/"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.contigMLST.contigMLSTNodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
   </extension>  
   <extension point="org.knime.product.splashExtension"></extension>  
   <extension point="org.knime.base.filehandling.mimetypes"> 
@@ -50,6 +51,12 @@
     <mimetype name="application/x-gbk">
       <fileextension name="gbk"/>
     </mimetype>
+    <mimetype name="application/x-json">
+      <fileextension name="json"/>
+    </mimetype>
+    <mimetype name="application/x-embl">
+      <fileextension name="embl"/>
+    </mimetype>    
     <mimetype name="application/x-gff">
       <fileextension name="gff"/>
     </mimetype>
