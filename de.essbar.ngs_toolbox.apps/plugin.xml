@@ -43,10 +43,20 @@
     </mimetype>
  	<mimetype name="application/x-fasta">
       <fileextension name="fa"/>
+      <fileextension name="tfa"/>
       <fileextension name="fasta"/>
       <fileextension name="fna"/>
       <fileextension name="ffn"/>
       <fileextension name="fsa"/>
+    </mimetype>
+    <mimetype name="application/x-blast">
+      <fileextension name=".fa.nsd"/>
+      <fileextension name=".fa.nin"/>
+      <fileextension name=".fa.nhr"/>
+      <fileextension name=".fa.nsq"/>
+      <fileextension name=".fa.nhd"/>
+      <fileextension name=".fa.nog"/>
+      <fileextension name=".fa.nsi"/>
     </mimetype>
     <mimetype name="application/x-gbk">
       <fileextension name="gbk"/>
