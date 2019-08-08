@@ -7,7 +7,7 @@
 datadir=""
 blastfile=""
 blastval=""
-novelfile=""
+novelfile="novel.fa"
 
 # Get path to output file and shift it.
 OUT=$1
@@ -76,7 +76,7 @@ for ((i=1; i<=$#; i++)); do
 done
 
 echo "mlst --blastdb $blastfile --datadir $datadir $* >$OUT"
-mlst mlst --blastdb $blastfile --datadir $datadir $* >$OUT
+mlst --blastdb $blastfile --datadir $datadir $* >$OUT
 
 # create empty file for novel alleles
 if [[ ! -e $novelfile ]];
