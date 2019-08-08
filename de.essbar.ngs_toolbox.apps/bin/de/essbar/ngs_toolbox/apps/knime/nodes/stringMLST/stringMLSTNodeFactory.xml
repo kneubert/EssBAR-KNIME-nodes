@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>stringMLST</name>
+    
+    <shortDescription>
+        Fast k-mer based tool for multi locus sequence typing (MLST).
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>stringMLST</p>
+		<p>
+			<a href="https://github.com/jordanlab/stringMLST">Web Documentation for stringMLST</a>
+		</p>
+
+        </intro>
+        
+		<option name="coverage">Calculate seqence coverage for each allele. Turns off fuzzy (-z 1). Requires bwa, bamtools and samtools.</option>
+		<option name="kmer">Kmer length for the stringMLST database which is used for assigning STs to input sample files.</option>
+		<option name="fuzzy">Threshold for reporting a fuzzy match. For higher coverage reads this threshold should be set higher to avoid indicating fuzzy match when exact match was more likely. For lower coverage reads, threshold smaller or equal to 100 is recommended</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="fastq1 [fq,fastq,gz]">Path to first fastq file for paired end sample and path to the fastq file for single end file. [fq,fastq]</inPort>
+		<inPort index="1" name="fastq2 [fq,fastq,gz]">Path to second fastq file for paired end sample. [fq,fastq,opt.]</inPort>
+		<inPort index="2" name="config [txt]">Config file: is a tab delimited file which has the information for typing scheme i.e. loci, its multifasta file and profile definition file. [*]</inPort>
+		<outPort index="0" name="output [txt,tsv,csv]">Output file with alleles and sequence types. [txt,tsv,csv]</outPort>
+		<outPort index="1" name="reads [fq,fastq]">A seperate reads file is created which has all the reads covering all the locus. [fq,fastq]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="stringMLST Std Output">The text sent to standard out during the execution of stringMLST.</view>
+        <view index="1" name="stringMLST Error Output">The text sent to standard error during the execution of stringMLST. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

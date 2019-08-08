@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>contigMLST</name>
+    
+    <shortDescription>
+        mlst
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>Scan contig files against traditional PubMLST typing schemes</p>
+		<p>
+			<a href="https://github.com/tseemann/mlst">Web Documentation for contigMLST</a>
+		</p>
+
+        </intro>
+        
+		<option name="threads">Number of BLAST threads.</option>
+		<option name="debug">Verbose debug output to stderr.</option>
+		<option name="csv">Output CSV instead of TSV.</option>
+		<option name="minid">DNA %identity of full allelle to consider 'similar'.</option>
+		<option name="mincov">DNA %cov to report partial allele at all.</option>
+		<option name="minscore">Minumum score out of 100 to match a scheme (when auto --scheme).</option>
+
+    </fullDescription>
+    
+    <ports>
+    	<inPort index="0" name="mlst-db [*]">PubMLST data . [*]</inPort>
+		<inPort index="1" name="blast-db [*]">BLAST database. [*]</inPort>
+		<inPort index="2" name="fasta [fa,fasta,gbk,embl,gz]">assembled contigs [fa,fasta,gbk,embl,gz]</inPort>
+		<outPort index="0" name="output [txt,tsv,csv]">Output file with alleles and sequence types. [txt,tsv,csv]</outPort>
+		<outPort index="1" name="json [json]">Also write results to this file in JSON format. [json]</outPort>
+		<outPort index="2" name="novel [fa,fasta]"> Save novel alleles to this FASTA file. [fa,fasta]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="contigMLST Std Output">The text sent to standard out during the execution of contigMLST.</view>
+        <view index="1" name="contigMLST Error Output">The text sent to standard error during the execution of contigMLST. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

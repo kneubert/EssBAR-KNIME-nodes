@@ -6,12 +6,23 @@
 	<manual><![CDATA[SRST2]]></manual>
 	<docurl>Direct links in docs</docurl>
 	<cli>
-	    <clielement optionIdentifier="--fwd" isList="true">
+	     <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. -->    
+        <clielement optionIdentifier="--fwd" isList="true">
             <mapping referenceName="srst2.fwd_reads" />
         </clielement>
         <clielement optionIdentifier="--rev" isList="true">
             <mapping referenceName="srst2.rev_reads" />
         </clielement>
+        <clielement optionIdentifier="--mlst_db" isList="false">
+            <mapping referenceName="srst2.mlst_db" />
+        </clielement>
+        <clielement optionIdentifier="--gene_db" isList="false">
+            <mapping referenceName="srst2.gene_db" />
+        </clielement>
+        <clielement optionIdentifier="--output" isList="false">
+            <mapping referenceName="srst2.output" />
+        </clielement>        
         <clielement optionIdentifier="--version" isList="false">
             <mapping referenceName="srst2.version" />
         </clielement>
@@ -90,20 +101,6 @@
         <clielement optionIdentifier="--threads" isList="false">
             <mapping referenceName="srst2.threads" />
         </clielement>
-        <!-- Following clielements are arguments. You should consider
-        providing a help text to ease understanding. -->    
-        <clielement optionIdentifier="--mlst_db" isList="false">
-            <mapping referenceName="srst2.mlst_db" />
-        </clielement>
-        <clielement optionIdentifier="--mlst_definitions" isList="false">
-            <mapping referenceName="srst2.mlst_def" />
-        </clielement>
-        <clielement optionIdentifier="--gene_db" isList="false">
-            <mapping referenceName="srst2.gene_db" />
-        </clielement>
-        <clielement optionIdentifier="--output" isList="false">
-            <mapping referenceName="srst2.output" />
-        </clielement>
 	</cli>
 	<PARAMETERS version="1.4"
                 xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
@@ -138,8 +135,7 @@
             <!-- Following clielements are arguments.-->   
             <ITEMLIST name="fwd_reads" value="" type="input-file" description="Single-end of forward read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="true" advanced="false" />            
             <ITEMLIST name="rev_reads" value="" type="input-file" description="Reverse read file(s) for analysing (may be gzipped)." supported_formats="*.fastq,*.fq,*.gz" required="false" advanced="false" />  
-            <ITEM name="mlst_db" value="" type="input-file" description="Fasta file of MLST alleles (required to calculate STs)." supported_formats="*.fasta,*.fa" required="false" advanced="false" />
-            <ITEM name="mlst_def" value="" type="input-file" description="ST definitions for MLST scheme (required to calculate STs)." supported_formats="*.txt" required="false" advanced="false" />          
+            <ITEM name="mlst_db" value="" type="input-prefix" description="PubMLST data (required to calculate STs)." supported_formats="*" required="false" advanced="false" />
             <ITEM name="gene_db" value="" type="input-file" description="Fasta file/s for gene databases (optional)." supported_formats="*.fasta,*.fa" required="false" advanced="false" />
             <ITEM name="output" value="" type="output-prefix" description="Prefix for srst2 output files." supported_formats="*.*" required="true" advanced="false" />
         </NODE>

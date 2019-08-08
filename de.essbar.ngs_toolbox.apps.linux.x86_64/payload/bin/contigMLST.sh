@@ -3,6 +3,7 @@
 # Wrapper script to mlst that accepts the same arguments except for the blast database 
 # (overwrite parameter to use the mlst.fa file for the blast db inside the given folder)
 
+
 datadir=""
 blastfile=""
 blastval=""
@@ -17,16 +18,16 @@ while getopts $optspec optchar; do
     case "${optchar}" in
         -)
             case "${OPTARG}" in
-				datadir)
+				mlst_db)
                     val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
 		    		echo "Parsing option: '--${OPTARG}', value: '${val}'" >&2;
-		    		datadir=${val}; 
+					datadir=${val}
                     ;;	
-                blastdb)
+                blast_db)
                     val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
 		    		echo "Parsing option: '--${OPTARG}', value: '${val}'" >&2;
 					blastval=${val}
-		    		blastfile=${val}"/mlst.fa"; 
+		    		blastfile="${val}/mlst.fa"; 
                     ;;		
 				novel)
                     val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
@@ -49,7 +50,7 @@ echo $blastval
 # remove --blastdb parameter and value
 for arg do 
    shift
-   [ "$arg" = "--blastdb" ] || [ "$arg" = "${blastval}" ]  && continue
+   [ "$arg" = "--blast_db" ] || [ "$arg" = "${blastval}" ] || [ "$arg" = "--mlst_db" ] || [ "$arg" = "${datadir}" ] && continue
    set -- "$@" "$arg"
 done
 
@@ -74,8 +75,8 @@ for ((i=1; i<=$#; i++)); do
   printf "%d\t%s\n" $i "${!i}"
 done
 
-echo "mlst --blastdb $blastfile $* >$OUT"
-mlst --blastdb $blastfile $* >$OUT
+echo "mlst --blastdb $blastfile --datadir $datadir $* >$OUT"
+mlst mlst --blastdb $blastfile --datadir $datadir $* >$OUT
 
 # create empty file for novel alleles
 if [[ ! -e $novelfile ]];
