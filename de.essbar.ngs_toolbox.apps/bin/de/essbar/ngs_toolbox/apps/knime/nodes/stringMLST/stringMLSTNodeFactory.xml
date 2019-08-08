@@ -8,7 +8,7 @@
     </shortDescription>
     
     <fullDescription>
-        <intro><p>stringMLST</p>
+        <intro><p>Fast k-mer based tool for multi locus sequence typing (MLST).</p>
 		<p>
 			<a href="https://github.com/jordanlab/stringMLST">Web Documentation for stringMLST</a>
 		</p>

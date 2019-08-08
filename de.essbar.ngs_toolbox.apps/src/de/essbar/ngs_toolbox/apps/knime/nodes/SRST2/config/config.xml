@@ -2,8 +2,8 @@
 <tool name="SRST2" version="0.2.0" category="Sequence typing"
       docurl="https://github.com/katholt/srst2">
 	<executableName>srst2.sh</executableName>
-	<description>Short Read Sequence Typing for Bacterial Pathogens.</description>
-	<manual><![CDATA[SRST2]]></manual>
+	<description>SRST2</description>
+	<manual>Short Read Sequence Typing for Bacterial Pathogens.</manual>
 	<docurl>Direct links in docs</docurl>
 	<cli>
 	     <!-- Following clielements are arguments. You should consider

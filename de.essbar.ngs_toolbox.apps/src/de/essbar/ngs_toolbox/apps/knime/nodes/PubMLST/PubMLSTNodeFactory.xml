@@ -8,7 +8,7 @@
     </shortDescription>
     
     <fullDescription>
-        <intro><p>PubMLST</p>
+        <intro><p>Download MLST datasets by species from pubmlst.org.</p>
 		<p>
 			<a href="https://github.com/katholt/srst2">Web Documentation for PubMLST</a>
 		</p>

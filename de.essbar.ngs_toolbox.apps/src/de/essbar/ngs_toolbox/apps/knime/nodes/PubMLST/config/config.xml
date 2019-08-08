@@ -2,8 +2,8 @@
 <tool name="PubMLST" version="0.2.0" category="Sequence typing"
       docurl="https://github.com/katholt/srst2">
 	<executableName>pubMLST.py</executableName>
-	<description>Download MLST datasets by species from pubmlst.org.</description>
-	<manual><![CDATA[PubMLST]]></manual>
+	<description>MLST database pubmlst.org</description>
+	<manual>Download MLST datasets by species from pubmlst.org</manual>
 	<docurl>Direct links in docs</docurl>
 	<cli>
         <clielement optionIdentifier="-s" isList="false">
