@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.essbar.QC.feature"
+      id="de.essbar.ngs_toolbox.QC.feature"
       label="QC Features"
       version="1.0.0.qualifier"
       provider-name="FU Berlin"
@@ -23,7 +23,7 @@ sites for details.
    </copyright>
 
    <license url="http://www.example.com/license">
-     GNU GENERAL PUBLIC LICENSE &amp; Krona Trademark Licence &amp; Parsnp Copyright LICENSE @amp; BSD 3-CLAUSE LICENCE;
+      GNU GENERAL PUBLIC LICENSE &amp; Krona Trademark Licence &amp; Parsnp Copyright LICENSE @amp; BSD 3-CLAUSE LICENCE;
 
 Parts of this feature are licensed under different licenses. You need to accept
 all of the licenses to use this package.

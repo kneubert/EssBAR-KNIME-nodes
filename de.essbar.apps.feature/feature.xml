@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.essbar.apps.feature"
+      id="de.essbar.ngs_toolbox.apps.feature"
       label="NGS Toolbox"
       version="1.0.0.qualifier"
       provider-name="FU Berlin"
