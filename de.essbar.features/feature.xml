@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.essbar.ngs_toolbox.feature"
+      id="de.essbar.features"
       label="Feature"
       version="1.0.0.qualifier">
 
@@ -25,6 +25,46 @@
 
    <plugin
          id="de.essbar.ngs_toolbox.apps.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="de.essbar.ngs_toolbox.QC"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.essbar.ngs_toolbox.QC.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="com.genericworkflownodes.knime"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="com.genericworkflownodes.knime.config"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="com.genericworkflownodes.knime.config.testing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="com.genericworkflownodes.knime.tests"
          download-size="0"
          install-size="0"
          version="0.0.0"
