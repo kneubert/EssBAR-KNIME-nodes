@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>MLVA</name>
+    
+    <shortDescription>
+        Multi loci VNTR (Variable Number of Tandem Repeats) analysis (by D. Christiany). This tool performs an in silico PCR to extract sequences of tandem repeat from submitted fasta file(s)  
+and call VNTR alleles.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>MLVA</p>
+		<p>
+			<a href="https://github.com/dpchris/MLVA">Web Documentation for MLVA</a>
+		</p>
+
+        </intro>
+        
+		<option name="mismatch">Takes the number of mismatches allowed for each primer (default = 2).</option>
+		<option name="contig">Necessary if fasta files contain contigs.</option>
+		<option name="round">Rounds MLVA allele values, take float, default is 0.25 (meaning that an allele value of an integer +- 0.25 will be rounded to this integer.</option>
+		<option name="mixte">A fasta file with a single sequence will be considered as 'chromosome' and fasta files with multiple sequences as contigs</option>
+		<option name="full_locus">Header will be full locus name instead of reduced locus name.</option>
+		<option name="flanking_seq">add flanking column in output sequences, flanking are the sequences before and after the insert (primers included), you can chose the size of flanking sequences.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="input_dir []">Input directory that contains fasta files. []</inPort>
+		<inPort index="1" name="primer [txt,tsv,csv]">Path of the primer list in a csv file (delimited by '\t', ';' or ','). [txt,tsv,csv]</inPort>
+		<inPort index="2" name="binning_file [txt,tsv,csv]">Corrects MLVA allele calls for primers present in this file. Default binning_file contains Brucella MLVA assay corrections as indicated in published allele numbering system version 3.6 (http://mlva.u-psud.fr/brucella/spip.php?article93) [txt,tsv,csv,opt.]</inPort>
+		<outPort index="0" name="result [txt,tsv,csv]">MLVA result file with allele numbers. [txt,tsv,csv]</outPort>
+		<outPort index="1" name="sequence [txt,tsv,csv]">MLVA result file with allele sequences. [txt,tsv,csv]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="MLVA Std Output">The text sent to standard out during the execution of MLVA.</view>
+        <view index="1" name="MLVA Error Output">The text sent to standard error during the execution of MLVA. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

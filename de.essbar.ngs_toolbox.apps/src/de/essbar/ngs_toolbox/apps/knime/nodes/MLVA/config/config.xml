@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="MLVA" version="0.0.1" category="Sequence typing"
+      docurl="https://github.com/dpchris/MLVA">
+	<executableName>MLVA_wrapper.sh</executableName>
+	<description>Multi loci VNTR (Variable Number of Tandem Repeats) analysis (by D. Christiany). This tool performs an in silico PCR to extract sequences of tandem repeat from submitted fasta file(s)  
+and call VNTR alleles.</description>
+	<manual><![CDATA[MLVA]]></manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. -->   
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="mlva.result" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="mlva.sequence" />
+        </clielement>
+        <clielement optionIdentifier="-i" isList="false">
+            <mapping referenceName="mlva.input_dir" />
+        </clielement>
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="mlva.primer" />
+        </clielement>
+        <clielement optionIdentifier="-b" isList="false">
+            <mapping referenceName="mlva.binning_file" />
+        </clielement>
+        <!-- string options. -->    
+        <clielement optionIdentifier="--mismatch" isList="false">
+            <mapping referenceName="mlva.mismatch" />
+        </clielement>
+        <clielement optionIdentifier="--contig" isList="false">
+            <mapping referenceName="mlva.contig" />
+        </clielement>
+        <clielement optionIdentifier="--round" isList="false">
+            <mapping referenceName="mlva.round" />
+        </clielement>
+        <clielement optionIdentifier="--mixte" isList="false">
+            <mapping referenceName="mlva.mixte" />
+        </clielement>
+        <clielement optionIdentifier="--full-locus-name" isList="false">
+            <mapping referenceName="mlva.full_locus" />
+        </clielement>
+        <clielement optionIdentifier="--flanking-seq" isList="false">
+            <mapping referenceName="mlva.flanking_seq" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="mlva" description="Multi loci VNTR (Variable Number of Tandem Repeats) analysis.">          
+            <!-- Following clielements are arguments.-->  
+            <ITEM name="result" value="" type="output-file" required="true" supported_formats="*.txt,*.tsv,*.csv"  description="MLVA result file with allele numbers."/>
+            <ITEM name="sequence" value="" type="output-file" required="true" supported_formats="*.txt,*.tsv,*.csv"  description="MLVA result file with allele sequences." />
+            <ITEM name="input_dir" value="" type="input-prefix" required="true" description="Input directory that contains fasta files." />
+            <ITEM name="primer" value="" type="input-file" required="true" supported_formats="*.txt,*.tsv,*.csv"  description="Path of the primer list in a csv file (delimited by '\t', ';' or ',')." />
+            <ITEM name="binning_file" value="" type="input-file" required="false" supported_formats="*.txt,*.tsv,*.csv" description="Corrects MLVA allele calls for primers present in this file. Default binning_file contains Brucella MLVA assay corrections as indicated in published allele numbering system version 3.6 (http://mlva.u-psud.fr/brucella/spip.php?article93)" />
+            <!-- string options. -->   
+            <ITEM name="mismatch" value="2" type="int" description="Takes the number of mismatches allowed for each primer (default = 2)." required="true" advanced="false" />
+            <ITEM name="contig" value="" type="string" description="Necessary if fasta files contain contigs." restrictions="true,false" required="false" advanced="false" />
+            <ITEM name="round" value="0.25" type="float" description="Rounds MLVA allele values, take float, default is 0.25 (meaning that an allele value of an integer +- 0.25 will be rounded to this integer." required="false" advanced="false" />
+            <ITEM name="mixte" value="" type="string" description="A fasta file with a single sequence will be considered as 'chromosome' and fasta files with multiple sequences as contigs" restrictions="true,false" advanced="false" />    
+            <ITEM name="full_locus" value="" type="string" description="Header will be full locus name instead of reduced locus name." restrictions="true,false" advanced="false" />    
+            <ITEM name="flanking_seq" value="0" type="int" description="add flanking column in output sequences, flanking are the sequences before and after the insert (primers included), you can chose the size of flanking sequences." required="false" advanced="false" />    
+        </NODE>
+    </PARAMETERS>
+</tool>

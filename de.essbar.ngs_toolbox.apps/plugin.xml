@@ -27,6 +27,7 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.PubMLST.PubMLSTNodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.stringMLST.stringMLSTNodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing/"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.contigMLST.contigMLSTNodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.MLVA.MLVANodeFactory" category-path="/community/EssBAR/NGSTools/Sequence typing"/>
   </extension>  
   <extension point="org.knime.product.splashExtension"></extension>  
   <extension point="org.knime.base.filehandling.mimetypes"> 

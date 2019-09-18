@@ -376,5 +376,9 @@ instructions.install=\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/blastn,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/mlst-make_blast_db,permissions:755);
+	targetFile:payload/bin/mlst-make_blast_db,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/MLVA_finder.py,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/MLVA_wrapper.sh,permissions:755);
 	
