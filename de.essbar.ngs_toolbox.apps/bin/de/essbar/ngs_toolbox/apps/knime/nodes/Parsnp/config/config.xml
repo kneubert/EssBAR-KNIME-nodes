@@ -75,7 +75,7 @@
 	</cli>
 	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		<NODE name="parsnp" description="Rapid core genome multi-alignment and phylogeny">
-			<ITEM name="genome_dir" value="" type="input-file" description="directory containing genomes/contigs/scaffolds" supported_formats="*" required="true" advanced="false" />
+			<ITEM name="genome_dir" value="" type="input-prefix" description="directory containing genomes/contigs/scaffolds" required="true" advanced="false" />
 			<ITEM name="reference_genome" value="" type="input-file" description="Reference genome" supported_formats="*.fasta,*.fa,*.fna" required="true" advanced="false" />
 			<ITEM name="genbank_file" value="" type="input-file" description="Genbank file." supported_formats="*.gbk" required="false" advanced="false" />
 			<ITEM name="query_genome" value="" type="input-file" description="Specify (assembled) query genome to use, in addition to genomes found in genome directory (optional)." supported_formats="*.fasta,*.fa,*.fna" required="false" advanced="false" />			
