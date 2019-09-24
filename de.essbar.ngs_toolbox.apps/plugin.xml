@@ -13,6 +13,7 @@
   </extension>  
   <extension point="org.knime.workbench.repository.nodes"> 
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Flexbar.FlexbarNodeFactory" category-path="/community/EssBAR/NGSTools/Preprocessing"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.FLASH2.FLASH2NodeFactory" category-path="/community/EssBAR/NGSTools/Preprocessing"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SPAdes.SPAdesNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Prokka.ProkkaNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.ProkkaDB.ProkkaDBNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
@@ -172,6 +173,10 @@
     </mimetype>
     <mimetype name="slimm/sldb">
       <fileextension name="sldb"/>
+    </mimetype>
+    <mimetype name="flash2/hist">
+      <fileextension name="hist"/>
+      <fileextension name="histogram"/>
     </mimetype>
   </extension> 
    <extension

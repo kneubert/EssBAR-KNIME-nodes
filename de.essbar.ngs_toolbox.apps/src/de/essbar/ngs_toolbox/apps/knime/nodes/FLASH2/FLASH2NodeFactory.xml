@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>FLASH2</name>
+    
+    <shortDescription>
+        FLASH merges reads from paired-end sequencing runs with very high accuracy.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>FLASH (Fast Length Adjustment of SHort reads) is an accurate and fast tool to merge paired-end reads</p>
+		<p>
+			<a href="http://ccb.jhu.edu/software/FLASH/index.shtml">Web Documentation for FLASH2</a>
+		</p>
+
+        </intro>
+        
+		<option name="qual_cutoff">The cutoff number for the quality score corresponding with the percent cutoff.</option>
+		<option name="percent_cutoff">The cutoff percentage for each read that will be discarded if it falls below -Q option.</option>
+		<option name="min_overlap">The minimum required overlap length (in base pair) between two reads to provide a confident overlap.</option>
+		<option name="max_overlap">Maximum overlap length in bp expected in approximately 90% of read pairs. It is by default set to 65bp, which works well for 100bp reads generated from a 180bp library, assuming a normal distribution of fragment lengths. </option>
+		<option name="min_overlap_outie">The minimum required overlap length between two reads to provide a confident overlap in an outie scenario.</option>
+		<option name="max_mismatch_density">Maximum allowed ratio between the number of mismatched base pairs and the overlap length. Two reads will not be combined with a given overlap if that overlap results in a mismatched base density higher than this value. </option>
+		<option name="outies">Also try combining read pairs in the 'outie' (outward) orientation.</option>
+		<option name="phred_offset">The smallest ASCII value of the characters used to represent quality values of bases in FASTQ files. A value of 33 corresponds to the later Illumina and Sanger platforms, 64 corresponds to the earlier Illumina platforms.</option>
+		<option name="read_length">Average read length, which is used to calculate the maximum overlap parameter.</option>
+		<option name="fragment_length">Fragment length, which is used to calculate the maximum overlap parameter.</option>
+		<option name="fragment_std">Fragment standard deviation, which is used to calculate the maximum overlap parameter.</option>
+		<option name="cap_mismatch_quals">Cap quality scores assigned at mismatch locations to 2.</option>
+		<option name="interleaved_input">Allow a single file that has the paired-end reads interleaved.</option>
+		<option name="interleaved_output">Write the uncombined pairs in interleaved FASTQ format.</option>
+		<option name="compress">Compress the output files directly with zlib, using the gzip container format.</option>
+		<option name="compress_prog">Compress the output files using the given compression program.</option>
+		<option name="threads">Set the number of worker threads. This is in addition to the I/O threads.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="input [fq,fastq,gz]">Input files. [fq,fastq,gz]</inPort>
+		<outPort index="0" name="output [fq,fastq,gz,bz,xz,pz]">Path to directory for output files. [fq,fastq,gz,bz,xz,pz]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="FLASH2 Std Output">The text sent to standard out during the execution of FLASH2.</view>
+        <view index="1" name="FLASH2 Error Output">The text sent to standard error during the execution of FLASH2. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>
