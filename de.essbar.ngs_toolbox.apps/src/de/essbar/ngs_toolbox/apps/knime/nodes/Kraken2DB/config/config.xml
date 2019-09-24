@@ -85,7 +85,7 @@
 			<ITEM name="UniVec" value="false" type="string" description="NCBI-supplied database of vector, adapter, linker, and primer sequences that may be contaminating sequencing projects and/or assemblies" restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="UniVec_Core" value="false" type="string" description="A subset of UniVec chosen to minimize false positive hits to the vector database" restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="fasta_folder" value="" type="input-prefix" description="Directory with genomes in fasta format (headers must contain either an NCBI accession number or an explicit assignment of the taxonomy ID using kraken:taxid." required="false" advanced="false" />
-			<ITEM name="db" value="" type="output-prefix" description="Kraken2 DB prefix name (full path)." required="true" advanced="false" />
+			<ITEM name="db" value="kraken2db" type="output-prefix" description="Kraken2 DB prefix name (full path)." supported_formats="*.k2d" required="true" advanced="false" />
 			<ITEM name="threads" value="1" type="int" description="Number of threads." restrictions="1:" required="false" advanced="false" />
 			<ITEM name="kmer_len" value="35" type="int" description="K-mer length in bp." restrictions="1:" required="false" advanced="false" />
 			<ITEM name="minimizer_len" value="31" type="int" description="Minimizer length in bp." restrictions="1:" required="false" advanced="false" />
