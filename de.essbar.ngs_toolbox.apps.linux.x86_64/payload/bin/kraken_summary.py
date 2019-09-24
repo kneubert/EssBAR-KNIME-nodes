@@ -15,7 +15,7 @@ from collections import OrderedDict
 
 def handle_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--reports', '-r', type=argparse.FileType('r'), nargs='+', help="Kraken report files", required=True)
+    parser.add_argument('--reports', '-r', type=argparse.FileType('r'), dest='reports', default=[], action='append', required=True, help="Kraken report files")
     parser.add_argument('--species_table', '-s', default="kraken_species_map_report_mqc.txt", help="Output summary table for species")
     parser.add_argument('--genus_table', '-g', default="kraken_genus_map_report_mqc.txt", help="Output summary table for genus")
     parser.add_argument('--species_min_sum', '-sm', type=int, default=20, help="Minimum sum of reads for a species in all samples (default: 20)")
@@ -42,6 +42,7 @@ def main(options):
     for f in options.reports:
         sample = os.path.basename(f.name)
         sample = sample.replace(".report.txt","")
+        sample = sample.replace(".kreport","")
         samples_list.append(sample)
         for line in f:
             x = line.rstrip('\n')
