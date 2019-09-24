@@ -20,6 +20,8 @@
 	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken.KrakenNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenReport.KrakenReportNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenSummary.KrakenSummaryNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken.KrakenNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken2DB.Kraken2DBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>    
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm.SlimmNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SlimmDB.SlimmDBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm2Krona.Slimm2KronaNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>

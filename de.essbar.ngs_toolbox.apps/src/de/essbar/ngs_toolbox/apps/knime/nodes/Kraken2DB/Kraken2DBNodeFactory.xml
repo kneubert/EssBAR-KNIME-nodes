@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Kraken2DB</name>
+    
+    <shortDescription>
+        Kraken taxonomic sequence classification
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+		<p>
+			<a href="https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual">Web Documentation for Kraken2DB</a>
+		</p>
+
+        </intro>
+        
+		<option name="archaea">RefSeq complete archaeal genomes</option>
+		<option name="bacteria">RefSeq complete bacterial genomes</option>
+		<option name="plasmid">RefSeq plasmid nucleotide sequences</option>
+		<option name="viral">RefSeq complete viral genomes</option>
+		<option name="human">GRCh38 human genome</option>
+		<option name="fungi">RefSeq complete fungal genomes</option>
+		<option name="plant">RefSeq complete plant genomes</option>
+		<option name="protozoa">RefSeq complete protozoan genomes</option>
+		<option name="nt">non-redundant nucleotide database</option>
+		<option name="env_nt">NCBI non-redundant nucleotide database with sequences from large environmental sequencing projects</option>
+		<option name="UniVec">NCBI-supplied database of vector, adapter, linker, and primer sequences that may be contaminating sequencing projects and/or assemblies</option>
+		<option name="UniVec_Core">A subset of UniVec chosen to minimize false positive hits to the vector database</option>
+		<option name="threads">Number of threads.</option>
+		<option name="kmer_len">K-mer length in bp.</option>
+		<option name="minimizer_len">Minimizer length in bp.</option>
+		<option name="minimizer_spaces">Number of characters in minimizer that are ignored in comparisons.</option>
+		<option name="max_db">Maximum number of bytes for Kraken 2 hash table; if the estimator determines more would normally be needed, the reference library will be downsampled to fit.</option>
+		<option name="ftp">Use FTP for downloading instead of RSYNC.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="fasta_folder []">Directory with genomes in fasta format (headers must contain either an NCBI accession number or an explicit assignment of the taxonomy ID using kraken:taxid. [,opt.]</inPort>
+		<outPort index="0" name="db []">Kraken2 DB prefix name (full path). []</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Kraken2DB Std Output">The text sent to standard out during the execution of Kraken2DB.</view>
+        <view index="1" name="Kraken2DB Error Output">The text sent to standard error during the execution of Kraken2DB. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

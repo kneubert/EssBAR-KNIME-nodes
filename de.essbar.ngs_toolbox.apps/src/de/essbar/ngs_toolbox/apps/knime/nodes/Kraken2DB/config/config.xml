@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Kraken2DB" version="1.0" docurl="https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual" category="Metagenomics" >
+	<executableName>kraken2-build.sh</executableName>
+	<description>Kraken taxonomic sequence classification</description>
+	<manual></manual>
+	<cli>
+		<!-- Options for the app -->
+		<clielement optionIdentifier="--archaea" isList="false">
+			<mapping referenceName="kraken2.archaea" />
+		</clielement>	
+		<clielement optionIdentifier="--bacteria" isList="false">
+			<mapping referenceName="kraken2.bacteria" />
+		</clielement>	
+		<clielement optionIdentifier="--plasmid" isList="false">
+			<mapping referenceName="kraken2.plasmid" />
+		</clielement>	
+		<clielement optionIdentifier="--viral" isList="false">
+			<mapping referenceName="kraken2.viral" />
+		</clielement>	
+		<clielement optionIdentifier="--human" isList="false">
+			<mapping referenceName="kraken2.human" />
+		</clielement>	
+		<clielement optionIdentifier="--fungi" isList="false">
+			<mapping referenceName="kraken2.fungi" />
+		</clielement>	
+		<clielement optionIdentifier="--plant" isList="false">
+			<mapping referenceName="kraken2.plant" />
+		</clielement>	
+		<clielement optionIdentifier="--protozoa" isList="false">
+			<mapping referenceName="kraken2.protozoa" />
+		</clielement>	
+		<clielement optionIdentifier="--nt" isList="false">
+			<mapping referenceName="kraken2.nt" />
+		</clielement>	
+		<clielement optionIdentifier="--env_nt" isList="false">
+			<mapping referenceName="kraken2.env_nt" />
+		</clielement>	
+		<clielement optionIdentifier="--UniVec" isList="false">
+			<mapping referenceName="kraken2.UniVec" />
+		</clielement>	
+		<clielement optionIdentifier="--UniVec_Core" isList="false">
+			<mapping referenceName="kraken2.UniVec_Core" />
+		</clielement>	
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->
+		<clielement optionIdentifier="--add-to-library" isList="false">
+			<mapping referenceName="kraken2.fasta_folder" />
+		</clielement>
+		<clielement optionIdentifier="--db" isList="false">
+			<mapping referenceName="kraken2.db" />
+		</clielement>	
+		<!-- Options-->
+		<clielement optionIdentifier="--threads" isList="false">
+			<mapping referenceName="kraken2.threads" />
+		</clielement>	
+		<clielement optionIdentifier="--kmer-len" isList="false">
+			<mapping referenceName="kraken2.kmer_len" />
+		</clielement>	
+		<clielement optionIdentifier="--minimizer-len" isList="false">
+			<mapping referenceName="kraken2.minimizer_len" />
+		</clielement>	
+		<clielement optionIdentifier="--minimizer-spaces" isList="false">
+			<mapping referenceName="kraken2.minimizer_spaces" />
+		</clielement>	
+		<clielement optionIdentifier="--max-db-size" isList="false">
+			<mapping referenceName="kraken2.max_db" />
+		</clielement>	
+		<clielement optionIdentifier="--use-ftp" isList="false">
+			<mapping referenceName="kraken2.ftp" />
+		</clielement>	
+
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="kraken2" description="Kraken 2 taxonomic sequence classification">
+			<ITEM name="archaea" value="false" type="string" description="RefSeq complete archaeal genomes" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="bacteria" value="false" type="string" description="RefSeq complete bacterial genomes" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="plasmid" value="false" type="string" description="RefSeq plasmid nucleotide sequences" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="viral" value="false" type="string" description="RefSeq complete viral genomes" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="human" value="false" type="string" description="GRCh38 human genome" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="fungi" value="false" type="string" description="RefSeq complete fungal genomes" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="plant" value="false" type="string" description="RefSeq complete plant genomes" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="protozoa" value="false" type="string" description="RefSeq complete protozoan genomes" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="nt" value="false" type="string" description="non-redundant nucleotide database" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="env_nt" value="false" type="string" description="NCBI non-redundant nucleotide database with sequences from large environmental sequencing projects" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="UniVec" value="false" type="string" description="NCBI-supplied database of vector, adapter, linker, and primer sequences that may be contaminating sequencing projects and/or assemblies" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="UniVec_Core" value="false" type="string" description="A subset of UniVec chosen to minimize false positive hits to the vector database" restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="fasta_folder" value="" type="input-prefix" description="Directory with genomes in fasta format (headers must contain either an NCBI accession number or an explicit assignment of the taxonomy ID using kraken:taxid." required="false" advanced="false" />
+			<ITEM name="db" value="" type="output-prefix" description="Kraken2 DB prefix name (full path)." required="true" advanced="false" />
+			<ITEM name="threads" value="1" type="int" description="Number of threads." restrictions="1:" required="false" advanced="false" />
+			<ITEM name="kmer_len" value="35" type="int" description="K-mer length in bp." restrictions="1:" required="false" advanced="false" />
+			<ITEM name="minimizer_len" value="31" type="int" description="Minimizer length in bp." restrictions="1:" required="false" advanced="false" />
+			<ITEM name="minimizer_spaces" value="7" type="int" description="Number of characters in minimizer that are ignored in comparisons." restrictions="1:" required="false" advanced="false" />
+			<ITEM name="max_db" value="" type="int" description="Maximum number of bytes for Kraken 2 hash table; if the estimator determines more would normally be needed, the reference library will be downsampled to fit." required="false" advanced="false" />
+			<ITEM name="ftp" value="false" type="string" description="Use FTP for downloading instead of RSYNC." restrictions="true,false" required="false" advanced="false" />
+			
+		</NODE>
+	</PARAMETERS>
+</tool>
