@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Kraken2</name>
+    
+    <shortDescription>
+        Kraken taxonomic sequence classification system
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+		<p>
+			<a href="https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual">Web Documentation for Kraken</a>
+		</p>
+
+        </intro>
+        
+		<option name="threads">Number of threads</option>
+		<option name="quick">Quick operation (use first hit or hits).</option>
+		<option name="confidence">Confidence score threshold (default 0.0).</option>
+		<option name="minimum-base-qual">Minimum base quality used in classification (only effective with FASTQ input)</option>
+		<option name="mpa-style">Format report output like Kraken 1's kraken-mpa-report.</option>
+		<option name="report-zero">Report counts for ALL taxa, even if they are zero.</option>
+		<option name="memory-mapping">Avoids loading database into RAM.</option>
+		<option name="paired">The two filenames provided are paired-end reads.</option>
+		<option name="gzip-input">Input files are gzip compressed.</option>
+		<option name="bzip2-input">Input files are bzip2 compressed.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="db [k2d]">Full path of precomputed Kraken2 database [k2d]</inPort>
+		<inPort index="1" name="input-files [fasta,fa,fastq,fq,gz,bz2]">Input files [fasta,fa,fastq,fq,gz,bz2]</inPort>
+		<outPort index="0" name="output [kraken]">Output file that contains classification results for each sequence. [fasta,fa,fastq,fq,*]</outPort>
+		<outPort index="1" name="report [kreport]">Report file that contains aggregate counts. [kreport]</outPort>
+		<outPort index="2" name="classified-output [fasta,fa,fastq,fq]">Output file that contains classified sequences. [fasta,fa,fastq,fq]</outPort>
+		<outPort index="3" name="unclassified-output [fasta,fa,fastq,fq]">Output file that contains unclassified sequences. [fasta,fa,fastq,fq]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Kraken Std Output">The text sent to standard out during the execution of Kraken.</view>
+        <view index="1" name="Kraken Error Output">The text sent to standard error during the execution of Kraken. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

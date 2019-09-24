@@ -21,6 +21,7 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenReport.KrakenReportNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenSummary.KrakenSummaryNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken.KrakenNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken2.Kraken2NodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>    
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken2DB.Kraken2DBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>    
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm.SlimmNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SlimmDB.SlimmDBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
@@ -173,4 +174,20 @@
       <fileextension name="sldb"/>
     </mimetype>
   </extension> 
+   <extension
+      point="com.genericworkflownodes.knime.mime.filesuffix.Checker">
+   <index-type name="Kraken database">
+      <suffix
+            suffix_string="kdb">
+      </suffix>
+      <suffix
+            suffix_string="idx">
+      </suffix>
+   </index-type>   
+   <index-type name="Kraken2 database">
+      <suffix 
+      		suffix_string="k2d">
+      </suffix>
+   </index-type>
+   </extension>  
 </plugin>

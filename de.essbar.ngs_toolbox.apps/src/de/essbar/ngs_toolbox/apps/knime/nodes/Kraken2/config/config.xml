@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Kraken2" version="1.0" docurl="https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual" category="Metagenomics" >
+	<executableName>kraken2</executableName>
+	<description>Kraken taxonomic sequence classification system</description>
+	<manual></manual>
+	<cli>
+		<!-- Following clielements are arguments. You should consider
+		providing a help text to ease understanding. -->
+		<clielement optionIdentifier="--db" isList="false">
+			<mapping referenceName="kraken2.db" />
+		</clielement>	
+		<clielement optionIdentifier="" isList="true">
+			<mapping referenceName="kraken2.input-files" />
+		</clielement>		
+		<clielement optionIdentifier="--output" isList="false">
+			<mapping referenceName="kraken2.output" />
+		</clielement>	
+                <clielement optionIdentifier="--report" isList="false">
+			<mapping referenceName="kraken2.report" />
+		</clielement>
+		<clielement optionIdentifier="--classified-out" isList="false">
+			<mapping referenceName="kraken2.classified-output" />
+		</clielement>
+		<clielement optionIdentifier="--unclassified-output" isList="false">
+			<mapping referenceName="kraken2.unclassified-output" />
+		</clielement>
+		<!-- Options for the app -->
+		<clielement optionIdentifier="--threads" isList="false">
+			<mapping referenceName="kraken2.threads" />
+		</clielement>
+		<clielement optionIdentifier="--quick" isList="false">
+			<mapping referenceName="kraken2.quick" />
+		</clielement>		
+		<clielement optionIdentifier="--confidence" isList="false">
+			<mapping referenceName="kraken2.confidence" />
+		</clielement>	
+		<clielement optionIdentifier="--minimum-base-quality" isList="false">
+			<mapping referenceName="kraken2.minimum-base-qual" />
+		</clielement>	
+		<clielement optionIdentifier="--use-mpa-style" isList="false">
+			<mapping referenceName="kraken2.mpa-style" />
+		</clielement>
+		<clielement optionIdentifier="--report-zero-counts" isList="false">
+			<mapping referenceName="kraken2.report-zero" />
+		</clielement>	
+		<clielement optionIdentifier="--memory-mapping" isList="false">
+			<mapping referenceName="kraken2.memory-mapping" />
+		</clielement>	
+		<clielement optionIdentifier="--paired" isList="false">
+			<mapping referenceName="kraken2.paired" />
+		</clielement>	
+		<clielement optionIdentifier="--gzip-compressed" isList="false">
+			<mapping referenceName="kraken2.gzip-input" />
+		</clielement>	
+		<clielement optionIdentifier="--bzip2.compressed" isList="false">
+			<mapping referenceName="kraken2.bzip2-input" />
+		</clielement>
+	</cli>
+	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<NODE name="kraken2" description="Kraken2 taxonomic sequence classification">
+			<ITEM name="db" value="" type="input-prefix" description="Full path of precomputed Kraken2 database" supported_formats="*.k2d" required="true" advanced="false" />
+			<ITEMLIST name="input-files" value="" type="input-file" description="Input files" supported_formats="*.fasta,*.fa,*.fastq,*.fq,*.gz,*.bz2" required="true" advanced="false" />
+			<ITEM name="output" value="" type="output-file" description="Output file that contains classification results for each sequence." supported_formats=".kraken" required="true" advanced="false" />
+   			<ITEM name="report" value="" type="output-file" description="Report file that contains aggregate counts." supported_formats="*.kreport" required="true" advanced="false" />                     
+			<ITEM name="classified-output" value="" type="output-file" description="Output file that contains classified sequences." supported_formats="*.fasta,*.fa,*.fastq,*.fq" required="false" advanced="false" />
+			<ITEM name="unclassified-output" value="" type="output-file" description="Output file that contains unclassified sequences." supported_formats="*.fasta,*.fa,*.fastq,*.fq" required="false" advanced="false" />			
+                        <ITEM name="threads" value="1" type="int" description="Number of threads" restrictions="1:" required="false" advanced="false" />
+			<ITEM name="quick" value="false" type="string" description="Quick operation (use first hit or hits)." restrictions="true,false" required="false" advanced="false" />	
+			<ITEM name="confidence" value="0.0" type="float" description="Confidence score threshold (default 0.0)." restrictions="0:1" required="false" advanced="false" />
+ 			<ITEM name="minimum-base-qual" value="0" type="int" description="Minimum base quality used in classification (only effective with FASTQ input)" restrictions="0:" required="false" advanced="false" />                
+			<ITEM name="mpa-style" value="false" type="string" description="Format report output like Kraken 1's kraken-mpa-report." restrictions="true,false" required="false" advanced="false" />	
+			<ITEM name="report-zero" value="false" type="string" description="Report counts for ALL taxa, even if they are zero." restrictions="true,false" required="false" advanced="false" />	  
+			<ITEM name="memory-mapping" value="false" type="string" description="Avoids loading database into RAM." restrictions="true,false" required="false" advanced="false" />	       
+			<ITEM name="paired" value="false" type="string" description="The two filenames provided are paired-end reads." restrictions="true,false" required="false" advanced="false" />	  
+			<ITEM name="gzip-input" value="false" type="string" description="Input files are gzip compressed." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="bzip2-input" value="false" type="string" description="Input files are bzip2 compressed." restrictions="true,false" required="false" advanced="false" />
+				
+		</NODE>
+	</PARAMETERS>
+</tool>
