@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool name="Kraken2DB" version="1.0" docurl="https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual" category="Metagenomics" >
+<tool name="kraken2-build" version="1.0" docurl="https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual" category="Metagenomics" >
 	<executableName>kraken2-build.sh</executableName>
 	<description>Kraken taxonomic sequence classification</description>
 	<manual></manual>
 	<cli>
 		<!-- Options for the app -->
 		<clielement optionIdentifier="--archaea" isList="false">
-			<mapping referenceName="kraken2.archaea" />
+			<mapping referenceName="kraken2-build.archaea" />
 		</clielement>	
 		<clielement optionIdentifier="--bacteria" isList="false">
-			<mapping referenceName="kraken2.bacteria" />
+			<mapping referenceName="kraken2-build.bacteria" />
 		</clielement>	
 		<clielement optionIdentifier="--plasmid" isList="false">
-			<mapping referenceName="kraken2.plasmid" />
+			<mapping referenceName="kraken2-build.plasmid" />
 		</clielement>	
 		<clielement optionIdentifier="--viral" isList="false">
-			<mapping referenceName="kraken2.viral" />
+			<mapping referenceName="kraken2-build.viral" />
 		</clielement>	
 		<clielement optionIdentifier="--human" isList="false">
-			<mapping referenceName="kraken2.human" />
+			<mapping referenceName="kraken2-build.human" />
 		</clielement>	
 		<clielement optionIdentifier="--fungi" isList="false">
-			<mapping referenceName="kraken2.fungi" />
+			<mapping referenceName="kraken2-build.fungi" />
 		</clielement>	
 		<clielement optionIdentifier="--plant" isList="false">
-			<mapping referenceName="kraken2.plant" />
+			<mapping referenceName="kraken2-build.plant" />
 		</clielement>	
 		<clielement optionIdentifier="--protozoa" isList="false">
-			<mapping referenceName="kraken2.protozoa" />
+			<mapping referenceName="kraken2-build.protozoa" />
 		</clielement>	
 		<clielement optionIdentifier="--nt" isList="false">
-			<mapping referenceName="kraken2.nt" />
+			<mapping referenceName="kraken2-build.nt" />
 		</clielement>	
 		<clielement optionIdentifier="--env_nt" isList="false">
-			<mapping referenceName="kraken2.env_nt" />
+			<mapping referenceName="kraken2-build.env_nt" />
 		</clielement>	
 		<clielement optionIdentifier="--UniVec" isList="false">
-			<mapping referenceName="kraken2.UniVec" />
+			<mapping referenceName="kraken2-build.UniVec" />
 		</clielement>	
 		<clielement optionIdentifier="--UniVec_Core" isList="false">
-			<mapping referenceName="kraken2.UniVec_Core" />
+			<mapping referenceName="kraken2-build.UniVec_Core" />
 		</clielement>	
 		<!-- Following clielements are arguments. You should consider
 		providing a help text to ease understanding. -->
 		<clielement optionIdentifier="--add-to-library" isList="false">
-			<mapping referenceName="kraken2.fasta_folder" />
+			<mapping referenceName="kraken2-build.fasta_folder" />
 		</clielement>
 		<clielement optionIdentifier="--db" isList="false">
-			<mapping referenceName="kraken2.db" />
+			<mapping referenceName="kraken2-build.db" />
 		</clielement>	
 		<!-- Options-->
 		<clielement optionIdentifier="--threads" isList="false">
-			<mapping referenceName="kraken2.threads" />
+			<mapping referenceName="kraken2-build.threads" />
 		</clielement>	
 		<clielement optionIdentifier="--kmer-len" isList="false">
-			<mapping referenceName="kraken2.kmer_len" />
+			<mapping referenceName="kraken2-build.kmer_len" />
 		</clielement>	
 		<clielement optionIdentifier="--minimizer-len" isList="false">
-			<mapping referenceName="kraken2.minimizer_len" />
+			<mapping referenceName="kraken2-build.minimizer_len" />
 		</clielement>	
 		<clielement optionIdentifier="--minimizer-spaces" isList="false">
-			<mapping referenceName="kraken2.minimizer_spaces" />
+			<mapping referenceName="kraken2-build.minimizer_spaces" />
 		</clielement>	
 		<clielement optionIdentifier="--max-db-size" isList="false">
-			<mapping referenceName="kraken2.max_db" />
+			<mapping referenceName="kraken2-build.max_db" />
 		</clielement>	
 		<clielement optionIdentifier="--use-ftp" isList="false">
-			<mapping referenceName="kraken2.ftp" />
+			<mapping referenceName="kraken2-build.ftp" />
 		</clielement>	
 
 	</cli>
 	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-		<NODE name="kraken2" description="Kraken 2 taxonomic sequence classification">
+		<NODE name="kraken2-build" description="Kraken 2 taxonomic sequence classification">
 			<ITEM name="archaea" value="false" type="string" description="RefSeq complete archaeal genomes" restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="bacteria" value="false" type="string" description="RefSeq complete bacterial genomes" restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="plasmid" value="false" type="string" description="RefSeq plasmid nucleotide sequences" restrictions="true,false" required="false" advanced="false" />
@@ -85,7 +85,7 @@
 			<ITEM name="UniVec" value="false" type="string" description="NCBI-supplied database of vector, adapter, linker, and primer sequences that may be contaminating sequencing projects and/or assemblies" restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="UniVec_Core" value="false" type="string" description="A subset of UniVec chosen to minimize false positive hits to the vector database" restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="fasta_folder" value="" type="input-prefix" description="Directory with genomes in fasta format (headers must contain either an NCBI accession number or an explicit assignment of the taxonomy ID using kraken:taxid." required="false" advanced="false" />
-			<ITEM name="db" value="kraken2db" type="output-prefix" description="Kraken2 DB prefix name (full path)." supported_formats="*.k2d" required="true" advanced="false" />
+			<ITEM name="db" value="kraken2-db" type="output-prefix" description="kraken2 DB prefix name (full path)." supported_formats="*.k2d" required="true" advanced="false" />
 			<ITEM name="threads" value="1" type="int" description="Number of threads." restrictions="1:" required="false" advanced="false" />
 			<ITEM name="kmer_len" value="35" type="int" description="K-mer length in bp." restrictions="1:" required="false" advanced="false" />
 			<ITEM name="minimizer_len" value="31" type="int" description="Minimizer length in bp." restrictions="1:" required="false" advanced="false" />
