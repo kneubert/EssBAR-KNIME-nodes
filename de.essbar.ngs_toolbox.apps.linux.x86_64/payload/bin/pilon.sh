@@ -35,13 +35,20 @@ while getopts "$optspec" optchar; do
 done
 
 # Map paired-end reads to assembly using bowtie2
-bowtie2-build $assembly $assembly
+echo "bowtie2-build --quiet $assembly $assembly"
+bowtie2-build --quiet $assembly $assembly
+echo "bowtie2 -x $assembly --interleaved $reads -S frags.sam -p $threads"
 bowtie2 -x $assembly --interleaved $reads -S frags.sam -p $threads
+
+echo "samtools view -bS frags.sam | samtools sort -o frags.bam"
 samtools view -bS frags.sam | samtools sort -o frags.bam
+echo "samtools index frags.bam"
 samtools index frags.bam
 
 # Run Pilon
+echo "java -Xmx16G -jar $DIR/pilon-1.23.jar --genome $assembly --frags frags.bam --outdir $outdir $pilon_args"
 java -Xmx16G -jar $DIR/pilon-1.23.jar --genome $assembly --frags frags.bam --outdir $outdir $pilon_args
 
 # Corrected assembly
+echo "mv $outdir/pilon.fasta $outfile"
 mv $outdir/pilon.fasta $outfile
