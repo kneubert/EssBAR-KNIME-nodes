@@ -16,6 +16,7 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.FLASH2.FLASH2NodeFactory" category-path="/community/EssBAR/NGSTools/Preprocessing"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SPAdes.SPAdesNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.ABACAS.ABACASNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Pilon.PilonNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Prokka.ProkkaNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.ProkkaDB.ProkkaDBNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Parsnp.ParsnpNodeFactory" category-path="/community/EssBAR/NGSTools/Phylogeny"/>
