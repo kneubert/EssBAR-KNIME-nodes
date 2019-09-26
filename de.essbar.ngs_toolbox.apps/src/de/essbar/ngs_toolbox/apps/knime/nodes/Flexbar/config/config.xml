@@ -208,8 +208,8 @@
 			<ITEM name="pre-trim-right" value="" type="int" description="Trim specified number of bases on 3&apos; end prior to detection." required="false" advanced="false" />
 			<ITEM name="post-trim-length" value="" type="int" description="Trim to specified read length from 3&apos; end after removal." required="false" advanced="true" />
 			<ITEM name="min-read-length" value="18" type="int" description="Minimum read length to remain after removal." required="false" advanced="false" />
-			<ITEM name="qtrim" value="" type="string" description="Quality-based trimming mode." restrictions="TAIL,WIN,BWA" required="false" advanced="false" />
-			<ITEM name="qtrim-format" value="" type="string" description="Quality format." restrictions="sanger,solexa,i1.3,i1.5,i1.8" required="false" advanced="false" />
+			<ITEM name="qtrim" value="TAIL" type="string" description="Quality-based trimming mode." restrictions="TAIL,WIN,BWA" required="false" advanced="false" />
+			<ITEM name="qtrim-format" value="i1.8" type="string" description="Quality format." restrictions="sanger,solexa,i1.3,i1.5,i1.8" required="false" advanced="false" />
 			<ITEM name="qtrim-threshold" value="20" type="int" description="Minimum quality as threshold for trimming." required="false" advanced="false" />
 			<ITEM name="qtrim-win-size" value="5" type="int" description="Region size for sliding window approach." required="false" advanced="true" />
 			<ITEM name="qtrim-post-removal" value="false" type="string" description="Perform quality-based trimming after removal steps." restrictions="true,false" required="false" advanced="true" />
