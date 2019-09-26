@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>ABACAS</name>
+    
+    <shortDescription>
+        Algorithm Based Automatic Contiguation of Assembled Sequences.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>ABACAS contiguates contigs from a de novo assembly against a closely related reference.</p>
+		<p>
+			<a href="http://abacas.sourceforge.net/">Web Documentation for ABACAS</a>
+		</p>
+
+        </intro>
+        
+		<option name="program">MUMmer program to use: 'nucmer' or 'promer'.</option>
+		<option name="min_word_length">Minimum length of exact matching word.</option>
+		<option name="min_contig_length">Minimum contig length.</option>
+		<option name="min_identity">Mimimum percent identity.</option>
+		<option name="min_cov">Mimimum contig coverage.</option>
+		<option name="min_cov_diff">Mimimum contig coverage difference.</option>
+		<option name="append">Append contigs in bin to the pseudomolecule.</option>
+		<option name="circular">Reference sequence is circular.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="contigs [fa,fasta,fna]">Contigs in multi-fasta format. [fa,fasta]</inPort>
+		<inPort index="1" name="reference [fa,fasta,fna]">Reference sequence in a multi-fasta file. [fa,fasta]</inPort>
+		<outPort index="0" name="output [fa,fasta]">Reference-based assembly. [fa,fasta]</outPort>
+		<outPort index="1" name="unmapped [fa,fasta]">Unmapped contigs. [fa,fasta]</outPort>
+		<outPort index="2" name="output prefix [*,inactive]">Output files. [*]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="ABACAS Std Output">The text sent to standard out during the execution of ABACAS.</view>
+        <view index="1" name="ABACAS Error Output">The text sent to standard error during the execution of ABACAS. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

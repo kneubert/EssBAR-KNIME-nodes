@@ -15,6 +15,7 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Flexbar.FlexbarNodeFactory" category-path="/community/EssBAR/NGSTools/Preprocessing"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.FLASH2.FLASH2NodeFactory" category-path="/community/EssBAR/NGSTools/Preprocessing"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SPAdes.SPAdesNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.ABACAS.ABACASNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Prokka.ProkkaNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.ProkkaDB.ProkkaDBNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Parsnp.ParsnpNodeFactory" category-path="/community/EssBAR/NGSTools/Phylogeny"/>
@@ -177,6 +178,12 @@
     <mimetype name="flash2/hist">
       <fileextension name="hist"/>
       <fileextension name="histogram"/>
+    </mimetype>
+    <mimetype name="abacas/assembly">
+      <fileextension name="crunch"/>
+      <fileextension name="stats"/>
+      <fileextension name="tab"/>
+      <fileextension name="gaps"/>
     </mimetype>
   </extension> 
    <extension

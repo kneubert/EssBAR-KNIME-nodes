@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="ABACAS" version="1.3.1" category="Assembly"
+      docurl="http://abacas.sourceforge.net/">
+	<executableName>abacas.sh</executableName>
+	<description>Algorithm Based Automatic Contiguation of Assembled Sequences.</description>
+	<manual>ABACAS contiguates contigs from a de novo assembly against a closely related reference.</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="abacas.contigs" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="abacas.reference" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="abacas.output" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="abacas.unmapped" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="abacas.prefix" />
+        </clielement>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. -->    
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="abacas.program" />
+        </clielement>
+        <clielement optionIdentifier="-s" isList="false">
+            <mapping referenceName="abacas.min_word_length" />
+        </clielement>
+        <clielement optionIdentifier="-i" isList="false">
+            <mapping referenceName="abacas.min_identity" />
+        </clielement>
+        <clielement optionIdentifier="-v" isList="false">
+            <mapping referenceName="abacas.min_cov" />
+        </clielement>
+        <clielement optionIdentifier="-V" isList="false">
+            <mapping referenceName="abacas.min_cov_diff" />
+        </clielement>
+        <clielement optionIdentifier="-l" isList="false">
+            <mapping referenceName="abacas.min_contig_length" />
+        </clielement>
+        <clielement optionIdentifier="-a" isList="false">
+            <mapping referenceName="abacas.append" />
+        </clielement>
+        <clielement optionIdentifier="-c" isList="false">
+            <mapping referenceName="abacas.circular" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="abacas" description="Algorithm Based Automatic Contiguation of Assembled Sequences.">
+            <!-- Following clielements are arguments.-->  
+            <ITEM name="contigs" value="" type="input-file" required="true" supported_formats="*.fa,*.fasta,*.fna" description="Contigs in multi-fasta format."/>
+            <ITEM name="reference" value="" type="input-file" required="true" supported_formats="*.fa,*.fasta,*.fna" description="Reference sequence in a multi-fasta file."/>
+            <ITEM name="output" value="scaffolds.fasta" type="output-file" required="true" supported_formats="*.fa,*.fasta" description="Reference-based assembly."/>
+            <ITEM name="unmapped" value="unmapped_contigs.fasta" type="output-file" required="false" supported_formats="*.fa,*.fasta" description="Unmapped contigs."/>  
+			<ITEM name="prefix" value="" type="output-prefix" description="Prefix for ABACAS output files." supported_formats="*.*" required="false" advanced="false" />          
+            <!-- Options -->             
+            <ITEM name="program" value="nucmer" type="string" required="false" restrictions="nucmer,promer" description="MUMmer program to use: 'nucmer' or 'promer'." />
+            <ITEM name="min_length" value="12" type="int" required="false" description="Minimum length of exact matching word."/>
+            <ITEM name="min_identity" value="40" type="int" required="false" description="Mimimum percent identity."/>
+            <ITEM name="min_cov" value="40" type="int" required="false" description="Mimimum contig coverage."/>            
+            <ITEM name="min_cov_diff" value="1" type="int" required="false" description="Mimimum contig coverage difference."/>    
+            <ITEM name="min_word_length" value="12" type="int" required="false" description="Minimum length of exact matching word."/>       
+            <ITEM name="min_contig_length" value="1" type="int" required="false" description="Minimum contig length."/>                     
+            <ITEM name="append" value="false" type="string" description="Append contigs in bin to the pseudomolecule." required="false" restrictions="true,false" advanced="false" />     
+            <ITEM name="circular" value="true" type="string" description="Reference sequence is circular." required="false" restrictions="true,false" advanced="false" />  
+        </NODE>
+    </PARAMETERS>
+</tool>
