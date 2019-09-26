@@ -13,39 +13,39 @@ while getopts "$optspec" optchar; do
     case "${optchar}" in
         -)
             case "${OPTARG}" in
-                archaea)
-                    echo "Parsing option: '--${OPTARG}'" >&2
+            archaea)
+                echo "Parsing option: '--${OPTARG}'" >&2
 		    archaea_db=1
-                    ;;
-                bacteria)
-                    echo "Parsing option: '--${OPTARG}'" >&2
-                    bacteria_db=1
-                    ;;
-                fungi)
-                    echo "Parsing option: '--${OPTARG}'" >&2
+                ;;
+            bacteria)
+                echo "Parsing option: '--${OPTARG}'" >&2
+                bacteria_db=1
+                ;;
+            fungi)
+                echo "Parsing option: '--${OPTARG}'" >&2
 		    fungi_db=1
+                ;;
+		    viruses)
+		        echo "Parsing option: '--${OPTARG}'" >&2
+		        viruses_db=1
+                ;;
+		    genus) 
+		        genus_dbs="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+		        echo "Parsing option: '--${OPTARG}', value '${genus_dbs}'" >&2
+                ;;
+		    output)
+		        output_dir="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+		        echo "Parsing option: '--${OPTARG}', value: '${output_dir}'" >&2
+		        ;;
+		    help)
+                echo "usage: $0 [-v] [--bacteria] [--archaea] [--fungi] [--viruses] [--genus <GENUS,...,GENUS>] [--output <directory>]" >&2
+            	exit 2
                     ;;
-		viruses)
-		    echo "Parsing option: '--${OPTARG}'" >&2
-		    viruses_db=1
-                    ;;
-		genus) 
-		    genus_dbs="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-		    echo "Parsing option: '--${OPTARG}', value '${genus_dbs}'" >&2
-                    ;;
-		output)
-		    output_dir="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-		    echo "Parsing option: '--${OPTARG}', value: '${output_dir}'" >&2
-		    ;;
-		help)
-                    echo "usage: $0 [-v] [--bacteria] [--archaea] [--fungi] [--viruses] [--genus <GENUS,...,GENUS>] [--output <directory>]" >&2
-            	    exit 2
-                    ;;
-                *)
-                    if [ "$OPTERR" = 1 ] && [ "${optspec:0:1}" != ":" ]; then
-                        echo "Unknown option --${OPTARG}" >&2
-                    fi
-                    ;;
+            *)
+                if [ "$OPTERR" = 1 ] && [ "${optspec:0:1}" != ":" ]; then
+                    echo "Unknown option --${OPTARG}" >&2
+                fi
+                ;;
             esac;;
         h)
             echo "usage: $0 [-v] [--bacteria] [--archaea] [--fungi] [--viruses] [--genus <GENUS,...,GENUS>] [--output <directory>]" >&2
