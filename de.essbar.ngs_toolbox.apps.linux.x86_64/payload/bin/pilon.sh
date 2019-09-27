@@ -8,7 +8,7 @@ shift 4
 pilon_args=$*
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
+bowtie_dir=$DIR/bowtie2-2.3.5
 echo "mkdir -p $outdir"
 mkdir -p $outdir
 echo "cd $outdir"
@@ -39,11 +39,11 @@ while getopts "$optspec" optchar; do
     esac
 done
 
-# Map paired-end reads to assembly using bowtie2
-echo "bowtie2-build --quiet $assembly $assembly"
-bowtie2-build --quiet $assembly $assembly
-echo "bowtie2 -x $assembly --interleaved $reads -S frags.sam -p $threads"
-bowtie2 -x $assembly --interleaved $reads -S frags.sam -p $threads
+# Map paired-end reads to assembly using bowtie2 version 2.3.5 (which supports interleaved reads)
+echo "$bowtie_dir/bowtie2-build --quiet $assembly $assembly"
+$bowtie_dir/bowtie2-build --quiet $assembly $assembly
+echo "$bowtie_dir/bowtie2 -x $assembly --interleaved $reads -S frags.sam -p $threads"
+$bowtie_dir/bowtie2 -x $assembly --interleaved $reads -S frags.sam -p $threads
 
 echo "samtools view -bS frags.sam | samtools sort -o frags.bam"
 samtools view -bS frags.sam | samtools sort -o frags.bam

@@ -30,7 +30,7 @@ while getopts $optspec optchar; do
 			mlst_db)
                 mlstdb="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
 		    	echo "Parsing option: '--${OPTARG}', value: '${mlstdb}'" >&2;
-				txt_files=( $mlstdb/*/*.txt )
+				txt_files=( ${mlstdb}/*/*.txt )
 				fasta_files=( ${mlstdb}/*/*.fasta )
 				mlstdef_file=`echo ${txt_files[0]}`
 				mlstfasta_file=`echo ${fasta_files[0]}`
