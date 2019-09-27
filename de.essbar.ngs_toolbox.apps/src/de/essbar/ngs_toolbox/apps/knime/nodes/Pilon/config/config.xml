@@ -15,6 +15,9 @@
         <clielement optionIdentifier="" isList="false">
             <mapping referenceName="pilon.output" />
         </clielement>    
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="pilon.output_dir" />
+        </clielement> 
         <clielement optionIdentifier="--duplicates" isList="false">
             <mapping referenceName="pilon.duplicates" />
         </clielement>
@@ -55,7 +58,8 @@
         <NODE name="pilon" description="Automatically improve draft assemblies.">
             <ITEM name="assembly" value="" type="input-file" required="true" supported_formats="*.fa,*.fasta" description="The input genome we are trying to improve."/>
             <ITEM name="reads" value="" type="input-file" required="true" supported_formats="*.fq,*.fastq,*.gz,*.bz2" description="A fastq file consisting of paired-end reads in interleaved format."/>
-            <ITEM name="output" value="pilon.fasta" type="output-file" required="true" supported_formats="*.fa,*.fasta" description="FASTA file containing an improved representation of the genome."/>
+            <ITEM name="output" value="" type="output-file" required="true" supported_formats="*.fa,*.fasta" description="FASTA file containing an improved representation of the genome."/>
+            <ITEM name="output_dir" value="" type="output-prefix" required="false" supported_formats="*.*" description="Output files."/>
             <!-- Options -->    
             <ITEM name="duplicates" value="false" type="string" required="false" restrictions="true,false" description="Use reads marked as duplicates in the alignment of reads."/>       
             <ITEM name="threads" value="1" type="int" required="false" restrictions="1:" description="Degree of parallelism to use for certain processing."/>

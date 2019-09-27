@@ -33,6 +33,8 @@
 		<inPort index="0" name="assembly [fa,fasta]">The input genome we are trying to improve. [fa,fasta]</inPort>
 		<inPort index="1" name="reads [fq,fastq,gz,bz2]">A fastq file consisting of paired-end reads in interleaved format. [fq,fastq,gz,bz2]</inPort>
 		<outPort index="0" name="output [fa,fasta]">FASTA file containing an improved representation of the genome. [fa,fasta]</outPort>
+ 		<outPort index="1" name="output folder [*,inactive]">Output directory. [*]</outPort>
+
  </ports>
     <views>
         <view index="0" name="Pilon Std Output">The text sent to standard out during the execution of Pilon.</view>

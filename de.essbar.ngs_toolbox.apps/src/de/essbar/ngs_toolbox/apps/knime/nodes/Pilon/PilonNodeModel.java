@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class PilonNodeModel extends GenericKnimeNodeModel {  
     protected PilonNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"fa" ,"fasta" }, {"fq" ,"fastq" ,"gz" ,"bz2" },}, new String[][]{{"fa" ,"fasta" },});
+        super(nodeConfig, pluginConfig, new String[][]{{"fa" ,"fasta" }, {"fq" ,"fastq" ,"gz" ,"bz2" },}, new String[][]{{"fa" ,"fasta" }, {"*","inactive"}});
     }
 }

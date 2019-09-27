@@ -3,11 +3,16 @@
 assembly=$1
 reads=$2
 outfile=$3
-shift 3
+outdir=$4
+shift 4
 pilon_args=$*
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-outdir=`dirname $outfile`
+
+echo "mkdir -p $outdir"
+mkdir -p $outdir
+echo "cd $outdir"
+cd $outdir
 
 optspec=":hv-:"
 while getopts "$optspec" optchar; do
@@ -42,6 +47,8 @@ bowtie2 -x $assembly --interleaved $reads -S frags.sam -p $threads
 
 echo "samtools view -bS frags.sam | samtools sort -o frags.bam"
 samtools view -bS frags.sam | samtools sort -o frags.bam
+rm frags.sam
+
 echo "samtools index frags.bam"
 samtools index frags.bam
 
@@ -50,5 +57,5 @@ echo "java -Xmx16G -jar $DIR/pilon-1.23.jar --genome $assembly --frags frags.bam
 java -Xmx16G -jar $DIR/pilon-1.23.jar --genome $assembly --frags frags.bam --outdir $outdir $pilon_args
 
 # Corrected assembly
-echo "mv $outdir/pilon.fasta $outfile"
-mv $outdir/pilon.fasta $outfile
+echo "cp $outdir/pilon.fasta $outfile"
+cp $outdir/pilon.fasta $outfile
