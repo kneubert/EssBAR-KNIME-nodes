@@ -2,7 +2,7 @@
 <tool name="ProkkaDB" version="1.0" docurl="https://github.com/rehrlich/prokka_database_maker" category="Assembly" >
 	<executableName>prokka_db.sh</executableName>
 	<description>Tool for creating databases for Prokka</description>
-	<manual></manual>
+	<manual>Prokka uses a variety of databases when trying to assign function to the predicted CDS features. It takes a hierarchial approach to make it fast. A small, core set of well characterized proteins are first searched using BLAST+. This combination of small database and fast search typically completes about 70% of the workload. Then a series of slower but more sensitive HMM databases are searched using HMMER3.</manual>
 	<cli>
 		<!-- Following clielements are arguments. You should consider
 		providing a help text to ease understanding. -->	

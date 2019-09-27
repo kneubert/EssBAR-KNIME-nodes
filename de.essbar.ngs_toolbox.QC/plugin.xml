@@ -3,7 +3,7 @@
 
 <plugin> 
   <extension point="org.knime.workbench.repository.categories"> 
-    <category description="/community/EssBAR" icon="icons/category.png" level-id="EssBAR" name="EssBAR" path="/community"/>
+    <category description="/community/EssBAR" icon="icons/EssBAR2.png" level-id="EssBAR" name="EssBAR" path="/community"/>
     <category description="/community/EssBAR/NGSTools" icon="icons/category.png" level-id="NGSTools" name="NGSTools" path="/community/EssBAR"/>
     <category description="/community/EssBAR/NGSTools/QC and Views" icon="icons/category.png" level-id="QC and Views" name="QC and Views" path="/community/EssBAR/NGSTools"/>
   </extension>  

@@ -9,7 +9,7 @@
     <category description="/community/EssBAR/NGSTools/Metagenomics" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Metagenomics" level-id="Metagenomics"/>
     <category description="/community/EssBAR/NGSTools/Sequence typing" icon="icons/category.png" path="/community/EssBAR/NGSTools" name="Sequence typing" level-id="Sequence typing"/>
     <category description="/community/EssBAR/NGSTools" icon="icons/category.png" path="/community/EssBAR" name="NGSTools" level-id="NGSTools"/>
-    <category description="/community/EssBAR" icon="icons/category.png" path="/community" name="EssBAR" level-id="EssBAR"/>
+    <category description="/community/EssBAR" icon="icons/EssBAR2.png" path="/community" name="EssBAR" level-id="EssBAR"/>
   </extension>  
   <extension point="org.knime.workbench.repository.nodes"> 
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Flexbar.FlexbarNodeFactory" category-path="/community/EssBAR/NGSTools/Preprocessing"/>

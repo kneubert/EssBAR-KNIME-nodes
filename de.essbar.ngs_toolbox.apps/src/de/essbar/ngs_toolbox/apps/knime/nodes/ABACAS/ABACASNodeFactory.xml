@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
-<knimeNode icon="generic_node.png" type="Manipulator">
+<knimeNode icon="wsi2.png" type="Manipulator">
     <name>ABACAS</name>
     
     <shortDescription>

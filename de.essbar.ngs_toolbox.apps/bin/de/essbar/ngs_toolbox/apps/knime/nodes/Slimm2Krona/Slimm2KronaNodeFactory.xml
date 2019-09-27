@@ -2,22 +2,15 @@
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="generic_node.png" type="Manipulator">
     <name>Slimm2Krona</name>
-    
     <shortDescription>
         Conversion of a Slimm profile to Krona compatible text format.
     </shortDescription>
     
     <fullDescription>
         <intro>
-		<p>
-			<a href="http://www.seqan.de">Web Documentation for Slimm2Krona</a>
-		</p>
-
+		Slimm2Krona converts Slimm output into text format that can be loaded by Krona tools (KronaText node).
         </intro>
-        
-
     </fullDescription>
-    
     <ports>
 		<inPort index="0" name="profile [tsv]">Profile file produced by Slimm. [tsv]</inPort>
 		<outPort index="0" name="output [tsv,Inactive]">Output file in Krona text format. [tsv,Inactive]</outPort>

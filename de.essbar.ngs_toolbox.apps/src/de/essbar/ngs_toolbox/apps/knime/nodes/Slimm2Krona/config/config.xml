@@ -2,6 +2,7 @@
 <tool name="Slimm2Krona" version="0.3.3" docurl="http://www.seqan.de" category="Metagenomics" >
 	<executableName>slimm2krona.py</executableName>
 	<description>Conversion of a Slimm profile to Krona compatible text format.</description>
+	<manual>Slimm2Krona converts Slimm output into text format that can be loaded by Krona tools (KronaText node).</manual>
 	<cli>
 		<clielement optionIdentifier="--profile" isList="false">
 			<mapping referenceName="slimm2krona.profile" />
