@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="FLASH2" version="0.2.0" category="Preprocessing"
+      docurl="http://ccb.jhu.edu/software/FLASH/index.shtml">
+	<executableName>flash2</executableName>
+	<description>FLASH merges reads from paired-end sequencing runs with very high accuracy.</description>
+	<manual>FLASH (Fast Length Adjustment of SHort reads) is an accurate and fast tool to merge paired-end reads</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. --> 
+        <clielement optionIdentifier="" isList="true">
+            <mapping referenceName="flash2.input" />
+        </clielement>
+        <clielement optionIdentifier="-d" isList="false">
+            <mapping referenceName="flash2.output" />
+        </clielement>
+        <clielement optionIdentifier="-Q" isList="false">
+            <mapping referenceName="flash2.qual_cutoff" />
+        </clielement>
+        <clielement optionIdentifier="-C" isList="false">
+            <mapping referenceName="flash2.percent_cutoff" />
+        </clielement>
+        <clielement optionIdentifier="--min-overlap" isList="false">
+            <mapping referenceName="flash2.min_overlap" />
+        </clielement>
+        <clielement optionIdentifier="--max-overlap" isList="false">
+            <mapping referenceName="flash2.max_overlap" />
+        </clielement>
+        <clielement optionIdentifier="--min-overlap-outie" isList="false">
+            <mapping referenceName="flash2.min_overlap_outie" />
+        </clielement>
+        <clielement optionIdentifier="--max-mismatch-density" isList="false">
+            <mapping referenceName="flash2.max_mismatch_density" />
+        </clielement>
+        <clielement optionIdentifier="--allow-outies" isList="false">
+            <mapping referenceName="flash2.outies" />
+        </clielement>
+        <clielement optionIdentifier="--phred-offset" isList="false">
+            <mapping referenceName="flash2.phred_offset" />
+        </clielement>
+        <clielement optionIdentifier="--read-len" isList="false">
+            <mapping referenceName="flash2.read_length" />
+        </clielement>
+        <clielement optionIdentifier="--fragment-len" isList="false">
+            <mapping referenceName="flash2.fragment_length" />
+        </clielement>
+        <clielement optionIdentifier="--fragment-len-stddev" isList="false">
+            <mapping referenceName="flash2.fragment_std" />
+        </clielement>
+        <clielement optionIdentifier="--cap-mismatch-quals" isList="false">
+            <mapping referenceName="flash2.cap_mismatch_quals" />
+        </clielement>
+        <clielement optionIdentifier="--interleaved-input" isList="false">
+            <mapping referenceName="flash2.interleaved_input" />
+        </clielement>
+        <clielement optionIdentifier="--interleaved-output" isList="false">
+            <mapping referenceName="flash2.interleaved_output" />
+        </clielement>
+        <clielement optionIdentifier="--compress" isList="false">
+            <mapping referenceName="flash2.compress" />
+        </clielement>
+        <clielement optionIdentifier="--compress-prog" isList="false">
+            <mapping referenceName="flash2.compress_prog" />
+        </clielement>
+        <clielement optionIdentifier="--threads" isList="false">
+            <mapping referenceName="flash2.threads" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="flash2" description="FLASH (Fast Length Adjustment of SHort reads) is an accurate and fast tool to merge paired-end reads.">
+            <!-- Following clielements are arguments.-->  
+            <ITEMLIST name="input" value="" type="input-file" required="true" description="Input files." supported_formats="*.fq,*.fastq,*.gz"/>  
+            <ITEM name="output" value="" type="output-prefix" description="Path to directory for output files." supported_formats="*.fq,*.fastq,*.gz,*.bz,*.xz,*.pz" required="true" advanced="false" />    
+            <ITEM name="qual_cutoff" value="2" type="int" description="The cutoff number for the quality score corresponding with the percent cutoff." required="false" advanced="false" />
+       	    <ITEM name="percent_cutoff" value="50" type="int" description="The cutoff percentage for each read that will be discarded if it falls below -Q option." restrictions="0:100" required="false" advanced="false" />
+       	    <ITEM name="min_overlap" value="10" type="int" description="The minimum required overlap length (in base pair) between two reads to provide a confident overlap." required="false" advanced="false" />
+       	    <ITEM name="max_overlap" value="65" type="int" description="Maximum overlap length in bp expected in approximately 90% of read pairs. It is by default set to 65bp, which works well for 100bp reads generated from a 180bp library, assuming a normal distribution of fragment lengths. " required="false" advanced="false" />
+       	    <ITEM name="min_overlap_outie" value="35" type="int" description="The minimum required overlap length between two reads to provide a confident overlap in an outie scenario." required="false" advanced="false" />
+       	    <ITEM name="max_mismatch_density" value="0.25" type="float" description="Maximum allowed ratio between the number of mismatched base pairs and the overlap length. Two reads will not be combined with a given overlap if that overlap results in a mismatched base density higher than this value. " required="false" advanced="false" />
+            <ITEM name="outies" value="false" type="string" description="Also try combining read pairs in the 'outie' (outward) orientation." required="false" restrictions="true,false" advanced="false" />     
+       	    <ITEM name="phred_offset" value="33" type="int" description="The smallest ASCII value of the characters used to represent quality values of bases in FASTQ files. A value of 33 corresponds to the later Illumina and Sanger platforms, 64 corresponds to the earlier Illumina platforms." required="false" advanced="false" />
+       	    <ITEM name="read_length" value="100" type="int" description="Average read length, which is used to calculate the maximum overlap parameter." required="false" advanced="false" />
+       	    <ITEM name="fragment_length" value="180" type="int" description="Fragment length, which is used to calculate the maximum overlap parameter." required="false" advanced="false" />
+       	    <ITEM name="fragment_std" value="18" type="int" description="Fragment standard deviation, which is used to calculate the maximum overlap parameter." required="false" advanced="false" />
+            <ITEM name="cap_mismatch_quals" value="false" type="string" description="Cap quality scores assigned at mismatch locations to 2." required="false" restrictions="true,false" advanced="false" />     
+            <ITEM name="interleaved_input" value="false" type="string" description="Allow a single file that has the paired-end reads interleaved." required="false" restrictions="true,false" advanced="false" />     
+            <ITEM name="interleaved_output" value="false" type="string" description="Write the uncombined pairs in interleaved FASTQ format." required="false" restrictions="true,false" advanced="false" />     
+            <ITEM name="compress" value="false" type="string" description="Compress the output files directly with zlib, using the gzip container format." required="false" restrictions="true,false" advanced="false" />     
+            <ITEM name="compress_prog" value="" type="string" description="Compress the output files using the given compression program." required="false" restrictions="gzip,bzip2,xz,pigz" advanced="false" />  
+            <ITEM name="threads" value="1" type="int" description="Set the number of worker threads. This is in addition to the I/O threads." required="false" restrictions="1:" advanced="false" />            
+        </NODE>
+    </PARAMETERS>
+</tool>

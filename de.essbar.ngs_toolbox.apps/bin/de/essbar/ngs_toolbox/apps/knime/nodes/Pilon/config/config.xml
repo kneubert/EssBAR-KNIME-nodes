@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Pilon" version="1.23" category="Assembly"
+      docurl="https://github.com/broadinstitute/pilon/wiki">
+	<executableName>pilon.sh</executableName>
+	<description>Automatically improve draft assemblies.</description>
+	<manual>Pilon uses read alignment analysis to identify inconsistencies between the input genome and the evidence in the reads. It then attempts to make improvements to the input genome, including: Single base differences, Small indels, Larger indel or block substitution events, Gap filling, Identification of local misassemblies, including optional opening of new gaps.</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="pilon.assembly" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="pilon.reads" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="pilon.output" />
+        </clielement>    
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="pilon.output_dir" />
+        </clielement> 
+        <clielement optionIdentifier="--duplicates" isList="false">
+            <mapping referenceName="pilon.duplicates" />
+        </clielement>
+        <clielement optionIdentifier="--threads" isList="false">
+            <mapping referenceName="pilon.threads" />
+        </clielement>
+        <clielement optionIdentifier="--defaultqual" isList="false">
+            <mapping referenceName="pilon.qual" />
+        </clielement>
+        <clielement optionIdentifier="--flank" isList="false">
+            <mapping referenceName="pilon.flank" />
+        </clielement>
+        <clielement optionIdentifier="--gapmargin" isList="false">
+            <mapping referenceName="pilon.gapmargin" />
+        </clielement>
+        <clielement optionIdentifier="--K" isList="false">
+            <mapping referenceName="pilon.kmer_size" />
+        </clielement>
+        <clielement optionIdentifier="--mindepth" isList="false">
+            <mapping referenceName="pilon.min_depth" />
+        </clielement>
+        <clielement optionIdentifier="--mingap" isList="false">
+            <mapping referenceName="pilon.min_gap" />
+        </clielement>
+        <clielement optionIdentifier="--minmq" isList="false">
+            <mapping referenceName="pilon.min_mq" />
+        </clielement>
+        <clielement optionIdentifier="--minqual" isList="false">
+            <mapping referenceName="pilon.min_qual" />
+        </clielement>
+        <clielement optionIdentifier="--nostrays" isList="false">
+            <mapping referenceName="pilon.nostrays" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="pilon" description="Automatically improve draft assemblies.">
+            <ITEM name="assembly" value="" type="input-file" required="true" supported_formats="*.fa,*.fasta" description="The input genome we are trying to improve."/>
+            <ITEM name="reads" value="" type="input-file" required="true" supported_formats="*.fq,*.fastq,*.gz,*.bz2" description="A fastq file consisting of paired-end reads in interleaved format."/>
+            <ITEM name="output" value="" type="output-file" required="true" supported_formats="*.fa,*.fasta" description="FASTA file containing an improved representation of the genome."/>
+            <ITEM name="output_dir" value="" type="output-prefix" required="false" supported_formats="*.*" description="Output files."/>
+            <!-- Options -->    
+            <ITEM name="duplicates" value="false" type="string" required="false" restrictions="true,false" description="Use reads marked as duplicates in the alignment of reads."/>       
+            <ITEM name="threads" value="1" type="int" required="false" restrictions="1:" description="Degree of parallelism to use for certain processing."/>
+            <ITEM name="qual" value="10" type="int" required="false" description="Assumes bases are of this quality if quals are no present in input BAMs."/>     
+            <ITEM name="flank" value="10" type="int" required="false" description="Controls how much of the well-aligned reads will be used; this many bases at each
+              end of the good reads will be ignored."/>
+            <ITEM name="gapmargin" value="100000" type="int" required="false" description="Closed gaps must be within this number of bases of true size to be closed."/>            
+            <ITEM name="kmer_size" value="47" type="int" required="false" description="Kmer size used by internal assembler."/>                 
+            <ITEM name="min_depth" value="0.1" type="float" required="false" description="Variants (snps and indels) will only be called if there is coverage of good pairs at this depth or more."/>    
+            <ITEM name="min_gap" value="10" type="int" required="false" description="Minimum size for unclosed gaps."/> 
+            <ITEM name="min_mq" value="0" type="int" required="false" description="Minimum alignment mapping quality for a read to count in pileups."/> 
+            <ITEM name="min_qual" value="0" type="int" description="Minimum base quality to consider for pileups." required="false" restrictions="0:" advanced="false" />     
+            <ITEM name="nostrays" value="false" type="string" description="Skip making a pass through the input BAM files to identify stray pairs, that is, those pairs in which both reads are aligned but not marked valid because they have inconsistent orientation or separation. Identifying stray pairs can help fill gaps and assemble larger insertions, especially of repeat content." required="false" restrictions="true,false" advanced="false" />        
+        </NODE>
+    </PARAMETERS>
+</tool>

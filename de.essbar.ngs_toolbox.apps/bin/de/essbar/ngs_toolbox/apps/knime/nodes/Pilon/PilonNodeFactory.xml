@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="pilon2.png" type="Manipulator">
+    <name>Pilon</name>
+    
+    <shortDescription>
+        Automatically improve draft assemblies.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>Pilon uses read alignment analysis to identify inconsistencies between the input genome and the evidence in the reads. It then attempts to make improvements to the input genome, including: Single base differences, Small indels, Larger indel or block substitution events, Gap filling, Identification of local misassemblies, including optional opening of new gaps.</p>
+		<p>
+			<a href="https://github.com/broadinstitute/pilon/wiki">Web Documentation for Pilon</a>
+		</p>
+
+        </intro>
+        
+		<option name="duplicates">Use reads marked as duplicates in the alignment of reads.</option>
+		<option name="threads">Degree of parallelism to use for certain processing.</option>
+		<option name="qual">Assumes bases are of this quality if quals are no present in input BAMs.</option>
+		<option name="flank">Controls how much of the well-aligned reads will be used; this many bases at each               end of the good reads will be ignored.</option>
+		<option name="gapmargin">Closed gaps must be within this number of bases of true size to be closed.</option>
+		<option name="kmer_size">Kmer size used by internal assembler.</option>
+		<option name="min_depth">Variants (snps and indels) will only be called if there is coverage of good pairs at this depth or more.</option>
+		<option name="min_gap">Minimum size for unclosed gaps.</option>
+		<option name="min_mq">Minimum alignment mapping quality for a read to count in pileups.</option>
+		<option name="min_qual">Minimum base quality to consider for pileups.</option>
+		<option name="nostrays">Skip making a pass through the input BAM files to identify stray pairs, that is, those pairs in which both reads are aligned but not marked valid because they have inconsistent orientation or separation. Identifying stray pairs can help fill gaps and assemble larger insertions, especially of repeat content.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="assembly [fa,fasta]">The input genome we are trying to improve. [fa,fasta]</inPort>
+		<inPort index="1" name="reads [fq,fastq,gz,bz2]">A fastq file consisting of paired-end reads in interleaved format. [fq,fastq,gz,bz2]</inPort>
+		<outPort index="0" name="output [fa,fasta]">FASTA file containing an improved representation of the genome. [fa,fasta]</outPort>
+ 		<outPort index="1" name="output folder [*,inactive]">Output directory. [*]</outPort>
+
+ </ports>
+    <views>
+        <view index="0" name="Pilon Std Output">The text sent to standard out during the execution of Pilon.</view>
+        <view index="1" name="Pilon Error Output">The text sent to standard error during the execution of Pilon. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

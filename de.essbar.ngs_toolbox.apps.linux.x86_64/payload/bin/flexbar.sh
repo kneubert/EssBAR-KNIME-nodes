@@ -9,4 +9,4 @@ shift
 
 # Execute flexbar and output interleaved reads.
 echo "flexbar $* -1 >${OUT}"
-flexbar $* -1 >${OUT}
+flexbar $* -1 >"${OUT}"

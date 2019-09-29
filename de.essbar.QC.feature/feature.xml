@@ -36,16 +36,17 @@ all of the licenses to use this package.
    </license>
 
    <plugin
-         id="de.essbar.ngs_toolbox.QC"
+         id="de.essbar.ngs_toolbox.apps"
          download-size="0"
          install-size="0"
-         version="0.0.3"/>
+         version="0.0.4"
+         unpack="false"/>
 
    <plugin
-         id="de.essbar.ngs_toolbox.QC.linux.x86_64"
+         id="de.essbar.ngs_toolbox.apps.linux.x86_64"
          download-size="0"
          install-size="0"
-         version="0.0.3"
+         version="0.0.4"
          fragment="true"/>
 
 </feature>
