@@ -6,11 +6,11 @@
 	<cli>
 		<!-- Following clielements are arguments. You should consider
 		providing a help text to ease understanding. -->
-		<clielement optionIdentifier="--db" isList="false">
-			<mapping referenceName="kraken2.db" />
-		</clielement>	
 		<clielement optionIdentifier="" isList="true">
 			<mapping referenceName="kraken2.input-files" />
+		</clielement>	
+		<clielement optionIdentifier="--db" isList="false">
+			<mapping referenceName="kraken2.db" />
 		</clielement>		
 		<clielement optionIdentifier="--output" isList="false">
 			<mapping referenceName="kraken2.output" />
@@ -58,8 +58,8 @@
 	</cli>
 	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		<NODE name="kraken2" description="Kraken2 taxonomic sequence classification">
-			<ITEM name="db" value="" type="input-prefix" description="Full path of precomputed Kraken2 database" supported_formats="*.k2d" required="true" advanced="false" />
 			<ITEMLIST name="input-files" value="" type="input-file" description="Input files" supported_formats="*.fasta,*.fa,*.fastq,*.fq,*.gz,*.bz2" required="true" advanced="false" />
+			<ITEM name="db" value="" type="input-prefix" description="Full path of precomputed Kraken2 database" supported_formats="*.k2d" required="true" advanced="false" />
 			<ITEM name="output" value="" type="output-file" description="Output file that contains classification results for each sequence." supported_formats=".kraken" required="true" advanced="false" />
    			<ITEM name="report" value="" type="output-file" description="Report file that contains aggregate counts." supported_formats="*.kreport" required="true" advanced="false" />                     
 			<ITEM name="classified-output" value="" type="output-file" description="Output file that contains classified sequences." supported_formats="*.fasta,*.fa,*.fastq,*.fq" required="false" advanced="false" />

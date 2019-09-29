@@ -55,7 +55,7 @@
     
     <ports>
 		<inPort index="0" name="assembly [fasta,fa,fna]">Assembly (contigs or scaffolds) [fasta,fa,fna]</inPort>
-		<inPort index="1" name="dbdir [*,pin,phd,psi,phi,psd,pog,psq,phr,hmm]">Prokka database root folder. [*,pin,phd,psi,phi,psd,pog,psq,phr,hmm]</inPort>
+		<inPort index="1" name="dbdir [*]">Prokka database root folder. [*]</inPort>
 		<inPort index="2" name="proteins [fasta,fa,fna,gbk]">FASTA or GBK file to use as 1st priority. [fasta,fa,fna,gbk,opt.]</inPort>
 		<inPort index="3" name="hmms [fasta,fa,fna]">Trusted HMM to first annotate from. [fasta,fa,fna,opt.]</inPort>
 		<outPort index="0" name="outdir [*,Inactive]">Output directory [*,Inactive]</outPort>

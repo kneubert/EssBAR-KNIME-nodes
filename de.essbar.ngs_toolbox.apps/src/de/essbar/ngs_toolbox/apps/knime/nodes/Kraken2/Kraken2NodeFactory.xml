@@ -29,8 +29,8 @@
     </fullDescription>
     
     <ports>
-		<inPort index="0" name="db [k2d]">Full path of precomputed Kraken2 database [k2d]</inPort>
-		<inPort index="1" name="input-files [fasta,fa,fastq,fq,gz,bz2]">Input files [fasta,fa,fastq,fq,gz,bz2]</inPort>
+		<inPort index="0" name="input-files [fasta,fa,fastq,fq,gz,bz2]">Input files [fasta,fa,fastq,fq,gz,bz2]</inPort>
+		<inPort index="1" name="db [k2d]">Full path of precomputed Kraken2 database [k2d]</inPort>
 		<outPort index="0" name="output [kraken]">Output file that contains classification results for each sequence. [fasta,fa,fastq,fq,*]</outPort>
 		<outPort index="1" name="report [kreport]">Report file that contains aggregate counts. [kreport]</outPort>
 		<outPort index="2" name="classified-output [fasta,fa,fastq,fq]">Output file that contains classified sequences. [fasta,fa,fastq,fq]</outPort>

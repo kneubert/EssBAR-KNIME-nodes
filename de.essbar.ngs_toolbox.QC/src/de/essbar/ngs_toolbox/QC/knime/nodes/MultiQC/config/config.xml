@@ -8,7 +8,7 @@
 	<cli>
 		<!-- Following clielements are arguments. You should consider
 		     providing a help text to ease understanding. -->
-		<clielement optionIdentifier="" isList="false">
+		<clielement optionIdentifier="" isList="true">
 			<mapping referenceName="multiqc.argument-0" />
 		</clielement>
 		<clielement optionIdentifier="" isList="false">
@@ -101,10 +101,10 @@
         <ITEM name="flat" value="false" type="string" required="false" description="Use only flat plots (static images)." restrictions="true,false"  advanced="false" />      
         <ITEM name="interactive" value="false" type="string" required="false" description="Use only interactive plots (HighCharts Javascript)." restrictions="true,false"  advanced="false" />      
         <ITEM name="pdf" value="false" type="string" required="false" description="Creates PDF report with 'simple' template. Requires Pandoc to be installed." restrictions="true,false"  advanced="false" />            
-        <ITEM name="argument-0" value="" type="input-prefix" required="true" description="Input directories" supported_formats="*" />
-        <ITEM name="argument-1" value="" type="input-prefix" required="false" description="Optional input directory" supported_formats="*" />
-        <ITEM name="argument-2" value="" type="input-prefix" required="false" description="Optional input directory" supported_formats="*" />
-        <ITEM name="argument-3" value="" type="input-prefix" required="false" description="Optional input directory" supported_formats="*" />
+        <ITEMLIST name="argument-0" value="" type="input-file" required="true" description="Input directories"/>
+        <ITEM name="argument-1" value="" type="input-file" required="false" description="Optional input directory" />
+        <ITEM name="argument-2" value="" type="input-file" required="false" description="Optional input directory" />
+        <ITEM name="argument-3" value="" type="input-file" required="false" description="Optional input directory" />
 		<ITEM name="filename" value="" type="output-prefix" description="Output files" supported_formats="*.*" required="false" advanced="false" />
 	 </NODE>
     </PARAMETERS>

@@ -37,10 +37,10 @@
 		
     </fullDescription>
     <ports>
-		<inPort index="0" name="argument-0 [*]">Input directories [*]</inPort>
-		<inPort index="1" name="argument-1 [*]">Input directory (optional) [*]</inPort>
-		<inPort index="2" name="argument-2 [*]">Input directory (optional) [*]</inPort>
-		<inPort index="3" name="argument-3 [*]">Input directory (optional) [*]</inPort>
+		<inPort index="0" name="argument-0 []">Input directories [*]</inPort>
+		<inPort index="1" name="argument-1 []">Input directory (optional) [*]</inPort>
+		<inPort index="2" name="argument-2 []">Input directory (optional) [*]</inPort>
+		<inPort index="3" name="argument-3 []">Input directory (optional) [*]</inPort>
 		<outPort index="0" name="output-port [*,Inactive]">Outputs [*,Inactive]</outPort>
  </ports>
     <views>

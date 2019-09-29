@@ -147,7 +147,7 @@
 			<ITEM name="strain" value="strain" type="string" description="Strain name" required="false" advanced="false" />
 			<ITEM name="plasmid" value="" type="string" description="Plasmid name or identifier" required="false" advanced="false" />
 			<ITEM name="kingdom" value="Bacteria" type="string" description="Annotation mode: Archaea|Bacteria|Mitochondria|Viruses" restrictions="Archaea,Bacteria,Mitochondria,Viruses" required="false" advanced="false" />
-			<ITEM name="gcode" value="0" type="int" description="Genetic code / Translation table (set if --kingdom is set)" required="false" advanced="false" />
+			<ITEM name="gcode" value="11" type="int" description="Genetic code / Translation table (set if --kingdom is set)" required="false" advanced="false" />
 			<ITEM name="gram" value="" type="string" description="Gram: -/neg +/pos" required="false" advanced="true" />
 			<ITEM name="usegenus" value="false" type="string" description="Use genus-specific BLAST databases (needs --genus)." restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="metagenome" value="false" type="string" description="Improve gene predictions for highly fragmented genomes." restrictions="true,false" required="false" advanced="false" />

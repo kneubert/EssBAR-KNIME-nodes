@@ -82,7 +82,7 @@ public class MultiQCNodeModel extends GenericKnimeNodeModel implements WizardNod
 	
     protected MultiQCNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"*"},{"*"},{"*"},{"*"}}, new String[][]{{"*" ,"inactive" },});
+        super(nodeConfig, pluginConfig, new String[][]{{""},{""},{""},{""}}, new String[][]{{"*" ,"inactive" },});
         
         m_config = new JSViewConfig();
         m_viewCreator = new JavaScriptViewCreator<>(getJavascriptObjectID()); 

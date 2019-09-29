@@ -6,18 +6,18 @@
 	<cli>
 		<!-- Following clielements are arguments. You should consider
 		providing a help text to ease understanding. -->
-		<clielement optionIdentifier="--s1" isList="false">
-			<mapping referenceName="spades.single_read_lib" />
-		</clielement>		
 		<clielement optionIdentifier="--pe1-12" isList="false">
 			<mapping referenceName="spades.paired_read_lib" />
 		</clielement>	
 		<clielement optionIdentifier="--pe1-s" isList="false">
 			<mapping referenceName="spades.paired_read_lib_unpaired" />
-		</clielement>	
+		</clielement>
 		<clielement optionIdentifier="--mp1-12" isList="false">
 			<mapping referenceName="spades.mate_pair_lib" />
 		</clielement>
+		<clielement optionIdentifier="--s1" isList="false">
+			<mapping referenceName="spades.single_read_lib" />
+		</clielement>			
 		<clielement optionIdentifier="--pacbio" isList="false">
 			<mapping referenceName="spades.pacbio" />
 		</clielement>
@@ -86,10 +86,10 @@
 	</cli>
 	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		<NODE name="spades" description="St. Petersburg genome assembler">
-			<ITEM name="single_read_lib" value="" type="input-file" description="File for single-read library" supported_formats="*.fastq,*.fq,*.bam" required="false" advanced="false" />
 			<ITEM name="paired_read_lib" value="" type="input-file" description="File with interlaced reads for paired-read library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />
 			<ITEM name="paired_read_lib_unpaired" value="" type="input-file" description="File with interlaced reads with unpaired reads from paired-end library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />
 			<ITEM name="mate_pair_lib" value="" type="input-file" description="File with interlaced reads for mate-pair library" supported_formats="*.fastq,*.fq" required="false" advanced="false" />			
+			<ITEM name="single_read_lib" value="" type="input-file" description="File for single-read library" supported_formats="*.fastq,*.fq,*.bam" required="false" advanced="false" />
 			<ITEM name="pacbio" value="" type="input-file" description=" File with PacBio CLR reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />			
 			<ITEM name="nanopore" value="" type="input-file" description=" File with Oxford Nanopore reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />					
 			<ITEM name="sanger" value="" type="input-file" description=" File with Sanger reads for hybrid assembly" supported_formats="*.fastq,*.fq" required="false" advanced="false" />	
