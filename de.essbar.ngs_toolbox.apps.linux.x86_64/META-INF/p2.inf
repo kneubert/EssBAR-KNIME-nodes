@@ -494,5 +494,17 @@ instructions.install=\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/bowtie2-2.3.5/bowtie2-inspect-s,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/bowtie2-2.3.5/bowtie2-inspect-s-debug,permissions:755);
+	targetFile:payload/bin/bowtie2-2.3.5/bowtie2-inspect-s-debug,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/mira,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/mira.py,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/miramem,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/miraconvert,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/miramer,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/mirabait,permissions:755);
 	

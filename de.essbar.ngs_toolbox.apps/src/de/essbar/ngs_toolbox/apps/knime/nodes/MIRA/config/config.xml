@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="MIRA" version="V5rc1" category="Assembly"
+      docurl="http://mira-assembler.sourceforge.net/docs/DefinitiveGuideToMIRA.html">
+	<executableName>mira.py</executableName>
+	<description>MIRA is a whole genome shotgun and EST sequence assembler for Sanger, 454, Solexa (Illumina) and IonTorrent data. It can be seen as a Swiss army knife of sequence assembly developed and used in the past 16 years to get assembly jobs done efficiently - and especially accurately. That is, without actually putting too much manual work into finishing the assembly.</description>
+	<manual>Sequence assembly with MIRA 5</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. --> 
+        <clielement optionIdentifier="--illumina_paired" isList="true">
+            <mapping referenceName="mira.illumina" />
+        </clielement>
+        <clielement optionIdentifier="--ion_torrent" isList="false">
+            <mapping referenceName="mira.iontorrent" />
+        </clielement>
+        <clielement optionIdentifier="--roche_454" isList="false">
+            <mapping referenceName="mira.roche" />
+        </clielement>
+        <clielement optionIdentifier="--sanger" isList="false">
+            <mapping referenceName="mira.sanger" />
+        </clielement>
+        <clielement optionIdentifier="--output" isList="false">
+            <mapping referenceName="mira.output" />
+        </clielement>
+        <clielement optionIdentifier="--large" isList="false">
+            <mapping referenceName="mira.large" />
+        </clielement>   
+        <!-- Options --> 
+        <clielement optionIdentifier="--threads" isList="false">
+            <mapping referenceName="mira.threads" />
+        </clielement>
+        <clielement optionIdentifier="--num_of_passes" isList="false">
+            <mapping referenceName="mira.num_of_passes" />
+        </clielement>
+        <clielement optionIdentifier="--kmer_series" isList="false">
+            <mapping referenceName="mira.kmer" />
+        </clielement>
+        <clielement optionIdentifier="--rmb_break_loops" isList="false">
+            <mapping referenceName="mira.rmb_break" />
+        </clielement>
+        <clielement optionIdentifier="--automatic_repeat_detection" isList="false">
+            <mapping referenceName="mira.repeat_detect" />
+        </clielement>
+        <clielement optionIdentifier="--coverage_threshold" isList="false">
+            <mapping referenceName="mira.cov" />
+        </clielement>
+       <clielement optionIdentifier="--min_length" isList="false">
+            <mapping referenceName="mira.min_length" />
+        </clielement>
+        <clielement optionIdentifier="--minimum_read_length" isList="false">
+            <mapping referenceName="mira.min_read_length" />
+        </clielement>
+        <clielement optionIdentifier="--minimum_reads_per_contig" isList="false">
+            <mapping referenceName="mira.min_reads_per_contig" />
+        </clielement>
+        <clielement optionIdentifier="--rename_prefix" isList="false">
+            <mapping referenceName="mira.rename_prefix" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+            xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="mira" description="Sequence assembly with MIRA 5.">
+       	    <!-- Following clielements are arguments.-->   
+            <ITEMLIST name="illumina" value="" type="input-file" required="true" supported_formats="*.fq,*.fastq" description="Illumina paired-end reads."/>
+            <ITEM name="iontorrent" value="" type="input-file" required="false" supported_formats="*.fq,*.fastq" description="Iontorrent single-end reads." />
+            <ITEM name="roche" value="" type="input-file" required="false" supported_formats="*.fq,*.fastq" description="Roche 454 data." />
+            <ITEM name="sanger" value="" type="input-file" required="false" supported_formats="*.fq,*.fastq" description="Sanger data." />
+            <ITEM name="output" value="" type="output-file" required="true" supported_formats="*.fa,*.fasta" description="Assembly result unpadded." />
+            <ITEM name="large" value="" type="output-file" required="false" supported_formats="*.fa,*.fasta" description="Assembly unpadded with only large contigs." />
+             <!-- Options --> 
+            <ITEM name="threads" value="1" type="int" description="Number of threads." restrictions="1:" required="false" advanced="false" />
+            <ITEM name="num_of_passes" value="0" type="int" description="Defines how many iterations of the whole assembly process are done." required="false" advanced="false" />
+            <ITEM name="kmer" value="" type="string" description="Comma separated list of integers at least 0 and smaller or equal to 256, e.g. '17,31,63,127'." restrictions="" required="false" advanced="false" />
+            <ITEM name="rmb_break" value="" type="int" description="Defines the maximum number of times a contig can be rebuilt during a main assembly pass if misassemblies due to possible repeats are found. integer > 0." restrictions="1:" required="false" advanced="false" />
+            <ITEM name="repeat_detect" value="yes" type="string" description="Automatically detect repeates." restrictions="yes,no" required="false" advanced="false" />
+            <ITEM name="cov" value="" type="float" description="Default is 2.0 for all sequencing technologies in most assembly cases. float > 1.0." required="false" advanced="false" />
+            <ITEM name="min_length" value="" type="int" description="Minimum length. integer > 1." restrictions="2:" required="false" advanced="false" />
+            <ITEM name="min_read_length" value="" type="int" description="Defines the minimum length that reads must have to be considered for the assembly. Shorter sequences will be filtered out at the beginning of the process and won't be present in the final project. integer at least 20." restrictions="20:" required="false" advanced="false" />
+            <ITEM name="min_reads_per_contig" value="" type="int" description="Defines the minimum number of reads a contig must have before it is built or saved by MIRA. integer at least 1." restrictions="1:" required="false" advanced="false" />
+            <ITEM name="rename_prefix" value="" type="string" description="Rename given read prefix of Illumina data to shorten read names (long read names >40 character will result in stop of mira)." required="false" advanced="false" />
+        </NODE>
+    </PARAMETERS>
+</tool>
