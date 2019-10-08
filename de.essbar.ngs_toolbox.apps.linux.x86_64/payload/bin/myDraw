@@ -1,0 +1,175 @@
+#!/usr/bin/env python
+
+import sys, os
+import Image, ImageDraw, ImageFont
+#import string
+
+col_back = (255,255,255)	# white
+col_norm = (128,128,128)	# grey
+col_error = (0,0,255)		# blue
+col_mutat = (255,0,0)		# red
+col_hgt = (0,255,0)			# green?
+
+dot_height = 10
+#dot_width = 1
+line_space = dot_height + 3
+block_gap = 3
+
+left_blank = 5
+
+EVENT_SUMM = 1
+OUT_BMP = 2
+FONT_FILE = 3
+ARGC = 4
+
+def myRun(cmd):
+	print cmd
+	os.system(cmd)
+
+def printUsage():
+	print "Usage:"
+	print "$ %s <event summary file> <output png file> <font file>" % (sys.argv[0])
+	quit()
+
+def	myOpen(filename, mode):
+	try:
+		f = open (filename, mode)
+	except IOError:
+		print 'cannot open', filename
+		print 'in mode ', mode
+		print ("({})".format(e))
+		quit()
+	return f
+
+def getBlockOff(blk_length):
+	blk_off = []
+	s = 0
+	blk_off.append (0)
+	for i in range (1, len(blk_length)):
+		blk_off.append (blk_off[i-1] + blk_length[i-1] + block_gap)
+	return blk_off
+
+def main():
+	if len(sys.argv) != ARGC:
+		printUsage()
+
+	inp = myOpen(sys.argv[EVENT_SUMM], 'r')
+	if os.path.exists (sys.argv[OUT_BMP]):
+		myRun ("rm %s" % sys.argv[OUT_BMP])
+	font_file = sys.argv[FONT_FILE]
+	font = ImageFont.truetype(font_file, 10)
+
+	# Line 1, number of nodes and snps
+	line = inp.readline()
+	num = str.split(line)
+	num_node = int(num[0])
+	num_snp = int(num[1])
+
+	# Line 2, comments
+	line = inp.readline()
+
+	# Line 3, length of all blocks
+	line = inp.readline()
+	blk_length = map(int, str.split(line))
+	blk_off = getBlockOff(blk_length)
+
+	# Line 4, empty. Lines 5-9, comments.
+	for i in range(6):
+		line = inp.readline()
+
+	# The first round, get the node names
+	node_name = []
+	while True:
+		line = inp.readline()
+		if len(line) == 0:
+			break
+		if line[0] == '\n' or line[0] == '\r':
+			continue
+
+		while line[-1] == '\n' or line[-1] == '\r':
+			line = line[:-1]
+		content = str.split (line)
+
+		if content[0] == "Node":
+			if len(content) == 3:	# leaf with a strain name
+				node_name.append(content[2])	# trim '\n'
+			else:
+				node_name.append("");
+
+	name_width = []
+	for strain_name in node_name:
+		name_width.append(font.getsize(strain_name)[0])
+	max_name_len = max(name_width)
+	left_boundary = left_blank + max_name_len
+
+	height = num_node * line_space
+	width = blk_off[-1] + blk_length[-1] + left_boundary
+	size = width, height
+
+	im = Image.new('RGB', size, col_back)
+#	pix = im.load()
+	draw = ImageDraw.Draw(im)
+
+	# Draw genomes, and cut at break points
+	x1, x2 = left_boundary, width
+	for node in range (num_node):
+		y1, y2 = node*line_space, node*line_space + dot_height
+		draw.rectangle((x1, y1, x2, y2-1), fill=col_norm)
+		draw.text((0,y1), node_name[node], font=font, fill="Black")
+
+	y1, y2 = 0, height
+	for i in range (1, len(blk_off)):
+		x2 = blk_off[i] + left_boundary
+		x1 = x2 - block_gap
+#			x1 = blk_off[i]-1+left_boundary
+#			x2 = x1+block_gap
+		draw.rectangle ((x1, y1, x2-1, y2), fill=col_back)
+
+	#node = 0
+
+	# rewind and skip the first 9 lines for the second round
+	inp.seek(0, os.SEEK_SET)
+	for i in range(9):
+		line = inp.readline()
+	while True:
+		line = inp.readline()
+		if len(line) == 0:
+			break
+		if line[0] == '\n' or line[0] == '\r':
+			continue
+
+		while line[-1] == '\n' or line[-1] == '\r':
+			line = line[:-1]
+		content = str.split (line)
+
+		if content[0] == "Node":
+			node = int(content[1][:-1])	# trim the ':'
+		elif content[0] == 'E':
+			line = inp.readline()
+			content = str.split (line)
+			blk, start = int(content[0]), int(content[1])
+			x = blk_off[blk] + start + left_boundary
+			y1, y2 = node*line_space, node*line_space+dot_height
+			draw.line((x, y1, x, y2-1), col_error)
+		elif content[0] == 'M':
+			line = inp.readline()
+			content = str.split (line)
+			blk, start = int(content[0]), int(content[1])
+			x = blk_off[blk] + start + left_boundary
+			y1, y2 = node*line_space, node*line_space+dot_height
+			draw.line((x, y1, x, y2-1), col_mutat)
+		else:	# content[0] == 'X'
+			line = inp.readline()
+			content = str.split (line)
+			blk, start, end = int(content[0]), int(content[1]), int(content[2])
+			x1 = blk_off[blk]+start+left_boundary
+			x2 = blk_off[blk]+end+left_boundary
+			y1, y2 = node*line_space, node*line_space+dot_height
+			draw.rectangle((x1, y1, x2, y2), fill=col_hgt)
+
+	inp.close()
+	im.save (sys.argv[OUT_BMP])
+
+if __name__ == '__main__':
+	main ()
+

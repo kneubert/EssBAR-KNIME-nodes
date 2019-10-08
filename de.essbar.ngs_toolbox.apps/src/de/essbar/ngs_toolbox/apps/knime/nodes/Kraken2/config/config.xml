@@ -64,7 +64,7 @@
    			<ITEM name="report" value="" type="output-file" description="Report file that contains aggregate counts." supported_formats="*.kreport" required="true" advanced="false" />                     
 			<ITEM name="classified-output" value="" type="output-file" description="Output file that contains classified sequences." supported_formats="*.fasta,*.fa,*.fastq,*.fq" required="false" advanced="false" />
 			<ITEM name="unclassified-output" value="" type="output-file" description="Output file that contains unclassified sequences." supported_formats="*.fasta,*.fa,*.fastq,*.fq" required="false" advanced="false" />			
-                        <ITEM name="threads" value="1" type="int" description="Number of threads" restrictions="1:" required="false" advanced="false" />
+            <ITEM name="threads" value="1" type="int" description="Number of threads" restrictions="1:" required="false" advanced="false" />
 			<ITEM name="quick" value="false" type="string" description="Quick operation (use first hit or hits)." restrictions="true,false" required="false" advanced="false" />	
 			<ITEM name="confidence" value="0.0" type="float" description="Confidence score threshold (default 0.0)." restrictions="0:1" required="false" advanced="false" />
  			<ITEM name="minimum-base-qual" value="0" type="int" description="Minimum base quality used in classification (only effective with FASTQ input)" restrictions="0:" required="false" advanced="false" />                

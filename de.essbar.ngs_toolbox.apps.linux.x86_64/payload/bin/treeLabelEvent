@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+import re, sys
+
+def isNum (x):
+	try:
+		float(x)
+		return True
+	except ValueError:
+		return False
+
+def printUsage():
+	print "Usage"
+	print "$ %s <tree file> <node summary file>" % (sys.argv[0])
+	quit()
+
+def main():
+	if len(sys.argv) != 3:
+		printUsage()
+
+	try:
+		tree_file = open(sys.argv[1], 'r')
+	except IOError as e:
+		print e
+		printUsage()
+
+	try:
+		node_summ = open(sys.argv[2], 'r')
+	except IOError as e:
+		print e
+		printUsage()
+
+	tree = tree_file.readline()
+	lines = node_summ.readlines()
+	for line in lines[2:]:
+		content = line.split('\t')
+		name = content[1]
+		mutation = int(content[3])
+		error = int(content[4])
+		hgt = int(content[5])
+	#	dis = max (mutation, error)
+		if isNum(name):		# internal node
+			patt = ",%s:" % name
+			match = re.search (patt, tree)
+			if match:
+				new_str = ",m%d_x%d:" % (mutation, hgt)
+				tree = tree.replace(match.group(0), new_str)
+			else:
+				patt = "\\)%s:" % name
+				match = re.search (patt, tree)
+				if match:
+					new_str = ")m%d_x%d:" % (mutation, hgt)
+					tree = tree.replace(match.group(0), new_str)
+				else:
+					print "I got a problem"
+					quit()
+		else:
+			patt = "%s:" % name
+			new_str = "%s_e%d_x%d:" % (name, error, hgt)
+			tree = tree.replace (patt, new_str)
+
+	print tree
+
+if __name__ == '__main__':
+	main()

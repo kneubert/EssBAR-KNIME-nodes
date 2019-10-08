@@ -21,6 +21,7 @@
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Prokka.ProkkaNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.ProkkaDB.ProkkaDBNodeFactory" category-path="/community/EssBAR/NGSTools/Assembly"/>
   	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Parsnp.ParsnpNodeFactory" category-path="/community/EssBAR/NGSTools/Phylogeny"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.kSNP3.kSNP3NodeFactory" category-path="/community/EssBAR/NGSTools/Phylogeny"/>
 	<node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken.KrakenNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenReport.KrakenReportNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenSummary.KrakenSummaryNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
@@ -186,6 +187,9 @@
       <fileextension name="stats"/>
       <fileextension name="tab"/>
       <fileextension name="gaps"/>
+    </mimetype>
+    <mimetype name="kSNP3/newick">
+      <fileextension name="tre"/>
     </mimetype>
   </extension> 
    <extension

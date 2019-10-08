@@ -1,0 +1,964 @@
+#!/bin/bash 
+#v3.92
+########################################################################
+
+# WHERE ARE ALL THE kSNP SCRIPTS?  
+# IF YOU INSTALLED kSNP ANYWHERE OTHER THAN /user/local THEN YOU MUST MODIFY THIS TO POINT TO THE DIRECTORY WHERE YOU HAVE INSTALLED kSNP SCRIPTS
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+kSNP=$DIR
+echo "source directory: $kSNP"
+
+#set kSNP=/g/g15/shea/kSNP3_Source
+
+########################################################################
+
+
+
+# Example:  kSNP3  -in example.fasta.list -outdir Test.out -k 13 -annotate example.annotate_list -min_frac 0.7 
+
+
+if  [[ $# -eq 0 ]]  
+then
+printf "Usage: kSNP3 <options>\
+Options are the following: \
+ -k <kmer_length> # required\n\
+ -in <input_fastaFile_list>  # required file listing  full path location of each genome and the genome name, one line per genome, tab delimited between full path to genome fasta file in column 1 and genome name in column 2. This format allows multi-read,multi-chromosome, and multi-contig genomes, each genome in separate fasta. If multiple chromosomes are listed as separate fasta entries in a single genome file, positions and annotations are found for each gi number \n\
+ -outdir <output_directory> # required \n\
+ -annotate <annotate_list> # optional file listing genome names for which to find positions and annotate SNPs, names match column 2 of the -in file. \n\
+ -SNPs_all <path to SNPs all file> # optional, if given then it uses existing SNPs instead of searching for new ones, and adds new genomes to the existing analysis. Assumes only the new genomes are listed in the -in file.\n\
+ -core # optional, if present calculate core SNPs and core SNP parsimony tree\n\
+ -ML # optional, if present calculate Maximum Likelihood tree\n\
+ -min_frac <minimum_fraction_genomes_with_locus> # optional to create a parsimony tree based only on SNP loci that occur in at least this fraction of genomes, for example -min_frac 0.5 \n\
+ -genbank <genbank.gbk> # optional file for SNP annotation\n\
+ -CPU <num_CPU> # optional, number of CPU's to use, if not specified it uses all available\n\
+ -NJ # optional, calculate a neighbor joining tree\n\
+ -vcf # optional, create a vcf file using the first genome specified in the -positions file as the reference genome\n\
+ -all_annotations  # optional, annotate each locus exhaustively with all the annotations in any of the annotated genomes. Without this option it only provides the first annotation it comes to for a given locus, checking in the order genomes are listed in the -annotate file.\n"
+         exit
+fi
+
+DEBUG=0
+
+echo "Location of kSNP scripts: "
+echo "$kSNP"
+
+#  Tell kSNP where the input files are
+thisDir=`pwd` 
+# Directory with the input files
+echo "The home directory is $thisDir"
+
+# Read in parameters from command line
+annotate_list="nonexistent_file"
+genbankFile="nonexistent_file"
+all_annotations=0
+
+
+while [[ $# -gt 0 ]]
+do
+   key="$1"
+   echo $key  
+   case $key in 
+       -vcf)
+            vcf=1
+            shift
+            ;;
+	-NJ)
+            nj=1
+            shift
+            ;;
+	-ML)
+            ML=1
+            shift
+            ;;
+	-core)
+            core=1
+            shift
+            ;;
+        -k)
+            k="$2"
+            shift 2
+            ;;
+        -in)
+            fasta_list="$2"
+            shift 2
+            ;;
+        -outdir)
+            dir="$2"
+            shift 2
+            ;;
+        -annotate)
+            annotate_list="$2"
+            shift 2
+            ;;
+	-all_annotations)
+            all_annotations=1
+            shift
+            ;;
+        -min_frac)
+            min_fraction_with_locus="$2"
+            shift 2
+            ;;
+        -genbank)
+            genbankFile="$2"
+            shift 2
+            ;;
+	-CPU)
+	    num_cpus="$2"
+	    shift 2
+	    ;;
+	-SNPs_all)
+	    SNPs_all="$2"
+	    shift 2
+	    ;;
+        *)
+            shift
+            printf "Unknown parameter $key\n"
+    esac
+done
+
+echo "fasta list: $fasta_list"
+
+$kSNP/CheckFileNames $fasta_list
+
+if [ -f 'NameErrors.txt' ] 
+then	
+	echo "pKSNP3 terminated because of error file being present."
+	exit
+fi
+
+
+
+if [[ $dir ]] 
+then 
+    echo "$kSNP/add_paths3 $dir $thisDir"
+    dir=`$kSNP/add_paths3 $dir $thisDir`
+    echo $dir
+fi
+
+if [[ $fasta_list ]] 
+then 
+    echo "$kSNP/add_paths3 $fasta_list $thisDir"
+    fasta_list=`$kSNP/add_paths3 $fasta_list $thisDir`
+    echo $fasta_list
+fi
+
+if [[ $annotate_list ]]
+then 
+    echo "$kSNP/add_paths3 $annotate_list $thisDir"
+    annotate_list=`$kSNP/add_paths3 $annotate_list $thisDir`
+    echo $annotate_list
+fi
+
+if [[ $genbankFile ]] 
+then 
+    echo "$kSNP/add_paths3 $genbankFile $thisDir"
+    genbankFile=`$kSNP/add_paths3 $genbankFile $thisDir`
+    echo $genbankFile
+fi
+
+if [[ $SNPs_all ]] 
+then 
+    echo "$kSNP/add_paths3 $SNPs_all $thisDir"
+    SNPs_all=`$kSNP/add_paths3 $SNPs_all $thisDir`
+    echo $SNPs_all
+fi
+
+echo "Starting kSNP"
+date
+startseconds=`date +%s`
+
+echo "input fasta_list: $fasta_list"
+echo "output directory: $dir"
+echo "k=$k"
+echo "annotate_list file: $annotate_list"
+if [ $all_annotations -eq 1 ] 
+then
+    echo "Report all annotations."
+else 
+    echo "Report minimal annotations."
+fi
+
+if [ $?min_fraction_with_locus ] 
+then
+  echo "min_fraction_with_locus: $min_fraction_with_locus"
+fi
+
+if [[ $genbankFile  ]] 
+then
+ if [ -e "$genbankFile" ] 
+ then
+   echo "Genbank file for annotations (and any from NCBI with gi number which are automatically downloaded): $genbankFile"
+ fi 
+fi
+
+#get the number of CPUs
+if [[ ! $num_cpus ]]
+then
+    #get the operating system
+    OS=`uname`
+
+    if [ "$OS" =~ 'Darwin' ] 
+    then
+	echo "The operating system is $OS"
+	/usr/sbin/system_profiler SPHardwareDataType>wubba
+	num_cpus=` awk '/Total Number of Cores/ {print $5}' wubba`
+	echo "There are $num_cpus CPUs"  
+	rm wubba
+	##@ num_cpus=$num_proc
+    fi
+
+    if [ ! "$OS" =~ 'Darwin' ] 
+    then
+	echo "The operating system is $OS"
+	num_cpus=`cat /proc/cpuinfo | grep processor | wc -l`
+    fi
+    if [ $num_cpus -lt 1 ] 
+    then
+	num_cpus=8
+	echo "Could not figure out the number of CPUs, will run 8 processes"
+    fi
+
+fi
+echo "Number CPUs: $num_cpus"
+
+#chesk the fasta genome files to be sure line endings are Unix and fix if they are not
+cp -f "$fasta_list" fasta_list
+$kSNP/LE2Unix fasta_list
+# First check genome names. Prints to STDERR if duplicate names, STDOUT list of genome names parsed for kSNP. Use names corresponding to (none, any or all of) these in the $annotate_list file.
+#echo  "Sequence names used for kSNP:"
+#$kSNP/genome_names3  "$fasta" 
+
+if ! [ -e "$dir" ] 
+then
+  mkdir "$dir"
+fi
+cd "$dir"
+
+if [ -e "$annotate_list" ] 
+then
+    cp -f "$annotate_list" annotate_list
+else
+   touch annotate_list
+fi
+
+cp -f "$fasta_list" fasta_list
+
+#DOS to unix
+perl -i -pe 's/\015\012/\012/g' annotate_list
+perl -i -pe 's/\015/\012/g' annotate_list
+perl -i -pe 's/\015\012/\012/g' fasta_list
+perl -i -pe 's/\015/\012/g' fasta_list
+
+
+echo "Finished genomes for finding SNP positions:"
+cat annotate_list
+echo ""
+
+
+# Make lookup table of genome names and fsplit# files, and create fsplit# files by merging entries of multi-contig/multi-read input genomes. 
+count=0
+num_seqs=`wc -l fasta_list | awk '{print $1}'`
+echo "Number of input sequences: $num_seqs "
+printf "" > fileName2genomeName
+while [ $count -lt $num_seqs ]
+do
+    name=`awk -F'\011' -v c="$count" 'FNR==c+1 {print $2}' fasta_list`
+    file=`awk -F'\011' -v c="$count" 'FNR==c+1 {print $1}' fasta_list`
+    printf "$count\t$name\t$file\n"
+    $kSNP/merge_fasta_reads3  "$file" > fsplit${count}
+    printf "fsplit${count}\t${name}\n" >> fileName2genomeName
+    let count+=1 
+done
+
+if [ $k -le 31  ] 
+then
+    # jellyfish can do forward and reverse complement counts at same time, only the canonical direction (first in sorted list) kmer is listed, but counts are for both directions
+    date
+    echo "Running jellyfish to find k-mers"
+    for f in fsplit*[0-9]
+    do
+      if ! [ -s kmers_all.${f} ] 
+      then
+	echo "$f"
+	$kSNP/jellyfish count -C -o Jelly.${f} -m $k -s 1000000000  -t $num_cpus  $f
+	printf "" > unsortedkmers.${f}
+	for i in Jelly.${f}_*
+	do
+	    $kSNP/jellyfish dump -c $i  >> unsortedkmers.${f}
+	done
+    	sort unsortedkmers.${f} > kmers_all.${f}
+	rm -f unsortedkmers.${f}
+      fi
+    done
+    echo "Finished running jellyfish"
+fi
+
+if [ $k -gt 31  ]
+then
+    echo "Running sa to find k-mers"
+    date
+    for f in fsplit*[0-9]
+    do
+     if ! [ -s kmers_all.${f} ]
+     then
+	$kSNP/sa $f $k 0
+	$kSNP/rc_kmer_freqs3 ${f}.counts > kmers_all.${f} 
+	rm -f ${f}.counts
+     fi
+    done
+    echo "Finished running sa"
+    date
+fi
+
+# Remove kmers that occur less than freq=average of median and mean kmer frequency for that genome.  
+echo "Removing kmers that occur less than freq=average of median and mean kmer frequency for that genome."
+date
+for f in fsplit*[0-9]
+do
+  awk '{print $2}' kmers_all.${f} > freq.${f}
+  min_kmer_coverage=`$kSNP/get_quantile3 freq.${f}`
+  echo "minimum kmer coverage for $f is $min_kmer_coverage"
+  awk -v m=$min_kmer_coverage '$2>=m {print}' kmers_all.${f} > kmers.${f}
+done
+date
+rm freq.*
+
+# Remove kmers from a genome if there are conflicting alleles in that genome 
+echo "Removing conflicting kmers from each genome with conflicting alleles"
+date
+for f in fsplit*
+do
+    echo $f
+    mkdir Dir.${f}
+    cd Dir.${f}
+    $kSNP/subset_mers3 ../kmers.${f}
+    printf "" > cmds_remove_conflicting 
+    for subset in *.mers
+    do
+	echo "$kSNP/delete_allele_conflicts3 $subset" >> cmds_remove_conflicting
+    done
+    $kSNP/parallel_commands3 $num_cpus cmds_remove_conflicting
+    cd ..
+done
+echo "Finished removing conflicting kmers"
+date
+
+
+echo "Merged sorted kmer files and remove duplicates"
+date
+$kSNP/subset_mer_list3 > mer_list
+printf "" > cmds_sort
+for subset in `cat mer_list`
+do
+echo "sort  -m  -u Dir.*/${subset}.conflictsDeleted  > $subset" >> cmds_sort
+done
+$kSNP/parallel_commands3 $num_cpus cmds_sort
+echo "Finished merging kmers across genomes"
+date
+
+################################ NEW
+# Do not look for new SNPs, just find old ones from  -SNPs_all  input option
+if [[  $SNPs_all  ]]
+then 
+    #  ADD GENOMES to existing SNP analysis
+    printf "Using existing SNPs from $SNPs_all file\n"
+    date
+    $kSNP/subset_SNPs_all3 "$SNPs_all"
+    for subset in `cat mer_list`
+    do
+      if [ -s ${subset}.SNPs_all ]
+      then
+	 $kSNP/SNPs2fastaQuery3 ${subset}.SNPs_all > SNP_loci.${subset}.fasta 
+      fi
+    done
+fi
+################################## if no -SNPs_all file or it is empty, then find new SNPs
+
+if [[ ! $SNPs_all ]] 
+then 
+    # do all the SNP finding
+    printf "Discovering new SNPs\n\n"
+    date
+
+    echo "Finding kmers with multiple allele variants"
+    printf "" > cmds_pick_snps
+    for subset in `cat mer_list`
+    do
+	echo "$kSNP/pick_snps_from_kmer_genome_counts3 $subset > SNP_loci.${subset}.fasta" >> cmds_pick_snps
+    done
+    $kSNP/parallel_commands3 $num_cpus cmds_pick_snps
+    echo "Finished finding kmers with multiple allele variants"
+fi
+   
+ # Find which genome has which allele variant, by comparing the SNP_loci and Dir.$f/$subset.conflictsDeleted  foreach genome
+date
+echo "Finding allele in each genome"
+printf "" > cmds_find_allele
+for f in fsplit*
+do
+    for subset in `cat mer_list`
+    do
+	echo "$kSNP/find_allele3 SNP_loci.${subset}.fasta  Dir.${f}/${subset}.conflictsDeleted $f > Dir.${f}/SNPs.${subset}" >> cmds_find_allele
+    done
+done
+$kSNP/parallel_commands3 $num_cpus cmds_find_allele
+for f in fsplit*
+do
+    cat Dir.${f}/SNPs.*.mers > Dir.${f}/SNPs
+done
+
+# Run mummer to find the position of each SNP in the finished genomes. Don't do this for unassembled draft genomes or merged raw read genomes, since positional information is not informative.
+
+if [ -s annotate_list ] 
+then
+    echo "Finding SNP positions in finished genomes using mummer."
+    date
+    printf "" > cmds_mummer
+    printf "" > cmds_parse_mummer
+    for genome in `cat annotate_list`
+    do
+	test=`grep -w  $genome fileName2genomeName | wc -l`
+	f=`grep -w  $genome fileName2genomeName | awk '{print $1}'`
+	if [ $test -gt 0 ] 
+	then
+	    file=`grep -w  $genome fasta_list  | awk -F'\011' '{print $1}'`
+	    printf "genome: $genome  in Dir.${f}\n"
+	    awk -F'\011' '{print ">" $1 "_" $2 "\n" $3 }' Dir.${f}/SNPs > Dir.${f}/SNPs.fasta
+	    printf "$kSNP/mummer -maxmatch -l $k -b -c  Dir.${f}/SNPs.fasta "'"'"$file"'"'" > Dir.${f}/mummer.out\n" >> cmds_mummer
+	    printf "$kSNP/parse_mummer4kSNP3  Dir.${f}/mummer.out  > Dir.${f}/SNP.positions\n" >> cmds_parse_mummer
+	fi
+    done
+    $kSNP/parallel_commands3 $num_cpus cmds_mummer
+    $kSNP/parallel_commands3 $num_cpus cmds_parse_mummer
+    date
+    echo "Finished finding SNP positions in finished genomes using mummer."
+fi
+
+# concatenate SNP files for each genome into one and sort it, and number the loci
+echo "Concatenate results for each genome and sort by locus to create SNPs_all_labelLoci"
+date
+printf "" > all_SNPs_unsorted
+for f in fsplit*
+do
+    test=`grep -w  $f fileName2genomeName | wc -l`
+    if [ $test -gt 0 ] 
+    then
+	genome=`grep -w  $f fileName2genomeName | awk '{print $2}'`
+	printf "genome: $genome  in Dir.${f}\n"
+	if [ -s Dir.${f}/SNP.positions ] 
+	then
+	    awk -F'\011' -v f=${f} '{print $1 "\t" $2 "\t" $3  "\t" f "\t" $4}' Dir.${f}/SNP.positions  >> all_SNPs_unsorted
+	    #cat Dir.${f}/SNP.positions >> all_SNPs_unsorted
+	else
+	    awk -v genome=$genome '{print  $1 "\t" $2 "\tx\t" genome "\t" }' Dir.${f}/SNPs >> all_SNPs_unsorted
+	fi
+    fi
+done
+if [  $SNPs_all ] 
+then 
+    # use existing SNP numbering
+    awk -F'\011'  '{print $2 "\t" $3 "\t" $4  "\t" $5 "\t" $6 "\t" $7}' "$SNPs_all" >> all_SNPs_unsorted
+fi
+sort -u all_SNPs_unsorted > all_SNPs_sorted
+$kSNP/number_SNPs_all3 all_SNPs_sorted
+$kSNP/rename_from_table3 all_SNPs_sorted_labelLoci fileName2genomeName SNPs_all
+
+
+# Set reference genome for vcf file to the be first finished genome, if this is empty, then set it to be the first genome in the input fasta file.
+if [ -s annotate_list ] 
+then
+    ref_genome=`head -1 annotate_list`
+fi
+if [[ ! $ref_genome ]] 
+then
+    ref_genome=`head -1 fileName2genomeName | awk '{print $2}'`
+fi
+
+if [[ $vcf ]] 
+then
+    $kSNP/parse_SNPs2VCF3 SNPs_all VCF.$ref_genome.vcf  $ref_genome
+fi
+
+echo "Finished finding SNPs"
+date
+
+
+# You can delete this Directory if everything works, but it's useful for debugging in case the run fails
+rm -r TemporaryFilesToDelete
+mkdir TemporaryFilesToDelete
+mv -f Dir.* TemporaryFilesToDelete/.
+if [ -e cmds_mummer ] 
+then 
+mv -f cmds_mummer TemporaryFilesToDelete/.
+mv -f cmds_parse_mummer TemporaryFilesToDelete/.
+fi
+mv -f  *.mers TemporaryFilesToDelete/.
+mv -f Jelly.* TemporaryFilesToDelete/.
+mv -f SNP_loci.*.mers.fasta TemporaryFilesToDelete/.
+mv -f kmers*  TemporaryFilesToDelete/.
+mv -f fsplit* TemporaryFilesToDelete/.
+mv -f  all_SNPs_unsorted  TemporaryFilesToDelete/.
+mv -f  all_SNPs_sorted* TemporaryFilesToDelete/.
+mv -f mer_list TemporaryFilesToDelete/.
+mv -f *.mers.SNPs_all TemporaryFilesToDelete/.
+
+
+##probes_from_SNPs_all_kmers $probe_prefix_label
+
+## Create a SNP matrix and fasta, for inputting to PHYLIP, FastTreeMP or other tools like SplitsTree
+$kSNP/SNPs_all_2_fasta_matrix3 SNPs_all SNPs_all_matrix.fasta SNPs_all_matrix
+
+printf "parsimony\n" > tree_list1
+printf "parsimony\n" > tree_list2
+
+############### Make tree using SNP matrix
+echo "Building parsimony tree"
+
+# Build parsimony tree
+$kSNP/parsimonator -s SNPs_all_matrix -n SNPs_all -N 100 -p 1234
+
+# get all the best scoring trees
+best_parsimony_tree_score=`grep "Parsimony tree" RAxML_info.SNPs_all | sort -k6 -n | head -1 | awk '{print $6}'`
+best_parsimony_trees=`grep "Parsimony tree" RAxML_info.SNPs_all | awk -v score=$best_parsimony_tree_score '$6==score {print $14}'`
+Num_best_parsimony_trees=`grep "Parsimony tree" RAxML_info.SNPs_all | awk -v score=$best_parsimony_tree_score '$6==score {print $14}' | wc -l | awk '{print $1}'`
+printf "Number of most parsimonious trees from SNPs_all: $Num_best_parsimony_trees\n"
+printf "Score of those trees: $best_parsimony_tree_score\n"
+
+cat $best_parsimony_trees > intree
+
+# Get majority consensus tree
+rm outfile outtree
+#PHYLIP consense was the only tool i found  that forced resolution of every branch. FastTree to give it branch lengths will crash if some notes have splits to >2 children. But you need to modify seq.h and phylip.h before compiling consense to allow longer names so they don't get truncated
+echo "Y\n" | $kSNP/consense
+
+# Give it branch lengths, optimized for the consensus parsimony tree.
+$kSNP/force_binary_tree outtree outtree.resolved
+$kSNP/FastTreeMP -nt -pseudo   -nome -mllen -gamma -gtr -intree outtree.resolved SNPs_all_matrix.fasta > tree.parsimony.tre
+mv RAxML* TemporaryFilesToDelete/.
+
+## Build parsimony tree from SNPs_in_majority"$min_fraction_with_locus"
+if [[ $min_fraction_with_locus ]]
+then 
+ printf "Getting SNPs_in_majority$min_fraction_with_locus and building tree\n"
+ $kSNP/core_SNPs3 SNPs_all fileName2genomeName $min_fraction_with_locus
+ $kSNP/SNPs_all_2_fasta_matrix3 SNPs_in_majority"$min_fraction_with_locus"  SNPs_in_majority"$min_fraction_with_locus"_matrix.fasta SNPs_in_majority"$min_fraction_with_locus"_matrix
+
+# Build parsimony tree
+$kSNP/parsimonator -s SNPs_in_majority"$min_fraction_with_locus"_matrix -n SNPs_majority"$min_fraction_with_locus" -N 100 -p 1234
+
+# get all the best scoring trees
+best_parsimony_tree_score=`grep "Parsimony tree" RAxML_info.SNPs_majority"$min_fraction_with_locus" | sort -k6 -n | head -1 | awk '{print $6}'`
+best_parsimony_trees=`grep "Parsimony tree" RAxML_info.SNPs_majority"$min_fraction_with_locus" | awk -v score=$best_parsimony_tree_score '$6==score {print $14}'`
+Num_best_parsimony_trees=`grep "Parsimony tree" RAxML_info.SNPs_majority"$min_fraction_with_locus" | awk -v score=$best_parsimony_tree_score '$6==score {print $14}' | wc -l | awk '{print $1}'`
+printf "Number of most parsimonious trees for SNPs_in_majority$min_fraction_with_locus : $Num_best_parsimony_trees\n"
+printf "Score of those trees: $best_parsimony_tree_score\n"
+
+
+cat $best_parsimony_trees > intree
+
+# Get majority consensus tree
+rm outfile outtree
+#Find consensus parsimony tree
+echo "Y\n" | $kSNP/consense
+
+# Give it branch lengths, optimized for the consensus parsimony tree.
+$kSNP/force_binary_tree outtree outtree.resolved
+$kSNP/FastTreeMP -nt -pseudo   -nome -mllen -gamma -gtr -intree outtree.resolved SNPs_in_majority"$min_fraction_with_locus"_matrix.fasta  > tree.majority"$min_fraction_with_locus".tre
+mv RAxML* TemporaryFilesToDelete/.
+
+# Uncomment the following line to build ML majority tree, and write over the parsimony majority tree just built
+ #$kSNP/FastTreeMP  -nt -pseudo  -gamma   -gtr SNPs_in_majority"$min_fraction_with_locus"_matrix.fasta  >  tree.majority"$min_fraction_with_locus".tre
+
+
+
+ for t in  majority"$min_fraction_with_locus" 
+ do
+    $kSNP/label_tree_nodes3 tree.${t}.tre   > tree_nodeLabel.${t}.tre
+    $kSNP/tree_nodes3 tree_nodeLabel.${t}.tre  nodes.${t}
+   if [ -s tree_nodeLabel.$t.tre ] 
+   then
+     echo "Placing SNPs on nodes $t tree"
+     $kSNP/SNPs2nodes-new3 SNPs_in_majority"$min_fraction_with_locus"  nodes.${t}.perlhash tree_nodeLabel.${t}.tre  Node_SNP_counts.${t}
+     if [ -e COUNT_Homoplastic_SNPs ] 
+     then
+	mv COUNT_Homoplastic_SNPs COUNT_Homoplastic_SNPs.${t}
+     fi
+     if [-e ClusterInfo ] 
+     then
+	mv ClusterInfo ClusterInfo.${t}
+     fi
+     if [-e Homoplasy_groups ] 
+     then
+	mv Homoplasy_groups Homoplasy_groups.${t}
+     fi
+     date
+     echo "Finished placing SNPs on nodes $t tree"
+	printf "name_on_tree\tSNP_counts\n" > tip_SNP_counts.${t}
+	grep "node: " Node_SNP_counts.${t} | grep -w "NumberTargets: 1" | awk '{print $2 "\011" $6}' >> tip_SNP_counts.${t}
+
+	if [ -s tree_nodeLabel.${t}.tre.rerooted ] 
+	then
+	    rm -f tree_nodeLabel.${t}.tre
+	    mv -f tree_nodeLabel.${t}.tre.rerooted tree_nodeLabel.${t}.tre
+	fi
+
+	#rm_node_names_from_tree tree_nodeLabel.$t.tre tree.$t.tre # don't overwrite tree.$t.tre anymore since we want the support values in original file.
+
+	$kSNP/labelTree_AlleleCount-new3  tree_nodeLabel.${t}.tre Node_SNP_counts.${t} tree_tipAlleleCounts.${t}.tre tree_AlleleCounts.${t}.tre 0
+	$kSNP/labelTree_AlleleCount-new3  tree_nodeLabel.${t}.tre Node_SNP_counts.${t} tree_tipAlleleCounts.${t}.NodeLabel.tre tree_AlleleCounts.${t}.NodeLabel.tre 1
+
+   fi
+ done
+fi
+
+##Building parsimony tree from only the core SNPs
+if [[ $core ]] 
+then 
+ printf "Getting core SNPs"
+ if [[ ! $min_fraction_with_locus ]] 
+ then
+   $kSNP/core_SNPs3 SNPs_all fileName2genomeName 0.5
+ fi
+ $kSNP/SNPs_all_2_fasta_matrix3 core_SNPs core_SNPs_matrix.fasta core_SNPs_matrix
+
+# Build parsimony tree
+$kSNP/parsimonator -s core_SNPs_matrix  -n SNPs_core -N 100 -p 1234
+
+# get all the best scoring trees
+best_parsimony_tree_score=`grep "Parsimony tree" RAxML_info.SNPs_core | sort -k6 -n | head -1 | awk '{print $6}'`
+best_parsimony_trees=`grep "Parsimony tree" RAxML_info.SNPs_core | awk -v score=$best_parsimony_tree_score '$6==score {print $14}'`
+
+Num_best_parsimony_trees=`grep "Parsimony tree" RAxML_info.SNPs_core | awk -v score=$best_parsimony_tree_score '$6==score {print $14}' | wc -l | awk '{print $1}'`
+
+printf "Number of most parsimonious trees for SNPs_core : $Num_best_parsimony_trees\n"
+printf "Score of those trees: $best_parsimony_tree_score\n"
+
+
+cat $best_parsimony_trees > intree
+
+# Get majority consensus tree
+rm outfile outtree
+#Find consensus parsimony tree
+echo "Y\n" | $kSNP/consense
+
+# Give it branch lengths, optimized for the consensus parsimony tree.
+$kSNP/force_binary_tree outtree outtree.resolved
+$kSNP/FastTreeMP -nt -pseudo   -nome -mllen -gamma -gtr -intree outtree.resolved core_SNPs_matrix.fasta  > tree.core.tre
+mv RAxML* TemporaryFilesToDelete/.
+
+# Uncomment the following line to build ML core tree, and write over the parsimony core tree just built
+#  $kSNP/FastTreeMP -nt  -gamma   -gtr core_SNPs_matrix.fasta  >  tree.core.tre
+
+fi
+
+if [ -s core_SNPs ] 
+ then
+   for t in core 
+   do
+    $kSNP/label_tree_nodes3 tree.${t}.tre   > tree_nodeLabel.${t}.tre
+    $kSNP/tree_nodes3 tree_nodeLabel.${t}.tre  nodes.${t}
+    if [ -s tree_nodeLabel.${t}.tre ] 
+    then
+	echo "Placing SNPs on nodes $t tree"
+	$kSNP/SNPs2nodes-new3 core_SNPs nodes.${t}.perlhash tree_nodeLabel.${t}.tre  Node_SNP_counts.${t}
+	if [ -e COUNT_Homoplastic_SNPs ] 
+	then
+	    mv COUNT_Homoplastic_SNPs COUNT_Homoplastic_SNPs.${t}
+	fi
+	if [ -e ClusterInfo ] 
+	then
+	    mv ClusterInfo ClusterInfo.${t}
+	fi
+	if [ -e Homoplasy_groups ] 
+	then
+	    mv Homoplasy_groups Homoplasy_groups.${t}
+	fi
+	date
+	echo "Finished placing SNPs on nodes $t tree"
+	echo ""
+	printf "name_on_tree\tSNP_counts\n" > tip_SNP_counts.${t}
+	grep "node: " Node_SNP_counts.${t} | grep -w "NumberTargets: 1" | awk '{print $2 "\011" $6}' >> tip_SNP_counts.${t}
+
+	if [ -s tree_nodeLabel.${t}.tre.rerooted ] 
+	then
+	    rm -f tree_nodeLabel.${t}.tre
+	    mv -f tree_nodeLabel.${t}.tre.rerooted tree_nodeLabel.${t}.tre
+	fi
+
+	#rm_node_names_from_tree tree_nodeLabel.$t.tre tree.$t.tre # don't overwrite tree.$t.tre anymore since we want the support values in original file.
+
+	$kSNP/labelTree_AlleleCount-new3  tree_nodeLabel.${t}.tre Node_SNP_counts.${t} tree_tipAlleleCounts.${t}.tre tree_AlleleCounts.${t}.tre 0
+	$kSNP/labelTree_AlleleCount-new3  tree_nodeLabel.${t}.tre Node_SNP_counts.${t} tree_tipAlleleCounts.${t}.NodeLabel.tre tree_AlleleCounts.$t.NodeLabel.tre 1
+
+    fi
+   done
+fi
+
+## Building ML FastTree tree from all SNPs
+if [ $ML ] 
+then
+ $kSNP/FastTreeMP  -nt -pseudo  -gamma -gtr SNPs_all_matrix.fasta >  tree.ML.tre
+ printf "ML\n" >> tree_list1
+ printf "ML\n" >> tree_list2
+fi
+
+
+if [[ $nj ]] 
+then
+echo "Building NJ tree"
+date
+# NOTE:  This next line can take a long time if there are million+ SNP loci and 100+ genomes. SNP_matrix2dist_matrix does loops, so it's slow, should be parallelized.  Probably should try the PHYLIP program, although scores might be different since i count them as somewhat closer if they share a locus but not the allele than if they don't even share the locus. But since NJ SNP trees are not accurate anyway, i'm not inclined to spend anymore time since no one should use this option.
+$kSNP/SNP_matrix2dist_matrix3 SNPs_all_matrix > NJ.dist.matrix
+$kSNP/distance_tree3 > tree.NJ.tre
+echo "Finished building NJ tree"
+printf "NJ\n" >> tree_list1
+printf "NJ\n" >> tree_list2
+date
+fi
+
+#######################
+ 
+$kSNP/find_unresolved_clusters3 tree.parsimony.tre > unresolved_clusters
+
+date
+echo "Finding nodes"
+
+for t in `cat tree_list1` 
+do
+    if [ -s tree.${t}.tre ] 
+    then
+	$kSNP/label_tree_nodes3 tree.$t.tre   > tree_nodeLabel.$t.tre
+	$kSNP/tree_nodes3 tree_nodeLabel."$t".tre  nodes.$t
+	echo "Placing SNPs on nodes $t tree"
+	$kSNP/SNPs2nodes-new3 SNPs_all nodes.$t.perlhash tree_nodeLabel.$t.tre  Node_SNP_counts.$t
+	if [ -e COUNT_Homoplastic_SNPs ] 
+	then
+	    mv COUNT_Homoplastic_SNPs COUNT_Homoplastic_SNPs.$t
+	fi
+	if [ -e ClusterInfo ] 
+	then
+	    mv ClusterInfo ClusterInfo.$t
+	fi
+	if [ -e Homoplasy_groups ] 
+	then
+	    mv Homoplasy_groups Homoplasy_groups.$t
+	fi
+	date
+	echo "Finished placing SNPs on nodes $t tree"
+	echo ""
+    fi
+done
+
+
+# Relabel trees with SNP counts at nodes
+for t in `cat tree_list1` 
+do
+    if [ -s tree.${t}.tre ] 
+    then
+
+	printf "name_on_tree\tSNP_counts\n" > tip_SNP_counts.$t
+	grep "node: " Node_SNP_counts.$t | grep -w "NumberTargets: 1" | awk '{print $2 "\011" $6}' >> tip_SNP_counts.$t
+
+	if [ -s tree_nodeLabel.$t.tre.rerooted ] 
+	then
+	    rm -f tree_nodeLabel.$t.tre
+	    mv -f tree_nodeLabel.$t.tre.rerooted tree_nodeLabel.$t.tre
+	fi
+
+	#rm_node_names_from_tree tree_nodeLabel.$t.tre tree.$t.tre # don't overwrite tree.$t.tre anymore since we want the support values in original file.
+
+	$kSNP/labelTree_AlleleCount-new3  tree_nodeLabel.$t.tre Node_SNP_counts.$t tree_tipAlleleCounts.$t.tre tree_AlleleCounts.$t.tre 0
+	$kSNP/labelTree_AlleleCount-new3  tree_nodeLabel.$t.tre Node_SNP_counts.$t tree_tipAlleleCounts.$t.NodeLabel.tre tree_AlleleCounts.$t.NodeLabel.tre 1
+    fi
+done
+
+mv -f nodes.* TemporaryFilesToDelete/.
+mv -f tree_tipAlleleCounts.*.NodeLabel.tre TemporaryFilesToDelete/.
+mv -f tree_nodeLabel.* TemporaryFilesToDelete/.
+
+########
+# find proteins where SNPs land, codons, amino acids, and identify nonsynonymous SNPs
+echo "Annotating SNPs."
+date
+
+# Only get genbank file and annoate if there is positional information for some genomes, ie. annotate_list is not empty
+if [ -s annotate_list ] 
+then 
+
+    # Get whole genome annotations from genbank, unfortunately you have to get the whole genbank file with sequence data, since the much smaller feature table does not have mature peptides making viral annotation useless with polyproteins only.
+    count=0
+    printf "" > headers.annotate_list
+    for genome in `cat annotate_list` 
+    do
+	file_check=`grep -w  $genome fasta_list  | wc -l`
+	if [ $file_check > 0 ]
+	then
+	    file=`grep -w  $genome fasta_list  | awk -F'\011' '{print $1}'`
+	    printf "$file\n"
+	    $kSNP/get_genbank_file3 "$file" genbank_from_NCBI.gbk.$count
+	    fgrep ">" $file | sed -e "s/^>/>$genome /" >> headers.annotate_list
+	    let count+=1
+	fi
+    done
+    cat genbank_from_NCBI.gbk.* | grep -v BioProject  > genbank_from_NCBI.gbk
+    rm genbank_from_NCBI.gbk.*
+
+    if [ -e "$genbankFile" ] 
+    then 
+	$kSNP/annotate_SNPs_from_genbankFiles3   -all $all_annotations  $genbankFile
+    else
+	$kSNP/annotate_SNPs_from_genbankFiles3   -all $all_annotations 
+    fi
+
+    printf "Num_NotAnnotatedRegion\tAnnotatedNotProtein\tNum_NonSynon\tNum_Synon\tNS/S\tNSfractionOfAnnotated\tNumLoci\tNum_InAnnotatedGenomes\tNum_NotInAnnotatedGenome\n" > Annotation_summary
+    i=SNP_annotations
+    num_notInAnnotatedGenome=`grep  NotInAnnotatedGenome $i |  awk '  {print $1}' | sort -u | wc -l | awk '{print $1}'` 
+    num_UnAnnRegion=`grep  UnannotatedRegion $i |  awk '  {print $1}' | sort -u | wc -l | awk '{print $1}'`  
+    num_AnnNotProtein=`grep  NotProteinCoding $i |  awk '  {print $1}' | sort -u | wc -l | awk '{print $1}'`  
+
+    NS_total=`grep -v LocusNum $i |  awk ' $3>0 {print $1}' | sort -u | wc -l | awk '{print $1}'` 
+    Num_loci=`grep -v LocusNum $i |  awk '{print $1}' | sort -u | wc -l | awk '{print $1}'` 
+    Num_loci_in_annotated=`grep -v LocusNum $i | grep -v  NotInAnnotatedGenome |  awk '{print $1}' | sort -u | wc -l | awk '{print $1}'` 
+    S_total=`perl -e "print ($Num_loci_in_annotated-$NS_total)"`
+    if [ $S_total -gt 0 ] 
+    then
+      NS_Sratio=`perl -e "print $NS_total/$S_total"`
+    else
+      NS_Sratio="inf"
+    fi
+    if [ $Num_loci_in_annotated -gt 0 ] 
+    then 
+	NSfraction_overall=`perl -e "print $NS_total/$Num_loci_in_annotated"`
+    else
+	NSfraction_overall="inf"
+    fi
+
+    printf "$num_UnAnnRegion\t$num_AnnNotProtein\t$NS_total\t$S_total\t$NS_Sratio\t$NSfraction_overall\t$Num_loci\t$Num_loci_in_annotated\t$num_notInAnnotatedGenome\n"  >> Annotation_summary
+ 
+
+    $kSNP/parse_protein_annotation_counts3 SNP_annotations >  Protein_Annotation_counts
+
+    echo "Finished SNP annotation."
+    #run ParAnn
+    $kSNP/ParAnn
+fi
+
+# cann only run if annotated genomes are given
+#run ParAnn
+# $kSNP/ParAnn
+
+echo "Finished running kSNP"
+date
+endseconds=`date +%s`
+elapsedTime=`perl -e "print (($endseconds-$startseconds)/60/60)"`
+echo "Elapsed time for kSNP in hours: $elapsedTime"
+
+
+mv cmds* TemporaryFilesToDelete/.
+mv tree_list1 TemporaryFilesToDelete/.
+mv tree_list2 TemporaryFilesToDelete/.
+mv -f fileName2genomeName TemporaryFilesToDelete/.
+rm intree outtree outfile
+rm SNP_annotations
+
+if [ -s SNPs_all ] && [ -s tree.parsimony.tre ] && [ -s tree_AlleleCounts.parsimony.tre ] &&  [ -s unresolved_clusters ] && [ -s COUNT_SNPs ] && [ $DEBUG -lt 1 ]
+then
+    rm -r TemporaryFilesToDelete
+fi
+
+exit
+
+##########################################################################################################
+##########################################################################################################
+
+# HRE finder is not updated to work with kSNP3.  Use kSNP2 if you want to use HREfinder.
+#  In case you want to run HREFinder  at http://sourceforge.net/projects/hrefinder/ 
+# set your path to the hreFinder code  "set hre=/path/to/hreFinder"
+# and comment out the exit line above.
+# YOU MUST HAVE ALL THE GENOMES IN THE -p annotate_list LIST. FOR HREFINDER YOU NEED POSITIONAL 
+# INFORMATION FOR ALL OF THEM, EVEN THE DRAFT GENOMES THAT ARE ASSEMBLED INTO A FEW LARGE CONTIGS. 
+# If some draft genomes are in alot of contigs, it is recommended that
+# you remove those and rerun kSNP before attempting hreFinder. 
+# Don't run hreFinder with genomes that are raw unassembled reads.
+
+
+###### Run hreFinder to predict series of SNPs likely to have been involved in homologous recombination events
+
+hre=$DIR  
+
+
+if [ -s SNPs_all ] 
+then
+
+# Set reference genome for vcf file to the be first finished genome, if this is empty, then set it to be the first genome in the input fasta file.
+if [ -s annotate_list ] 
+then
+    ref_genome=`head -1 annotate_list`
+fi
+if [[ ! $ref_genome ]] 
+then
+    ref_genome=`head -1 fileName2genomeName | awk '{print $2}'`
+fi
+
+
+for tree in `cat tree_list2`
+do
+  mkdir  HRE.$tree
+  cd HRE.$tree
+  $hre/run_config.py ../tree.$tree.tre    ../fastainput ../SNPs_all $ref_genome
+
+  echo ""
+  echo $tree
+  echo "Number of SNPs involved in HRE events:"
+  awk '$1!="" {print $1}' hreSNPs | sort -u | wc -l
+  echo "Number of HRE events:"
+  grep -v HRE_events hre_from_to_c | awk ' total=total+$5 {} END {print total}'
+  echo "Number of HRE events from outside tree:"
+  grep -v HRE_events hre_from_to_c | grep outside | awk ' total=total+$5 {} END {print total}'
+
+
+  cd ..
+done
+
+fi
+
+exit
+
+
+# Set up standing db of genbank files so you don't have to go online to annotate SNPs
+mkdir GenbankFiles
+cd GenbankFiles
+for domain in Viruses Bacteria;
+do
+mkdir $domain
+cd $domain
+for type in gbk
+do
+mkdir Temp
+cd Temp
+wget "ftp://ftp.ncbi.nih.gov/genomes/$domain/all.$type.tar.gz"
+tar -xvzf all.$type.tar.gz
+rm *.tar.gz
+mv */*  ..
+rm -r *
+cd ..
+rm -r Temp
+done
+cd ..
+done
+
+# get gbk files for plasmids
+for domain in Plasmids
+do
+mkdir $domain
+cd $domain
+for type in gbk
+do
+wget "ftp://ftp.ncbi.nih.gov/genomes/$domain/plasmids.all.$type.tar.gz"
+tar -xvzf plasmids.all.$type.tar.gz
+mv am/ftp-genomes/Plasmids/$type/* .
+rm -r am
+rm *.tar.gz
+done
+cd ..
+done

@@ -4,12 +4,14 @@
     <name>MLVA</name>
     
     <shortDescription>
-        Multi loci VNTR (Variable Number of Tandem Repeats) analysis (by D. Christiany). This tool performs an in silico PCR to extract sequences of tandem repeat from submitted fasta file(s)  
-and call VNTR alleles.
+        MLVA analysis (by D. Christiany)
     </shortDescription>
     
     <fullDescription>
-        <intro><p>MLVA</p>
+        <intro>
+        Multi loci VNTR (Variable Number of Tandem Repeats) analysis (by D. Christiany). 
+        This tool performs an in silico PCR to extract sequences of tandem repeat from submitted fasta file(s)  
+and call VNTR alleles.
 		<p>
 			<a href="https://github.com/dpchris/MLVA">Web Documentation for MLVA</a>
 		</p>

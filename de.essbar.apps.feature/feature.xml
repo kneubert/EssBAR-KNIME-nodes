@@ -8,13 +8,16 @@
       arch="x86_64">
 
    <description url="http://www.example.com/description">
-      This feature contains a collection of tools to analyse sequence data. It bundles SeqAn nodes and several NGS tools.
+ This feature contains a collection of tools to analyse sequence data. 
+ It bundles SeqAn nodes and several NGS tools.
+ 
  Flexbar = https://github.com/seqan/flexbar/wiki
  FLASH2 = http://ccb.jhu.edu/software/FLASH/index.shtml
  Kraken = http://ccb.jhu.edu/software/kraken/MANUAL.html
  Kraken2 = https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual
  Slimm = https://github.com/seqan/slimm/wiki
  Parsnp = http://harvest.readthedocs.io/en/latest/content/parsnp.html
+ kSNP3 = http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf
  SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
  Pilon = https://github.com/broadinstitute/pilon/wiki
  Prokka = https://github.com/tseemann/prokka
@@ -25,15 +28,16 @@
    </description>
 
    <copyright url="http://www.example.com/copyright">
-      The copyright of the contained tools belongs to the original
- authors. Please check the corresponding web-
- sites for details.
+ The copyright of the contained tools belongs to the original authors. 
+ Please check the corresponding web-sites for details.
+ 
  Flexbar = https://github.com/seqan/flexbar/wiki
  FLASH2 = http://ccb.jhu.edu/software/FLASH/index.shtml
  Kraken = http://ccb.jhu.edu/software/kraken/MANUAL.html
  Kraken2 = https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual
  Slimm = https://github.com/seqan/slimm/wiki
  Parsnp = http://harvest.readthedocs.io/en/latest/content/parsnp.html
+ kSNP3 = http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf
  SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
  Pilon = https://github.com/broadinstitute/pilon/wiki
  Prokka = https://github.com/tseemann/prokka
@@ -42,27 +46,28 @@
  stringMLST = https://github.com/jordanlab/stringMLST
  ContigMLST = https://github.com/tseemann/mlst
  MLVA = https://github.com/dpchris/MLVA
-   </copyright>
+ </copyright>
 
-   <license url="http://www.example.com/license">
-      GNU GENERAL PUBLIC LICENSE &amp; Parsnp Copyright LICENSE @amp; BSD 3-CLAUSE LICENCE;
+ <license url="http://www.example.com/license">
+ GNU GENERAL PUBLIC LICENSE &amp; Parsnp Copyright LICENSE @amp; BSD 3-CLAUSE LICENCE;
  Parts of this feature are licensed under different licenses. You need to accept
  all of the licenses to use this package.
  
  Flexbar = BSD 3-Clause License
  FLASH2 = GNU GENERAL PUBLIC LICENSE (v3)
-    Kraken = GNU GENERAL PUBLIC LICENSE (v3)
-    Kraken2 = The MIT License (MIT)
-    Slimm = BSD 3-CLAUSE LICENCE
-    Parsnp = Parsnp Copyright LICENSE
-    SPAdes = GPLv2 on October 1, 2017
-    ABACAS = MUMmer3.xx OPEN SOURCE LICENSE (The Artistic License) 
-    Pilon = GNU GENERAL PUBLIC LICENSE (v2)
-    Prokka = GNU GENERAL PUBLIC LICENSE (v3)
-    SRST2/PubMLST = BSD License 
-    stringMLST = CC Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
-    ContigMLST = GNU GENERAL PUBLIC LICENSE (v2)
-    MLVA = copyright by D.Christiany
+ Kraken = GNU GENERAL PUBLIC LICENSE (v3)
+ Kraken2 = The MIT License (MIT)
+ Slimm = BSD 3-CLAUSE LICENCE
+ Parsnp = Parsnp Copyright LICENSE
+ kSNP3 = THE BSD OPENSOURCE LICENSE
+ SPAdes = GPLv2 on October 1, 2017
+ ABACAS = MUMmer3.xx OPEN SOURCE LICENSE (The Artistic License) 
+ Pilon = GNU GENERAL PUBLIC LICENSE (v2)
+ Prokka = GNU GENERAL PUBLIC LICENSE (v3)
+ SRST2/PubMLST = BSD License 
+ stringMLST = CC Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+ ContigMLST = GNU GENERAL PUBLIC LICENSE (v2)
+ MLVA = copyright by D.Christiany
 
 ################################################################################
 ################################################################################
@@ -1078,6 +1083,51 @@ For the avoidance of doubt, this Public License does not, and shall not be inter
 To the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.
 No term or condition of this Public License will be waived and no failure to comply consented to unless expressly agreed to by the Licensor.
 Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.
+
+################################################################################
+################################################################################
+################################################################################
+################################################################################  
+
+THE BSD OPENSOURCE LICENSE
+
+. Please also read this link – Additional BSD Notice http://opensource.org/licenses/BSD-3-Clause.
+Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
+• Redistributions of source code must retain the above copyright notice, this list of conditions and the
+disclaimer below.
+• Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+disclaimer (as noted below) in the documentation and/or other materials provided with the distribution.
+• Neither the name of the LLNS/LLNL nor the names of its contributors may be used to endorse or
+promote products derived from this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL LAWRENCE LIVERMORE NATIONAL
+SECURITY, LLC, THE U.S. DEPARTMENT OF ENERGY OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+Additional BSD Notice
+1. This notice is required to be provided under our contract with the U.S. Department of Energy
+(DOE). This work was produced at Lawrence Livermore National Laboratory under Contract
+No. DE-AC52-07NA27344 with the DOE.
+2. Neither the United States Government nor Lawrence Livermore National Security, LLC nor
+any of their employees, makes any warranty, express or implied, or assumes any liability or
+responsibility for the accuracy, completeness, or usefulness of any information, apparatus,
+product, or process disclosed, or represents that its use would not infringe privately-owned
+rights.
+3. Also, reference herein to any specific commercial products, process, or services by trade
+name, trademark, manufacturer or otherwise does not necessarily constitute or imply its
+endorsement, recommendation, or favoring by the United States Government or Lawrence
+Livermore National Security, LLC. The views and opinions of authors expressed herein do not
+necessarily state or reflect those of the United States Government or Lawrence Livermore
+National Security, LLC, and shall not be used for advertising or product endorsement purposes.
+
    </license>
 
    <plugin
