@@ -149,8 +149,7 @@ var zoomOut = false;
 var quickLook = false; // true when in quick look state
 var mouseDown = false;
 var mouseDownTime; // to detect mouse button hold
-//var quickLookHoldLength = 200;
-var quickLookHoldLength = 20;
+var quickLookHoldLength = 200;
 
 var imageWidth;
 var imageHeight;
@@ -245,8 +244,7 @@ var mouseYRel = -1;
 var progress = 0; // for tweening; goes from 0 to 1.
 var progressLast = 0;
 var tweenFactor = 0; // progress converted by a curve for a smoother effect.
-//var tweenLength = 850; // in ms
-var tweenLength = 1; // in ms
+var tweenLength = 850; // in ms
 var tweenCurvature = 13;
 //
 // tweenMax is used to scale the sigmoid function so its range is [0,1] for the
@@ -5918,7 +5916,6 @@ function setSelectedNode(newNode)
 	}
 }
 
-
 function waitForData(dataWindow, target, title, time, postUrl, postVar)
 {
 	if ( nodeData.length == target )
@@ -6259,7 +6256,7 @@ function update()
 			
 			if ( fpsDisplay )
 			{
-                            fpsDisplay.innerHTML = 'fps: ' + Math.round(tweenFrames * 1000 / tweenLength);
+				fpsDisplay.innerHTML = 'fps: ' + Math.round(tweenFrames * 1000 / tweenLength);
 			}
 		}
 		
