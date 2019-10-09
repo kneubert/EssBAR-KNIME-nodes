@@ -149,7 +149,8 @@ var zoomOut = false;
 var quickLook = false; // true when in quick look state
 var mouseDown = false;
 var mouseDownTime; // to detect mouse button hold
-var quickLookHoldLength = 200;
+//var quickLookHoldLength = 200;
+var quickLookHoldLength = 20;
 
 var imageWidth;
 var imageHeight;
@@ -244,7 +245,8 @@ var mouseYRel = -1;
 var progress = 0; // for tweening; goes from 0 to 1.
 var progressLast = 0;
 var tweenFactor = 0; // progress converted by a curve for a smoother effect.
-var tweenLength = 850; // in ms
+//var tweenLength = 850; // in ms
+var tweenLength = 1; // in ms
 var tweenCurvature = 13;
 //
 // tweenMax is used to scale the sigmoid function so its range is [0,1] for the
@@ -756,7 +758,7 @@ function Node()
 		
 //		if ( this.alphaWedge.current() > 0 || this.alphaLabel.current() > 0 )
 		{
-			var lastChildAngleEnd;
+			var lastChildAngleEnd = angleStartCurrent;
 			
 			if ( this.hasChildren() )//canDisplayChildren )
 			{
@@ -774,7 +776,7 @@ function Node()
 					angleEndCurrent == this.parent.angleEnd.current() + rotationOffset
 				);
 				
-				if ( angleStartCurrent != angleEndCurrent )
+				//if ( angleStartCurrent != angleEndCurrent )
 				{
 					this.drawLines(angleStartCurrent, angleEndCurrent, radiusInner, drawRadial, selected);
 				}
@@ -785,7 +787,9 @@ function Node()
 				if ( this == selectedNode || alphaOtherCurrent )
 				{
 					childRadiusInner =
-						this.children[this.children.length - 1].radiusInner.current() * gRadius;
+						this.children.length ?
+							this.children[this.children.length - 1].radiusInner.current() * gRadius
+						: radiusInner
 				}
 				
 				if ( this == selectedNode )
@@ -938,7 +942,7 @@ function Node()
 					var lastChildAngle;
 					var truncateWedge =
 					(
-						this.hasChildren() &&
+						(this.hasChildren() || this == selectedNode ) &&
 						! this.keyed &&
 						(compress || depth < maxDisplayDepth) &&
 						drawChildren
@@ -946,7 +950,7 @@ function Node()
 					
 					if ( truncateWedge )
 					{
-						radiusOuter = this.children[0].radiusInner.current() * gRadius;
+						radiusOuter = this.children.length ? this.children[0].radiusInner.current() * gRadius : radiusInner;
 					}
 					else
 					{
@@ -969,7 +973,7 @@ function Node()
 					*/
 					context.globalAlpha = alphaWedgeCurrent;
 					
-					if ( radiusInner != radiusOuter )
+					if ( radiusInner != radiusOuter || truncateWedge )
 					{
 						drawWedge
 						(
@@ -2146,17 +2150,24 @@ function Node()
 	
 	this.getUnclassifiedPercentage = function()
 	{
-		var lastChild = this.children[this.children.length - 1];
+		if ( this.children.length )
+		{
+			var lastChild = this.children[this.children.length - 1];
 		
-		return getPercentage
-		(
+			return getPercentage
 			(
-				this.baseMagnitude +
-				this.magnitude -
-				lastChild.magnitude -
-				lastChild.baseMagnitude
-			) / this.magnitude
-		) + '%';
+				(
+					this.baseMagnitude +
+					this.magnitude -
+					lastChild.magnitude -
+					lastChild.baseMagnitude
+				) / this.magnitude
+			) + '%';
+		}
+		else
+		{
+			return '100%';
+		}
 	}
 	
 	this.getUnclassifiedText = function()
@@ -2982,15 +2993,19 @@ function Node()
 		if ( this == selectedNode )
 		{
 			var otherArc = 
-				angleFactor *
-				(
-					this.baseMagnitude + this.magnitude -
-					lastChild.baseMagnitude - lastChild.magnitude
-				);
+				this.children.length ?
+					angleFactor *
+					(
+						this.baseMagnitude + this.magnitude -
+						lastChild.baseMagnitude - lastChild.magnitude
+					)
+				: this.baseMagnitude + this.magnitude;
 			this.canDisplayLabelOther =
-				otherArc *
-				(this.children[0].radiusInner.end + 1) * gRadius >=
-				minWidth();
+				this.children.length ?
+					otherArc *
+					(this.children[0].radiusInner.end + 1) * gRadius >=
+					minWidth()
+				: true;
 			
 			this.keyUnclassified = false;
 			
@@ -3006,7 +3021,16 @@ function Node()
 			
 			this.angleStart.setTarget(0);
 			this.angleEnd.setTarget(Math.PI * 2);
-			this.radiusInner.setTarget(0);
+			
+			if ( this.children.length )
+			{
+				this.radiusInner.setTarget(0);
+			}
+			else
+			{
+				this.radiusInner.setTarget(compressedRadii[0]);
+			}
+			
 			this.hidePrev = this.hide;
 			this.hide = false;
 			this.hideAlonePrev = this.hideAlone;
@@ -3557,7 +3581,7 @@ value="&harr;" title="Expand this wedge to become the new focus of the chart"/><
 	position = addOptionElement
 	(
 		position,
-'<a style="margin:2px" target="_blank" href="https://github.com/marbl/Krona/wiki"><img style="vertical-align:middle;width:108px;height:30px;" src="' + logoImage + '"/></a><input type="button" id="back" value="&larr;" title="Go back (Shortcut: &larr;)"/>\
+'<a style="margin:2px" target="_blank" href="https://github.com/marbl/Krona/wiki"><img style="vertical-align:middle;width:108px;height:30px;" src="' + logoImage + '" alt="Logo of Krona"/></a><input type="button" id="back" value="&larr;" title="Go back (Shortcut: &larr;)"/>\
 <input type="button" id="forward" value="&rarr;" title="Go forward (Shortcut: &rarr;)"/> \
 &nbsp;Search: <input type="text" id="search"/>\
 <input id="searchClear" type="button" value="x" onclick="clearSearch()"/> \
@@ -3855,7 +3879,7 @@ function checkSelectedCollapse()
 		newNode = newNode.children[0];
 	}
 	
-	if ( newNode.children.length == 0 )
+	if ( newNode.children.length == 0 && newNode.getParent() )
 	{
 		newNode = newNode.getParent();
 	}
@@ -5738,17 +5762,9 @@ function setCallBacks()
 	}
 	
 	image = document.getElementById('hiddenImage');
-	
-	if ( image.complete )
+	image.onload = function()
 	{
 		hiddenPattern = context.createPattern(image, 'repeat');
-	}
-	else
-	{
-		image.onload = function()
-		{
-			hiddenPattern = context.createPattern(image, 'repeat');
-		}
 	}
 	
 	var loadingImageElement = document.getElementById('loadingImage');
@@ -5823,8 +5839,8 @@ function setFocus(node)
 	}
 	
 	var table = '<table>';
-	
-	table += '<tr><td></td></tr>';
+	//TODO: use CSS margins instead of an additional column
+	table += '<tr><td></td><td></td></tr>';
 	
 	for ( var i = 0; i < node.attributes.length; i++ )
 	{
@@ -5901,6 +5917,7 @@ function setSelectedNode(newNode)
 		setFocus(selectedNode);
 	}
 }
+
 
 function waitForData(dataWindow, target, title, time, postUrl, postVar)
 {
@@ -6056,24 +6073,9 @@ function snapshot()
 	
 	svg += svgFooter();
 	
-	snapshotWindow = window.open
-	(
-		'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg),
-		'_blank'
-	);
-/*	var data = window.open('data:text/plain;charset=utf-8,hello', '_blank');
-	var data = window.open('', '_blank');
-	data.document.open('text/plain');
-	data.document.write('hello');
-	data.document.close();
-	var button = document.createElement('input');
-	button.type = 'button';
-	button.value = 'save';
-	button.onclick = save;
-	data.document.body.appendChild(button);
-//	snapshotWindow.document.write(svg);
-//	snapshotWindow.document.close();
-*/	
+	var snapshotWindow = window.open('', '_blank', '', 'replace=false');
+	snapshotWindow.document.write('<html><body><a href="data:image/svg+xml,' + encodeURIComponent(svg) + '" download="snapshot.svg">Download Snapshot</a></html></body>');
+	snapshotWindow.document.write(svg);
 }
 
 function save()
@@ -6257,7 +6259,7 @@ function update()
 			
 			if ( fpsDisplay )
 			{
-				fpsDisplay.innerHTML = 'fps: ' + Math.round(tweenFrames * 1000 / tweenLength);
+                            fpsDisplay.innerHTML = 'fps: ' + Math.round(tweenFrames * 1000 / tweenLength);
 			}
 		}
 		
@@ -6570,7 +6572,7 @@ function updateView()
 
 function updateMaxAbsoluteDepth()
 {
-	while ( selectedNode.depth > maxAbsoluteDepth - 1 )
+	while ( maxAbsoluteDepth > 1 && selectedNode.depth > maxAbsoluteDepth - 1 )
 	{
 		selectedNode = selectedNode.getParent();
 	}

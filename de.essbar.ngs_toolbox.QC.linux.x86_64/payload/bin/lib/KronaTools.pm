@@ -9,6 +9,7 @@ use strict;
 package KronaTools;
 
 use Getopt::Long;
+Getopt::Long::Configure("no_ignore_case");
 use File::Basename;
 use File::Path;
 
@@ -35,6 +36,7 @@ our @EXPORT = qw
 	addByLineage
 	addByTaxID
 	addXML
+	classify
 	classifyBlast
 	default
 	getAccFromSeqID
@@ -90,7 +92,8 @@ my %options =
 	'standalone' => 1,
 	'taxCol' => 2,
 	'taxonomy' => $taxonomyDir,
-	'threshold' => 3
+	'threshold' => 3,
+	'thresholdGeneric' => 0,
 );
 
 # Option format codes to pass to GetOptions (and to be parsed for display).
@@ -113,8 +116,10 @@ my %optionFormats =
 		'e=f',
 	'include' =>
 		'i',
-	'noRank' =>
+	'cellular' =>
 		'k',
+	'noRank' =>
+		'K',
 	'local' =>
 		'l',
 	'magCol' =>
@@ -147,6 +152,8 @@ my %optionFormats =
 		't=i',
 	'threshold' =>
 		't=f',
+	'thresholdGeneric' =>
+		't=f',
 	'taxonomy' =>
 		'tax=s',
 	'url' =>
@@ -173,6 +180,7 @@ my %optionTypes =
 my %optionDescriptions =
 (
 	'bitScore' => 'Use bit score for average scores instead of log[10] e-value.',
+	'cellular' => 'Show the "cellular organisms" taxon (collapsed by default).',
 	'combine' => 'Combine data from each file, rather than creating separate datasets within the chart.',
 	'depth' => 'Maximum depth of wedges to include in the chart.',
 	'ecCol' => 'Column of input files to use as EC number.',
@@ -186,7 +194,7 @@ my %optionDescriptions =
 	'minConfidence' => 'Minimum confidence. Each query sequence will only be added to taxa that were predicted with a confidence score of at least this value.',
 	'name' => 'Name of the highest level.',
 	'noMag' => 'Files do not have a field for quantity.',
-	'noRank' => 'Allow assignments to taxa with ranks labeled "no rank" (instead of moving up to parent).',
+	'noRank' => 'Collapse assignments to taxa with ranks labeled "no rank" by moving up to parent.',
 	'out' => 'Output file name.',
 	'phymm' => 'Input is phymm only (no confidence scores).',
 	'postUrl' => 'Url to send query IDs to (instead of listing them) for each wedge. The query IDs will be sent as a comma separated list in the POST variable "queries", with the current dataset index (from 0) in the POST variable "dataset". The url can include additional variables encoded via GET.',
@@ -198,6 +206,7 @@ my %optionDescriptions =
 	'taxCol' => 'Column of input files to use as taxonomy ID.',
 	'taxonomy' => 'Path to directory containing a taxonomy database to use.',
 	'threshold' => 'Threshold for bit score differences when determining "best" hits. Hits with scores that are within this distance of the highest score will be included when computing the lowest common ancestor (or picking randomly if -r is specified).',
+	'thresholdGeneric' => 'Threshold for score differences when determining "best" hits. Hits with scores that are within this distance of the highest score will be included when computing the lowest common ancestor (or picking randomly if -r is specified). If 0, only exact ties for the best hit are used.',
 	'url' => 'URL of Krona resources to use instead of bundling them with the chart (e.g. "http://krona.sourceforge.net"). Reduces size of charts and allows updates, though charts will not work without access to this URL.',
 	'verbose' => 'Verbose.'
 );
@@ -212,6 +221,7 @@ my %optionDescriptions =
 our %argumentNames =
 (
 	'blast' => 'blast_output',
+	'hits' => 'hits',
 	'magnitude' => 'magnitudes',
 	'metarep' => 'metarep_folder',
 	'name' => 'name',
@@ -226,6 +236,12 @@ our %argumentDescriptions =
 downloading from NCBI). If running BLAST locally, subject IDs in the local
 database must contain accession numbers, either bare or in the fourth field of
 the pipe-separated ("gi|12345|xx|ABC123.1|") format.',
+	'hits' =>
+'Tabular file whose fields are [query, subject, score]. Subject must be
+an accession or contain one in the fourth field of pipe notation (e.g.
+"gi|12345|xx|ABC123.1|". The subject and score can be omitted to
+include a query that has no hits, which will be assigned a taxonomy
+ID of -1.',
 	'magnitude' =>
 'Optional file listing query IDs with magnitudes, separated by tabs. This can
 be used to account for read length or contig depth to obtain a more accurate
@@ -245,14 +261,14 @@ default, the basename of the file will be used.',
 # Global constants #
 ####################
 
-our $version = '2.7';
+our $version = '2.7.1';
 my $javascriptVersion = '2.0';
 my $javascript = "src/krona-$javascriptVersion.js";
 my $hiddenImage = 'img/hidden.png';
 my $favicon = 'img/favicon.ico';
 my $loadingImage = 'img/loading.gif';
 my $logo = 'img/logo-med.png';
-my $taxonomyHrefBase = 'http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=info&id=';
+my $taxonomyHrefBase = 'http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=info&amp;id=';
 my $ecHrefBase = 'http://www.chem.qmul.ac.uk/iubmb/enzyme/EC';
 my $suppDirSuffix = '.files';
 my $suppEnableFile = 'enable.js';
@@ -260,7 +276,15 @@ my $fileTaxonomy = 'taxonomy.tab';
 my $fileTaxByAcc = 'all.accession2taxid.sorted';
 my $memberLimitDataset = 10000;
 my $memberLimitTotal = 100000;
-my $columns = `tput cols`;
+my $columns;
+if (defined($ENV{TERM}))
+{
+	$columns = `tput cols`;
+}
+else
+{
+	$columns = 80;
+}
 our $minEVal = -450;
 
 
@@ -568,11 +592,11 @@ sub addByTaxID
 	#
 	while
 	(
-		! $options{'noRank'} && $taxID > 1 && $taxRanks[$taxID] eq 'no rank' ||
-		$options{'depth'} && $taxDepths[$taxID] > $options{'depth'}
+		shouldCollapse($taxID) ||
+		$options{'depth'} && getTaxDepth($taxID) > $options{'depth'}
 	)
 	{
-		$taxID = $taxParents[$taxID];
+		$taxID = getTaxParent($taxID);
 	}
 	
 	# get parent recursively
@@ -584,7 +608,7 @@ sub addByTaxID
 	{
 		$parentID = getTaxParent($parentID);
 	}
-	while (! $options{'noRank'} && $parentID > 1 && getTaxRank($parentID) eq 'no rank');
+	while ( shouldCollapse($parentID) );
 	
 	#
 	if ( $parentID != 1 )#$taxID )
@@ -759,6 +783,133 @@ sub addXML
 	}
 }
 
+sub classify
+{
+	# taxonomically classifies generic hits based on LCA (or random selection)
+	# of 'best' hits.
+	#
+	# Options used: thresholdGeneric, include, percentIdentity, random, score
+	
+	my # parameters
+	(
+		$fileName, # file with tabular hits (query, subject, score)
+		
+		# hash refs to be populated with results (keyed by query ID)
+		#
+		$taxIDs,
+		$scores
+	) = @_;
+	
+	open HITS, "<$fileName" or ktDie("Could not open $fileName\n");
+	
+	my $lastQueryID;
+	my $topScore;
+	my $ties;
+	my $taxID;
+	my %lcaSet;
+	my $totalScore;
+	
+	while ( 1 )
+	{
+		my $line = <HITS>;
+		
+		chomp $line;
+		
+		my
+		(
+			$queryID,
+			$hitID,
+			$score
+		) = split /\t/, $line;
+		
+		if ( defined $queryID && ! defined $hitID )
+		{
+			$taxIDs->{$queryID} = -1;
+			$scores->{$queryID} = 0;
+			
+			next;
+		}
+		
+		if ( $queryID ne $lastQueryID )
+		{
+			if (  $ties )
+			{
+				# add the chosen hit from the last queryID
+				
+				if ( ! $options{'random'} )
+				{
+					$taxID = taxLowestCommonAncestor(keys %lcaSet)
+				}
+				
+				$taxIDs->{$lastQueryID} = $taxID;
+				$scores->{$lastQueryID} = $totalScore / $ties;
+			}
+			
+			$ties = 0;
+			$totalScore = 0;
+			%lcaSet = ();
+		}
+		
+		if ( ! defined $hitID )
+		{
+			last; # EOF
+		}
+		
+		my $acc = getAccFromSeqID($hitID);
+		
+		if ( ! defined $acc )
+		{
+			$lastQueryID = $queryID;
+			next;
+		}
+		
+		if # this is a 'best' hit if...
+		(
+			$queryID ne $lastQueryID || # new query ID (including null at EOF)
+			$score >= $topScore - $options{'thresholdGeneric'} # within score threshold
+		)
+		{
+			# add score for average
+			#
+			$totalScore += $score;
+			$ties++;
+			
+			if # use this hit if...
+			(
+				! $options{'random'} || # using LCA
+				$queryID ne $lastQueryID || # new query ID
+				int(rand($ties)) == 0 # randomly chosen to replace other hit
+			)
+			{
+				my $newTaxID = getTaxIDFromAcc($acc);
+				
+				if ( ! $newTaxID || ! taxIDExists($newTaxID) )
+				{
+					$newTaxID = 1;
+				}
+				
+				if ( $options{'random'} )
+				{
+					$taxID = $newTaxID;
+				}
+				else
+				{
+					$lcaSet{$newTaxID} = 1;
+				}
+			}
+		}
+		
+		if ( $queryID ne $lastQueryID )
+		{
+			$topScore = $score;
+		}
+		
+		$lastQueryID = $queryID;
+	}
+	
+	close HITS;
+}	
+
 sub classifyBlast
 {
 	# taxonomically classifies BLAST results based on LCA (or random selection)
@@ -868,7 +1019,7 @@ sub classifyBlast
 		if # this is a 'best' hit if...
 		(
 			$queryID ne $lastQueryID || # new query ID (including null at EOF)
-			$bitScore > $topScore - $options{'threshold'} || # within score threshold
+			$bitScore >= $topScore - $options{'threshold'} || # within score threshold
 			$options{'factor'} && $eVal <= $options{'factor'} * $topEVal # within e-val factor
 		)
 		{
@@ -906,7 +1057,7 @@ sub classifyBlast
 			{
 				my $newTaxID = getTaxIDFromAcc($acc);
 				
-				if ( ! $newTaxID || ! defined $taxParents[$newTaxID] )
+				if ( ! $newTaxID || ! taxIDExists($newTaxID) )
 				{
 					$newTaxID = 1;
 				}
@@ -930,6 +1081,8 @@ sub classifyBlast
 		
 		$lastQueryID = $queryID;
 	}
+	
+	close BLAST;
 	
 	if ( $zeroEVal )
 	{
@@ -966,10 +1119,10 @@ sub getAccFromSeqID
 		$acc = (split /\|/, $acc)[3];
 	}
 	
-	if ( $acc !~ /^\d+$/ && $acc !~ /^[A-Z]+_?[A-Z]*\d+(\.\d+)?$/ )
+	if ( $acc !~ /^\d+$/ && $acc !~ /^[A-Z\d]+_?[A-Z\d]+(\.\d+)?$/ )
 	{
 		$invalidAccs{$acc} = 1;
-		return undef;
+		#return undef;
 	}
 	
 	return $acc;
@@ -1064,6 +1217,11 @@ sub getTaxInfo
 	my ($tax) = @_;
 	
 	$tax = int($tax);
+	
+	if ( $tax == 0 )
+	{
+		return ('', '', '', '', '');
+	}
 	
 	if ( defined $taxInfoByID{$tax} )
 	{
@@ -1293,7 +1451,7 @@ sub htmlHeader
 			$notFound = "Could not get resources from \\\"$options{'url'}\\\".";
 		}
 		
-		$script = indent(2) . "<script src=\"$path$javascript\"></script>\n";
+		$script = indent(2) . "<script src=\"$path$javascript\" type=\"text/javascript\"></script>\n";
 	}
 	
 	return
@@ -1303,13 +1461,13 @@ sub htmlHeader
 			indent(2) . "<meta charset=\"utf-8\"/>\n" .
 #			indent(2) . "<base href=\"$path\" target=\"_blank\"/>\n" .
 			indent(2) . "<link rel=\"shortcut icon\" href=\"$path$favicon\"/>\n" .
-			indent(2) . "<script id=\"notfound\">window.onload=function(){document.body.innerHTML=\"$notFound\"}</script>\n" .
+			indent(2) . "<script id=\"notfound\" type=\"text/javascript\">window.onload=function(){document.body.innerHTML=\"$notFound\"}</script>\n" .
 			$script .
 		indent(1) . "</head>\n" .
 		indent(1) . "<body>\n" .
-			indent(2) . "<img id=\"hiddenImage\" src=\"$path$hiddenImage\" style=\"display:none\"/>\n" .
-			indent(2) . "<img id=\"loadingImage\" src=\"$path$loadingImage\" style=\"display:none\"/>\n" .
-			indent(2) . "<img id=\"logo\" src=\"$path$logo\" style=\"display:none\"/>\n" .
+			indent(2) . "<img id=\"hiddenImage\" src=\"$path$hiddenImage\" style=\"display:none\" alt=\"Hidden Image\"/>\n" .
+			indent(2) . "<img id=\"loadingImage\" src=\"$path$loadingImage\" style=\"display:none\" alt=\"Loading Indicator\"/>\n" .
+			indent(2) . "<img id=\"logo\" src=\"$path$logo\" style=\"display:none\" alt=\"Logo of Krona\"/>\n" .
 			indent(2) . "<noscript>Javascript must be enabled to view this page.</noscript>\n" .
 			indent(2) . "<div style=\"display:none\">\n";
 }
@@ -1514,7 +1672,7 @@ sub printWarnings
 	{
 		ktWarn
 		(
-			"The following accessions were not in a valid format and were ignored:\n" .
+			"The following accessions look strange and may yield erroneous results. Please check if they are acual valid NCBI accessions:\n" .
 			join ' ', (keys %invalidAccs)
 		);
 		
@@ -1614,6 +1772,19 @@ sub setOption
 	my ($option, $value) = @_;
 	
 	$options{$option} = $value;
+}
+
+sub shouldCollapse
+{
+	my ($taxID) = @_;
+	
+	return !
+	(
+		getTaxRank($taxID) ne 'no rank' ||
+		! $options{'noRank'} && $taxID != 131567 ||
+		$taxID == 1 ||
+		$options{'cellular'} && $taxID == 131567
+	);
 }
 
 sub taxContains
@@ -1918,7 +2089,7 @@ sub dataHeader
 		my $enableText = $supp ? " enable=\"$suppDir/$suppEnableFile\"" : '';
 		$header .= indent(4) . "<$memberTag$enableText>members</$memberTag>\n";
 		$assignedText = " ${memberTag}Node=\"members\"";
-		$summaryText = " ${memberTag}\All=\"members\"";
+		$summaryText = " ${memberTag}All=\"members\"";
 		
 		if ( $options{'postUrl'} )
 		{
