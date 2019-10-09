@@ -7,17 +7,8 @@
 		<clielement optionIdentifier="" isList="false">
 			<mapping referenceName="flexbar.target" />
 		</clielement>
-		<clielement optionIdentifier="--full-help" isList="false">
-			<mapping referenceName="flexbar.full-help" />
-		</clielement>
-		<clielement optionIdentifier="--man-help" isList="false">
-			<mapping referenceName="flexbar.man-help" />
-		</clielement>
-		<clielement optionIdentifier="--versions" isList="false">
-			<mapping referenceName="flexbar.versions" />
-		</clielement>
-		<clielement optionIdentifier="--cite" isList="false">
-			<mapping referenceName="flexbar.cite" />
+		<clielement optionIdentifier="" isList="false">
+			<mapping referenceName="flexbar.log" />
 		</clielement>
 		<clielement optionIdentifier="--threads" isList="false">
 			<mapping referenceName="flexbar.threads" />
@@ -154,9 +145,6 @@
 		<clielement optionIdentifier="--align-log" isList="false">
 			<mapping referenceName="flexbar.align-log" />
 		</clielement>
-		<clielement optionIdentifier="--stdout-log" isList="false">
-			<mapping referenceName="flexbar.stdout-log" />
-		</clielement>
 		<clielement optionIdentifier="--removal-tags" isList="false">
 			<mapping referenceName="flexbar.removal-tags" />
 		</clielement>
@@ -170,13 +158,10 @@
 	<PARAMETERS version="1.6.2" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_6_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 		<NODE name="flexbar" description="flexible barcode and adapter removal">
 			<ITEM name="target" value="flexbarOut.fastq" type="output-file" description="Output file that contains interleaved reads." supported_formats="*.fastq,*.fq" required="true" advanced="false" />
-			<ITEM name="full-help" value="false" type="string" description="Display the help message with advanced options." restrictions="true,false" required="false" advanced="false" />
-			<ITEM name="man-help" value="false" type="string" description="Print advanced options as man document." restrictions="true,false" required="false" advanced="true" />
-			<ITEM name="versions" value="false" type="string" description="Print Flexbar and SeqAn version numbers." restrictions="true,false" required="false" advanced="false" />
-			<ITEM name="cite" value="false" type="string" description="Show program reference for citation." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="log" value="" type="output-file" description="Flexbar log file." supported_formats="log" required="false" advanced="false" />
 			<ITEM name="threads" value="1" type="int" description="Number of threads to employ." required="false" advanced="false" />
 			<ITEM name="bundle" value="256" type="int" description="Number of read pairs per thread." required="false" advanced="true" />
-			<ITEM name="reads" value="" type="input-file" description="Fasta/q file or stdin (-) with reads that may contain barcodes." required="true" advanced="false" supported_formats="*.fq,*.fastq,*.fq.gz"/>
+			<ITEM name="reads" value="" type="input-file" description="Fasta/q file with reads that may contain barcodes." required="true" advanced="false" supported_formats="*.fq,*.fastq,*.fq.gz"/>
 			<ITEM name="reads2" value="" type="input-file" description="Second input file of paired reads, gz and bz2 files supported." required="false" advanced="false" supported_formats="*.fq,*.fastq,*.fq.gz" />
 			<ITEM name="barcodes" value="" type="input-file" description="Fasta file with barcodes for demultiplexing, may contain N." required="false" advanced="false" />
 			<ITEM name="barcodes2" value="" type="input-file" description="Additional barcodes file for second read set in paired mode." required="false" advanced="true" />
@@ -218,8 +203,7 @@
 			<ITEM name="length-dist" value="false" type="string" description="Generate length distribution for read output files." restrictions="true,false" required="false" advanced="true" />
 			<ITEM name="single-reads" value="false" type="string" description="Write single reads for too short counterparts in pairs." restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="single-reads-paired" value="false" type="string" description="Write paired single reads with N for short counterparts." restrictions="true,false" required="false" advanced="true" />
-			<ITEM name="align-log" value="" type="string" description="Print chosen read alignments." restrictions="ALL,MOD,TAB" required="false" advanced="false" />
-			<ITEM name="stdout-log" value="true" type="string" description="Write statistics to console instead of target log file." restrictions="true,false" required="false" advanced="false" />
+			<ITEM name="align-log" value="ALL" type="string" description="Print chosen read alignments." restrictions="ALL,MOD,TAB" required="false" advanced="false" />
 			<ITEM name="removal-tags" value="false" type="string" description="Tag reads that are subject to adapter or barcode removal." restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="number-tags" value="false" type="string" description="Replace read tags by ascending number to save space." restrictions="true,false" required="false" advanced="true" />
 			<ITEM name="random-tags" value="false" type="string" description="Capture read sequence at barcode or adapter N positions." restrictions="true,false" required="false" advanced="true" />

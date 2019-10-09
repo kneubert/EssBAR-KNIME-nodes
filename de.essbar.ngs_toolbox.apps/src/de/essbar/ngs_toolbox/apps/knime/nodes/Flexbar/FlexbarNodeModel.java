@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class FlexbarNodeModel extends GenericKnimeNodeModel {  
     protected FlexbarNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"fasta" ,"fa" ,"fastq" ,"fq", "fastq.gz", "fq.gz"}, {}, {}, {}, {}, {}, {},}, new String[][]{{"fastq"}});
+        super(nodeConfig, pluginConfig, new String[][]{{"fasta" ,"fa" ,"fastq" ,"fq", "fastq.gz", "fq.gz"}, {}, {}, {}, {}, {}, {},}, new String[][]{{"fastq"}, {"log"}});
     }
 }

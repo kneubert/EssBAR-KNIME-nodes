@@ -15,12 +15,7 @@
 		</p>
 
         </intro>
-        
-		<option name="full-help">Display the help message with advanced options.</option>
-		<option name="man-help">Print advanced options as man document.</option>
-		<option name="versions">Print Flexbar and SeqAn version numbers.</option>
-		<option name="cite">Show program reference for citation.</option>
-		<option name="threads">Number of threads to employ.</option>
+        <option name="threads">Number of threads to employ.</option>
 		<option name="bundle">Number of read pairs per thread.</option>
 		<option name="target">Prefix for output file names or paths.</option>
 		<option name="barcode-trim-end">Type of detection, see section trim-end modes.</option>
@@ -59,7 +54,6 @@
 		<option name="single-reads">Write single reads for too short counterparts in pairs.</option>
 		<option name="single-reads-paired">Write paired single reads with N for short counterparts.</option>
 		<option name="align-log">Print chosen read alignments.</option>
-		<option name="stdout-log">Write statistics to console instead of target log file.</option>
 		<option name="removal-tags">Tag reads that are subject to adapter or barcode removal.</option>
 		<option name="number-tags">Replace read tags by ascending number to save space.</option>
 		<option name="random-tags">Capture read sequence at barcode or adapter N positions.</option>
@@ -67,7 +61,7 @@
     </fullDescription>
     
     <ports>
-		<inPort index="0" name="reads [fasta,fa,fastq,fq,gz]">Fasta/q file or stdin (-) with reads that may contain barcodes. [fasta,fa,fastq,fq,gz]</inPort>
+		<inPort index="0" name="reads [fasta,fa,fastq,fq,gz]">Fasta/q file with reads that may contain barcodes. [fasta,fa,fastq,fq,gz]</inPort>
 		<inPort index="1" name="reads2 [fasta,fa,fastq,fq,gz]">Second input file of paired reads, gz and bz2 files supported. [fasta,fa,fastq,fq,gz]</inPort>
 		<inPort index="2" name="barcodes [fasta,fa]">Fasta file with barcodes for demultiplexing, may contain N. [fasta,fa]</inPort>
 		<inPort index="3" name="barcodes2 [fasta,fa]">Additional barcodes file for second read set in paired mode. [fasta,fa]</inPort>
@@ -75,6 +69,7 @@
 		<inPort index="5" name="adapters [fasta,fa]">Fasta file with adapters for removal that may contain N. [fasta,fa]</inPort>
 		<inPort index="6" name="adapters2 [fasta,fa]">File with extra adapters for second read set in paired mode. [fasta,fa]</inPort>
 		<outPort index="0" name="output file [fastq,fq]">Output file [fastq,fq]</outPort>
+		<outPort index="1" name="output file [log]">Output file [log]</outPort>
  </ports>
     <views>
         <view index="0" name="Flexbar Std Output">The text sent to standard out during the execution of Flexbar.</view>
