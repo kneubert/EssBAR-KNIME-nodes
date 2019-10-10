@@ -132,14 +132,27 @@ fi
 
 # download 'cm' and 'hmm' from prokka github
 echo "Retrieve 'cm' and 'hmm' from prokka github repository..."
+if [ ! -e cm ] || [ ! -e hmm ]
+then 
+  wget https://github.com/tseemann/prokka/trunk/db/cm/archive/master.zip
+  unzip master.zip
+fi
 if [ ! -e cm ]
 then
-  svn export https://github.com/tseemann/prokka/trunk/db/cm
+  # svn export https://github.com/tseemann/prokka/trunk/db/cm
+  mv prokka-master/db/cm/ .
 fi
 
 if [ ! -e hmm ]
 then
-  svn export https://github.com/tseemann/prokka/trunk/db/hmm
+  # svn export https://github.com/tseemann/prokka/trunk/db/hmm
+  mv prokka-master/db/hmm/ .
+fi
+
+if [ -e master.zip ]
+then
+  rm master.zip
+  rm -R prokka-master
 fi
 
 db_dir=`pwd`
