@@ -120,13 +120,13 @@
     <mimetype name="parsnp/x-ggr">
       <fileextension name="ggr"/>
     </mimetype>
-    <mimetype name="passnp/x-xmfa">
+    <mimetype name="parsnp/x-xmfa">
       <fileextension name="xmfa"/>
     </mimetype>
-    <mimetype name="passnp/x-ini">
+    <mimetype name="parsnp/x-ini">
       <fileextension name="ini"/>
     </mimetype>
-    <mimetype name="passnp/x-unaligned">
+    <mimetype name="parsnp/x-unaligned">
       <fileextension name="unaligned"/>
     </mimetype>
   	<mimetype name="kraken/x-fasta">
@@ -191,6 +191,10 @@
     </mimetype>
     <mimetype name="kSNP3/newick">
       <fileextension name="tre"/>
+    </mimetype>
+    <mimetype name="application/config">
+      <fileextension name="config"/>
+      <fileextension name="cfg"/>
     </mimetype>
   </extension> 
    <extension
