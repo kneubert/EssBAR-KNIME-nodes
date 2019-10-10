@@ -25,7 +25,8 @@
  SRST2 = https://github.com/katholt/srst2
  stringMLST = https://github.com/jordanlab/stringMLST
  ContigMLST = https://github.com/tseemann/mlst
-   </description>
+ MLVA = https://github.com/dpchris/MLVA
+ </description>
 
    <copyright url="http://www.example.com/copyright">
       The copyright of the contained tools belongs to the original authors. 
