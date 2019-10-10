@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class ParsnpNodeModel extends GenericKnimeNodeModel {  
     protected ParsnpNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"*" }, {"fasta" ,"fa", "fna" }, {"gbk" }, {"fasta" ,"fa","fna" },}, new String[][]{{"*" ,"inactive" },});
+        super(nodeConfig, pluginConfig, new String[][]{{"*" }, {"fasta" ,"fa", "fna" }, {"gbk" }, {"fasta" ,"fa","fna" },}, new String[][]{{"*" },});
     }
 }

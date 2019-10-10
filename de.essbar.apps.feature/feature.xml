@@ -8,7 +8,7 @@
       arch="x86_64">
 
    <description url="http://www.example.com/description">
- This feature contains a collection of tools to analyse sequence data. 
+      This feature contains a collection of tools to analyse sequence data. 
  It bundles SeqAn nodes and several NGS tools.
  
  Flexbar = https://github.com/seqan/flexbar/wiki
@@ -28,7 +28,7 @@
    </description>
 
    <copyright url="http://www.example.com/copyright">
- The copyright of the contained tools belongs to the original authors. 
+      The copyright of the contained tools belongs to the original authors. 
  Please check the corresponding web-sites for details.
  
  Flexbar = https://github.com/seqan/flexbar/wiki
@@ -46,10 +46,10 @@
  stringMLST = https://github.com/jordanlab/stringMLST
  ContigMLST = https://github.com/tseemann/mlst
  MLVA = https://github.com/dpchris/MLVA
- </copyright>
+   </copyright>
 
- <license url="http://www.example.com/license">
- GNU GENERAL PUBLIC LICENSE &amp; Parsnp Copyright LICENSE @amp; BSD 3-CLAUSE LICENCE;
+   <license url="http://www.example.com/license">
+      GNU GENERAL PUBLIC LICENSE &amp; Parsnp Copyright LICENSE @amp; BSD 3-CLAUSE LICENCE;
  Parts of this feature are licensed under different licenses. You need to accept
  all of the licenses to use this package.
  
@@ -1100,8 +1100,8 @@ disclaimer below.
 disclaimer (as noted below) in the documentation and/or other materials provided with the distribution.
 • Neither the name of the LLNS/LLNL nor the names of its contributors may be used to endorse or
 promote products derived from this software without specific prior written permission.
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
-IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS
+IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
 THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL LAWRENCE LIVERMORE NATIONAL
 SECURITY, LLC, THE U.S. DEPARTMENT OF ENERGY OR CONTRIBUTORS BE LIABLE FOR
@@ -1127,7 +1127,6 @@ endorsement, recommendation, or favoring by the United States Government or Lawr
 Livermore National Security, LLC. The views and opinions of authors expressed herein do not
 necessarily state or reflect those of the United States Government or Lawrence Livermore
 National Security, LLC, and shall not be used for advertising or product endorsement purposes.
-
    </license>
 
    <plugin

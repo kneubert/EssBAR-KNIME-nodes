@@ -10,4 +10,4 @@
 use strict;
 use Cwd 'abs_path';
 abs_path($0) =~ /(.*)\//;
-print abs_path("$1/lib");
+print abs_path("$1/../lib");

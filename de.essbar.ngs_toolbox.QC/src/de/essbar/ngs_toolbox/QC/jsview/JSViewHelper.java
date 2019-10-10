@@ -216,7 +216,7 @@ public class JSViewHelper {
 			
 		}
 
-		File file_out = new File(dir + "/qualimapReport_encoded.html");
+		File file_out = new File(dir + "/report_encoded.html");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file_out));
 		bw.write(document.toString());
 		bw.close();

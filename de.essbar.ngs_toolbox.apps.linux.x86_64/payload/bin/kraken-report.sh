@@ -8,5 +8,5 @@ OUT=$1
 shift
 
 # Execute kraken-report and redirect stdout to the output file
-echo "kraken-report $* >${OUT}"
-kraken-report $* >${OUT}
+echo "kraken-report $* >$OUT"
+kraken-report $* >"$OUT"

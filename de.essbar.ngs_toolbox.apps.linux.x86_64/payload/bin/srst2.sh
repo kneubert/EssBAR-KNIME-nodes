@@ -5,7 +5,7 @@
 # first, parse the options:
 
 flag="--input_se"
-reads=""
+reads=()
 mlstdb=""
 mlstdef_file=""
 mlstfasta_file=""
@@ -19,12 +19,12 @@ while getopts $optspec optchar; do
             fwd)
                 val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
 		    	echo "Parsing option: '--${OPTARG}', value: '${val}'" >&2;
-		    	reads=${reads}" ${val}"; 
+                reads=("${reads[@]}" "$val")
                 ;;
             rev)
                 val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
 		    	echo "Parsing option: '--${OPTARG}', value: '${val}'" >&2;
-		    	reads=${reads}" ${val}"; 
+                reads=("${reads[@]}" "$val")
 		    	flag="--input_pe"
                 ;;
 			mlst_db)
@@ -78,5 +78,9 @@ for ((i=1; i<=$#; i++)); do
 done
 
 # run SRST2
-echo "srst2 $* ${flag} ${reads} --mlst_db $mlstfasta_file --mlst_definitions $mlstdef_file"
-srst2 $* ${flag} ${reads} --mlst_db $mlstfasta_file --mlst_definitions $mlstdef_file
+cmd=(srst2 "$*" "$flag" "${reads[@]}" --mlst_db "$mlstfasta_file" --mlst_definitions "$mlstdef_file")
+echo "${cmd[@]}"
+#srst2 $* "$flag" "$reads" --mlst_db "$mlstfasta_file" --mlst_definitions "$mlstdef_file"
+eval "${cmd[@]}"
+
+

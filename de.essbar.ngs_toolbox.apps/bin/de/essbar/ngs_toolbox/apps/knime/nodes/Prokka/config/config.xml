@@ -162,7 +162,7 @@
 			<ITEM name="norrna" value="false" type="string" description="Don't run rRNA search (default OFF)." restrictions="true,false" required="false" advanced="true" />
 			<ITEM name="notrna" value="false" type="string" description="Don't run tRNA search (default OFF)." restrictions="true,false" required="false" advanced="true" />
 			<ITEM name="rnammer" value="false" type="string" description="Prefer RNAmmer over Barrnap for rRNA prediction (default OFF)." restrictions="true,false" required="false" advanced="true" />																																																																																														
-			<ITEM name="outdir" value="" type="output-prefix" description="Output directory" supported_formats="*.*" required="false" advanced="false" />		
+			<ITEM name="outdir" value="" type="output-prefix" description="Output directory" supported_formats="*.*" required="true" advanced="false" />		
 			<ITEM name="assembly" value="" type="input-file" description="Assembly (contigs or scaffolds)" supported_formats="*.fasta,*.fa,*.fna" required="true" advanced="false" />	
 			<ITEM name="dbdir" value="" type="input-prefix" description="Prokka database root folder." supported_formats="*" required="true" advanced="false" />
 			<ITEM name="proteins" value="" type="input-file" description="FASTA or GBK file to use as 1st priority." supported_formats="*.fasta,*.fa,*.fna,*.gbk" required="false" advanced="false" />

@@ -389,11 +389,11 @@ public class KtImportTaxonomyNodeModel extends GenericKnimeNodeModel implements 
 	            representation.setCssCode(m_config.getCssCode());
 	            setPathsFromLibNames(m_config.getDependencies());
 	            setOptionalViewWaitTime((long)m_config.getWaitTime());
-	           // setOptionalViewWaitTime((long)10);
+	            setOptionalViewWaitTime((long)1000); // test
+	            
 	         
 	          //  System.out.println("Optional View Wait time: " + (long)m_config.getWaitTime());
 	           // setFlowVariablesInView();
-	            
 	           // System.out.println("js code: " + representation.getJsCode());
 	           // System.out.println("css code: " + m_config.getCssCode());
 	            

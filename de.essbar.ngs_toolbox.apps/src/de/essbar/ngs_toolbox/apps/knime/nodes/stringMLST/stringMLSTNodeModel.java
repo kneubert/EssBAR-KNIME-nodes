@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class stringMLSTNodeModel extends GenericKnimeNodeModel {  
     protected stringMLSTNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"fq" ,"fastq", "gz" }, {"fq" ,"fastq", "gz" }, {"txt" },}, new String[][]{{"txt" ,"tsv" ,"csv" }, {"fq" ,"fastq" },});
+        super(nodeConfig, pluginConfig, new String[][]{{"fastq" ,"fq" ,"gz", "fastq.gz", "fq.gz" }, {"fastq" ,"fq" ,"gz", "fastq.gz", "fq.gz" }, {"txt", "cfg", "config" },}, new String[][]{{"txt" ,"tsv" ,"csv" }, {"fq" ,"fastq" },});
     }
 }
