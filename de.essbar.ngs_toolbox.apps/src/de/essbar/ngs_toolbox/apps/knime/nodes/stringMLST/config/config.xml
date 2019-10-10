@@ -41,9 +41,9 @@
             <ITEM name="kmer" value="35" type="int" required="false" description="Kmer length for the stringMLST database which is used for assigning STs to input sample files." />
             <ITEM name="fuzzy" value="300" type="int" required="false" description="Threshold for reporting a fuzzy match. For higher coverage reads this threshold should be set higher to avoid indicating fuzzy match when exact match was more likely. For lower coverage reads, threshold smaller or equal to 100 is recommended" />
             <!-- Following clielements are arguments.-->    
-            <ITEM name="fastq1" value="" type="input-file" description="Path to first fastq file for paired end sample and path to the fastq file for single end file." supported_formats="*.fq,*.fastq,*.gz,*.fastq.gz,*.fq.gz" required="true" advanced="false" />
-            <ITEM name="fastq2" value="" type="input-file" description="Path to second fastq file for paired end sample." supported_formats="*.fq,*.fastq,*.gz,*.fastq.gz,*.fq.gz" required="false" advanced="false" />
-            <ITEM name="config" value="" type="input-file" description="Config file: is a tab delimited file which has the information for typing scheme i.e. loci, its multifasta file and profile definition file." supported_formats="*.txt" required="true" advanced="false" />
+            <ITEM name="fastq1" value="" type="input-file" description="Path to first fastq file for paired end sample and path to the fastq file for single end file." supported_formats="*.fastq,*.fq,*.gz" required="true" advanced="false" />
+            <ITEM name="fastq2" value="" type="input-file" description="Path to second fastq file for paired end sample." supported_formats="*.fastq,*.fq,*.gz" required="false" advanced="false" />
+            <ITEM name="config" value="" type="input-file" description="Config file: is a tab delimited file which has the information for typing scheme i.e. loci, its multifasta file and profile definition file." supported_formats="*.txt,*.cfg,*.config" required="true" advanced="false" />
             <ITEM name="output" value="" type="output-file" description="Output file with alleles and sequence types." supported_formats="*.txt,*.tsv,*.csv" required="true" advanced="false" />            
             <ITEM name="reads" value="" type="output-file" description="A seperate reads file is created which has all the reads covering all the locus." supported_formats="*.fq,*.fastq" required="false" advanced="false" />   
         </NODE>
