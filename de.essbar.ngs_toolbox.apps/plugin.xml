@@ -68,8 +68,9 @@
       <fileextension name="nog"/>
       <fileextension name="nsi"/>
     </mimetype>
-    <mimetype name="application/x-gbk">
+    <mimetype name="application/x-genbank">
       <fileextension name="gbk"/>
+      <fileextension name="gbff"/>
     </mimetype>
     <mimetype name="srst2/pileup">
       <fileextension name="pileup"/>
