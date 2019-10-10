@@ -60,16 +60,12 @@ def predict(prefix):
        coverage_flag = "-C"
     if options.fastq2:
        command_args = ["stringMLST.py", "--predict", "-1", options.fastq1, "-2",options.fastq2, "-k", str(options.kmer_length), "-P", prefix, "-o", options.output, "-r", "--fuzzy", str(options.fuzzy_thresh), coverage_flag]
-       if options.coverage:
-          command_args.extend(["-c", options.config])
        print " ".join(command_args)
        p = subprocess.Popen(command_args, stdout=subprocess.PIPE)
        out = p.stdout.read()
        print out
     else:
        command_args = ["stringMLST.py", "--predict", "-1", options.fastq1, "-s", "-k", str(options.kmer_length), "-P", prefix,"-o", options.output, "-r", "--fuzzy", str(options.fuzzy_thresh), coverage_flag]
-       if options.coverage:
-          command_args.extend(["-c", options.config])
        print " ".join(command_args)
        p = subprocess.Popen(command_args, stdout=subprocess.PIPE)
        out = p.stdout.read()
