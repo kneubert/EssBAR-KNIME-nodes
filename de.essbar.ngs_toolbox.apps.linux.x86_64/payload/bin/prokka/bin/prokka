@@ -20,7 +20,7 @@
 use strict;
 use warnings;
 use FindBin;
-use lib "$FindBin::RealBin/../perl5"; # for bundled Perl modules
+use lib "$FindBin::RealBin/../../perl_lib"; # for bundled Perl modules
 use Cwd qw(abs_path);
 use File::Copy;
 use Time::Piece;

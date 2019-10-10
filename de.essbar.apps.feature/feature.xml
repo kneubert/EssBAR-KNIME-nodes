@@ -26,7 +26,7 @@
  stringMLST = https://github.com/jordanlab/stringMLST
  ContigMLST = https://github.com/tseemann/mlst
  MLVA = https://github.com/dpchris/MLVA
- </description>
+   </description>
 
    <copyright url="http://www.example.com/copyright">
       The copyright of the contained tools belongs to the original authors. 
@@ -1134,14 +1134,14 @@ National Security, LLC, and shall not be used for advertising or product endorse
          id="de.essbar.ngs_toolbox.apps"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.0.7"
          unpack="false"/>
 
    <plugin
          id="de.essbar.ngs_toolbox.apps.linux.x86_64"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.0.7"
          fragment="true"/>
 
 </feature>
