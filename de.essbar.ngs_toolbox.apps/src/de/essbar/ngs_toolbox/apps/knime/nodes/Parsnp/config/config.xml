@@ -79,7 +79,7 @@
 			<ITEM name="reference_genome" value="" type="input-file" description="Reference genome" supported_formats="*.fasta,*.fa,*.fna" required="true" advanced="false" />
 			<ITEM name="genbank_file" value="" type="input-file" description="Genbank file." supported_formats="*.gbk" required="false" advanced="false" />
 			<ITEM name="query_genome" value="" type="input-file" description="Specify (assembled) query genome to use, in addition to genomes found in genome directory (optional)." supported_formats="*.fasta,*.fa,*.fna" required="false" advanced="false" />			
-			<ITEM name="output" value="" type="output-prefix" description="Output directory" supported_formats="*" required="false" advanced="false" />
+			<ITEM name="output" value="" type="output-prefix" description="Output directory" supported_formats="*" required="true" advanced="false" />
 			<ITEM name="curated" value="false" type="string" description="Curated genome directory, use all genomes in dir and ignore MUMi." restrictions="true,false" required="false" advanced="false" />
 			<ITEM name="max_MUMi" value="" type="float" description="Max MUMi distance value for MUMi distribution" restrictions="0:" required="false" advanced="false" />
 			<ITEM name="only_MUMi" value="false" type="string" description="Calculate MUMi and exit? overrides all other choices." restrictions="true,false" required="false" advanced="false" />

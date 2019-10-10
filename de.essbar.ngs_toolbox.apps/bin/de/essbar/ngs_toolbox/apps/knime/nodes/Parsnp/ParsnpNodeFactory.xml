@@ -40,7 +40,7 @@
 		<inPort index="1" name="reference_genome [fasta,fa,fna]">Reference genome [fasta,fa,fna,opt.]</inPort>
 		<inPort index="2" name="genbank_file [gbk]">Genbank file. [gbk,opt.]</inPort>
 		<inPort index="3" name="query_genome [fasta,fa,fna]">Specify (assembled) query genome to use, in addition to genomes found in genome directory (optional). [fasta,fa,fna,opt.]</inPort>
-		<outPort index="0" name="output [*,Inactive]">Output directory [*,Inactive]</outPort>
+		<outPort index="0" name="output [*]">Output directory [*]</outPort>
  </ports>
     <views>
         <view index="0" name="Parsnp Std Output">The text sent to standard out during the execution of Parsnp.</view>
