@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EssBAR NGSToolbox: Applications - linux-x86_64 Fragment  
 Bundle-SymbolicName: de.essbar.ngs_toolbox.apps.linux.x86_64;singleton:=true
-Bundle-Version: 0.0.7
+Bundle-Version: 0.0.8
 Bundle-Vendor: Freie Universitaet Berlin
-Fragment-Host: de.essbar.ngs_toolbox.apps;bundle-version="0.0.7"
+Fragment-Host: de.essbar.ngs_toolbox.apps;bundle-version="0.0.8"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-PlatformFilter: (& (osgi.arch=x86_64) (osgi.os=linux))
