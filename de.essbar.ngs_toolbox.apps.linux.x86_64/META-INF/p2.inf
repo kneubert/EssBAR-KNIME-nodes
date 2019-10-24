@@ -8,35 +8,33 @@ instructions.install=\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/flexbar.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/spades.sh,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/spades.py,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-hammer,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-bwa,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-core,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-corrector-core,permissions:755);\		
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-gbuilder,permissions:755);\		
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spdes-gmapper,permissions:755);\	
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-init.pyc,permissions:755);\	
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-ionhammer,permissions:755);\	
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-kmercount,permissions:755);\	
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/spades-truseq-scfcorrection,permissions:755);\	
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/spades_init.py,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/truspades.py,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/dipspades,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/scaffold_correction,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/plasmidspades.py,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/dipspades.py,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/metaspades.py,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/bwa-spades,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/rnaspades.py,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/ionhammer,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/spades,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/hammer,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/corrector,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/prokka/doc/update_manual.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
