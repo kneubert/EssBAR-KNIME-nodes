@@ -21,7 +21,12 @@ from os.path import isfile
 
 
 def compress_dataset_files(dataset_data, ext_python_modules_home, max_threads, log):
-    log.info("\n== Compressing corrected reads (with gzip)")
+    pigz_path = support.which('pigz')
+    if pigz_path:
+        compressor = 'pigz'
+    else:
+        compressor = 'gzip'
+    log.info("\n== Compressing corrected reads (with " + compressor + ")")
     to_compress = []
     for reads_library in dataset_data:
         for key, value in reads_library.items():
@@ -36,7 +41,6 @@ def compress_dataset_files(dataset_data, ext_python_modules_home, max_threads, l
                     to_compress.append(reads_file)
                 reads_library[key] = compressed_reads_filenames
     if len(to_compress):
-        pigz_path = support.which('pigz')
         if pigz_path:
             for reads_file in to_compress:
                 support.sys_call([pigz_path, '-f', '-7', '-p', str(max_threads), reads_file], log)
@@ -130,10 +134,10 @@ def run_hammer(corrected_dataset_yaml_filename, configs_dir, execution_home, cfg
         cfg.tmp_dir = support.get_tmp_dir(prefix="hammer_")
         if cfg.iontorrent:
             prepare_config_ih(cfg_file_name, cfg, ext_python_modules_home)
-            binary_name = "ionhammer"
+            binary_name = "spades-ionhammer"
         else:
             prepare_config_bh(cfg_file_name, cfg, log)
-            binary_name = "hammer"
+            binary_name = "spades-hammer"
 
         command = [os.path.join(execution_home, binary_name),
                    os.path.abspath(cfg_file_name)]

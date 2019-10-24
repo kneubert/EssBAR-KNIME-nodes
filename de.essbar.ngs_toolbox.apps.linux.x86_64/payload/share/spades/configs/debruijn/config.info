@@ -78,10 +78,6 @@ paired_info_statistics false
 ; set it true to get statistics for pair information (over gaps), such as false positive/negative, perfect match, etc.
 paired_info_scaffolder false
 
-;FIXME is it always simple?
-estimation_mode simple
-; simple, weighted, extensive, smoothing
-
 ;the only option left from repeat resolving
 max_repeat_length 8000
 
@@ -123,8 +119,10 @@ gap_closer_enable   true
 gap_closer
 {
     minimal_intersection	10
-    before_simplify		true
-    in_simplify    		false
+
+    ;before_raw_simplify and before_simplify are mutually exclusive
+    before_raw_simplify    		true
+    before_simplify		false
     after_simplify 		true
     weight_threshold		2.0
 }
@@ -145,14 +143,11 @@ lcer
 
 pacbio_processor
 {
+    bwa_length_cutoff 200
 ;align and traverse.
-    pacbio_k 13
-    additional_debug_info false
     compression_cutoff 0.6
-    domination_cutoff 1.5
     path_limit_stretching 1.3
     path_limit_pressing 0.7
-    ignore_middle_alignment true
     max_path_in_dijkstra 15000
     max_vertex_in_dijkstra 2000
 ;gap_closer
@@ -172,10 +167,7 @@ graph_read_corr
 
 bwa_aligner
 {
-    ;stupid naming since spades.py cannot change config normally
-    bwa_enable false
     debug false
-    path_to_bwa ./bin/bwa-spades
     min_contig_len 0
 }
 
@@ -183,3 +175,12 @@ bwa_aligner
 flanking_range 55
 series_analysis ""
 save_gp false
+
+ss_coverage_splitter {
+    enabled           false
+    bin_size          50
+    min_edge_len      200
+    min_edge_coverage 5
+    min_flanking_coverage 2
+    coverage_margin   5
+}

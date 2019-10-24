@@ -24,7 +24,7 @@ ALLOWED_READS_EXTENSIONS += [x + '.gz' for x in ALLOWED_READS_EXTENSIONS]
 
 # we support up to MAX_LIBS_NUMBER libs for each type of short-reads libs
 MAX_LIBS_NUMBER = 9
-OLD_STYLE_READS_OPTIONS = ["--12", "-1", "-2", "-s"]
+OLD_STYLE_READS_OPTIONS = ["--12", "-1", "-2", "-s", "--merged"]
 SHORT_READS_TYPES = {"pe": "paired-end", "s": "single", "mp": "mate-pairs", "hqmp": "hq-mate-pairs", "nxmate": "nxmate"}
 # other libs types:
 LONG_READS_TYPES = ["pacbio", "sanger", "nanopore", "tslr", "trusted-contigs", "untrusted-contigs"]
@@ -43,13 +43,15 @@ filtering_types = ["hard", "soft", "default"]
 #other constants
 MIN_K = 1
 MAX_K = 127
+RNA_MIN_K = 29
+RNA_MAX_LOWER_K = 55
 THRESHOLD_FOR_BREAKING_SCAFFOLDS = 3
 THRESHOLD_FOR_BREAKING_ADDITIONAL_CONTIGS = 10
 
 #default values constants
 THREADS = 16
 MEMORY = 250
-K_MERS_RNA = [55]
+K_MERS_RNA = [33,49]
 K_MERS_SHORT = [21,33,55]
 K_MERS_150 = [21,33,55,77]
 K_MERS_250 = [21,33,55,77,99,127]
@@ -74,7 +76,6 @@ only_assembler = False
 disable_gzip_output = None
 disable_rr = None
 careful = None
-diploid_mode = False
 
 # advanced options
 continue_mode = False
@@ -97,7 +98,8 @@ iterations = None
 bh_heap_check = None
 spades_heap_check = None
 read_buffer_size = None
-lcer_cutoff = None 
+lcer_cutoff = None
+read_cov_threshold = None
 ### END OF OPTIONS
 
 # for restarting SPAdes
@@ -117,7 +119,6 @@ restart_developer_mode = None
 restart_reference = None
 restart_configs_dir = None
 restart_read_buffer_size = None
-restart_fast = None
 
 # for running to specific check-point
 stop_after = None
@@ -129,21 +130,20 @@ correct_scaffolds = False
 run_truseq_postprocessing = False
 
 #rna options
-strand_specific = None  # None, True, False are possible
-fast = None
-
+strand_specificity = None  # None, 'rf', 'fr' are possible
 dict_of_prefixes = dict()
 dict_of_rel2abs = dict()
 
 # list of spades.py options
-long_options = "12= threads= memory= tmp-dir= iterations= phred-offset= sc iontorrent meta large-genome rna plasmid "\
-               "ss-fr ss-rf fast fast:false "\
+long_options = "12= merged= threads= memory= tmp-dir= iterations= phred-offset= sc iontorrent meta large-genome rna plasmid "\
+               "ss-fr ss-rf "\
                "only-error-correction only-assembler "\
                "disable-gzip-output disable-gzip-output:false disable-rr disable-rr:false " \
                "help version test debug debug:false reference= series-analysis= config-file= dataset= "\
                "bh-heap-check= spades-heap-check= read-buffer-size= help-hidden "\
                "mismatch-correction mismatch-correction:false careful careful:false save-gp save-gp:false "\
-               "continue restart-from= diploid truseq cov-cutoff= hidden-cov-cutoff= configs-dir= stop-after=".split()
+               "continue restart-from= truseq cov-cutoff= hidden-cov-cutoff= read-cov-threshold= " \
+               "configs-dir= stop-after=".split()
 short_options = "o:1:2:s:k:t:m:i:hv"
 
 # adding multiple paired-end, mate-pair and other (long reads) libraries support
@@ -156,6 +156,8 @@ for i in range(MAX_LIBS_NUMBER):
             reads_options += ("%s%d-1= %s%d-2=" % tuple([type, i + 1] * 2)).split()
         else:  # paired-end, mate-pairs, hq-mate-pairs
             reads_options += ("%s%d-1= %s%d-2= %s%d-12= %s%d-s= %s%d-rf %s%d-fr %s%d-ff" % tuple([type, i + 1] * 7)).split()
+            if type == 'pe':  # special case: paired-end may include merged reads (-m)
+                reads_options += ["%s%d-m=" % (type, i+1)]
 reads_options += list(map(lambda x: x + '=', LONG_READS_TYPES))
 long_options += reads_options
 # for checking whether option corresponds to reads or not
@@ -207,27 +209,32 @@ def usage(spades_version, show_hidden=False, mode=None):
     sys.stderr.write("-v/--version\t\tprints version" + "\n")
 
     sys.stderr.write("" + "\n")
-    if mode != "dip":
-        sys.stderr.write("Input data:" + "\n")
-    else:
-        sys.stderr.write("Input reads:" + "\n")
+    sys.stderr.write("Input data:" + "\n")
+
     sys.stderr.write("--12\t<filename>\tfile with interlaced forward and reverse"\
                          " paired-end reads" + "\n")
     sys.stderr.write("-1\t<filename>\tfile with forward paired-end reads" + "\n")
     sys.stderr.write("-2\t<filename>\tfile with reverse paired-end reads" + "\n")
     sys.stderr.write("-s\t<filename>\tfile with unpaired reads" + "\n")
+    sys.stderr.write("--merged\t<filename>\tfile with merged forward and reverse paired-end reads" + "\n")
+    if mode == "meta":
+        allowed_lib_ids = "1"
+    else:
+        allowed_lib_ids = "1,2,...," + str(MAX_LIBS_NUMBER)
     sys.stderr.write("--pe<#>-12\t<filename>\tfile with interlaced"\
-                         " reads for paired-end library number <#> (<#> = 1,2,..,9)" + "\n")
+                         " reads for paired-end library number <#> (<#> = %s)" % allowed_lib_ids + "\n")
     sys.stderr.write("--pe<#>-1\t<filename>\tfile with forward reads"\
-                         " for paired-end library number <#> (<#> = 1,2,..,9)" + "\n")
+                         " for paired-end library number <#> (<#> = %s)" % allowed_lib_ids + "\n")
     sys.stderr.write("--pe<#>-2\t<filename>\tfile with reverse reads"\
-                         " for paired-end library number <#> (<#> = 1,2,..,9)" + "\n")
+                         " for paired-end library number <#> (<#> = %s)" % allowed_lib_ids + "\n")
     sys.stderr.write("--pe<#>-s\t<filename>\tfile with unpaired reads"\
-                         " for paired-end library number <#> (<#> = 1,2,..,9)" + "\n")
+                         " for paired-end library number <#> (<#> = %s)" % allowed_lib_ids + "\n")
+    sys.stderr.write("--pe<#>-m\t<filename>\tfile with merged reads"\
+                         " for paired-end library number <#> (<#> = %s)" % allowed_lib_ids + "\n")
     sys.stderr.write("--pe<#>-<or>\torientation of reads"\
-                         " for paired-end library number <#> (<#> = 1,2,..,9; <or> = fr, rf, ff)" + "\n")
+                         " for paired-end library number <#> (<#> = %s; <or> = fr, rf, ff)" % allowed_lib_ids + "\n")
     sys.stderr.write("--s<#>\t\t<filename>\tfile with unpaired reads"\
-                     " for single reads library number <#> (<#> = 1,2,..,9)" + "\n")
+                     " for single reads library number <#> (<#> = %s)" % allowed_lib_ids + "\n")
     if mode not in ["rna", "meta"]:
         sys.stderr.write("--mp<#>-12\t<filename>\tfile with interlaced"\
                              " reads for mate-pair library number <#> (<#> = 1,2,..,9)" + "\n")
@@ -254,47 +261,41 @@ def usage(spades_version, show_hidden=False, mode=None):
         sys.stderr.write("--nxmate<#>-2\t<filename>\tfile with reverse reads"\
                              " for Lucigen NxMate library number <#> (<#> = 1,2,..,9)" + "\n")
         sys.stderr.write("--sanger\t<filename>\tfile with Sanger reads\n")
+    if not mode == "rna":
         sys.stderr.write("--pacbio\t<filename>\tfile with PacBio reads\n")
         sys.stderr.write("--nanopore\t<filename>\tfile with Nanopore reads\n")
-    if not mode == "rna":
         sys.stderr.write("--tslr\t<filename>\tfile with TSLR-contigs\n")
-    sys.stderr.write("--trusted-contigs\t<filename>\tfile with trusted contigs\n")
-    sys.stderr.write("--untrusted-contigs\t<filename>\tfile with untrusted contigs\n")
-    if mode == "dip":
-        sys.stderr.write("Input haplocontigs:" + "\n")
-        sys.stderr.write("--hap\t<filename>\tfile with haplocontigs" + "\n")
+    if not mode == "meta":
+        sys.stderr.write("--trusted-contigs\t<filename>\tfile with trusted contigs\n")
+        sys.stderr.write("--untrusted-contigs\t<filename>\tfile with untrusted contigs\n")
+
     if mode == "rna":
         sys.stderr.write("--ss-<type>\tstrand specific data, <type> = fr (normal) and rf (antisense)\n")
 
     sys.stderr.write("" + "\n")
     sys.stderr.write("Pipeline options:" + "\n")
-    if mode != "dip":
+
+    if mode != "rna":
         sys.stderr.write("--only-error-correction\truns only read error correction"\
                              " (without assembling)" + "\n")
-    sys.stderr.write("--only-assembler\truns only assembling (without read error"\
-                         " correction)" + "\n")
-    if mode != "dip":
-        if mode not in ["rna", "meta"]:
-            sys.stderr.write("--careful\t\ttries to reduce number of mismatches and short indels" + "\n")
-        sys.stderr.write("--continue\t\tcontinue run from the last available check-point" + "\n")
-        sys.stderr.write("--restart-from\t<cp>\trestart run with updated options and from the specified check-point ('ec', 'as', 'k<int>', 'mc')" + "\n")
+        sys.stderr.write("--only-assembler\truns only assembling (without read error"\
+                             " correction)" + "\n")
+
+    if mode not in ["rna", "meta"]:
+        sys.stderr.write("--careful\t\ttries to reduce number of mismatches and short indels" + "\n")
+    sys.stderr.write("--continue\t\tcontinue run from the last available check-point" + "\n")
+    if mode == "rna":
+        sys.stderr.write("--restart-from\t<cp>\trestart run with updated options and from the specified check-point ('as', 'k<int>', 'last')" + "\n")
+    else:
+        sys.stderr.write("--restart-from\t<cp>\trestart run with updated options and from the specified check-point ('ec', 'as', 'k<int>', 'mc', 'last')" + "\n")
     sys.stderr.write("--disable-gzip-output\tforces error correction not to"\
                          " compress the corrected reads" + "\n")
     sys.stderr.write("--disable-rr\t\tdisables repeat resolution stage"\
                      " of assembling" + "\n")
 
-    if mode == "dip":
-        sys.stderr.write("" + "\n")
-        sys.stderr.write("DipSPAdes options:" + "\n")
-        sys.stderr.write("--expect-gaps\t\tindicates that significant number of gaps in coverage is expected" + "\n")
-        sys.stderr.write("--expect-rearrangements\tindicates that significant number of rearrangements between haplomes of diploid genome is expected" + "\n")
-        sys.stderr.write("--hap-assembly\t\tenables haplotype assembly phase" + "\n")
-
     sys.stderr.write("" + "\n")
     sys.stderr.write("Advanced options:" + "\n")
     sys.stderr.write("--dataset\t<filename>\tfile with dataset description in YAML format" + "\n")
-    if mode == "rna":
-        sys.stderr.write("--fast\t\t\t\tspeeds up isoform detection, but may miss short and low-expressed isoforms\n")
     sys.stderr.write("-t/--threads\t<int>\t\tnumber of threads" + "\n")
     sys.stderr.write("\t\t\t\t[default: %s]\n" % THREADS)
     sys.stderr.write("-m/--memory\t<int>\t\tRAM limit for SPAdes in Gb"\
@@ -302,13 +303,10 @@ def usage(spades_version, show_hidden=False, mode=None):
     sys.stderr.write("\t\t\t\t[default: %s]\n" % MEMORY)
     sys.stderr.write("--tmp-dir\t<dirname>\tdirectory for temporary files" + "\n")
     sys.stderr.write("\t\t\t\t[default: <output_dir>/tmp]" + "\n")
-    if mode != 'rna':
-        sys.stderr.write("-k\t\t<int,int,...>\tcomma-separated list of k-mer sizes" \
-                         " (must be odd and" + "\n")
-        sys.stderr.write("\t\t\t\tless than " + str(MAX_K + 1) + ") [default: 'auto']" + "\n")
-    else:
-        sys.stderr.write("-k\t\t<int>\t\tk-mer size (must be odd and less than " + str(MAX_K + 1) + ") " \
-                         "[default: 'auto']\n")
+
+    sys.stderr.write("-k\t\t<int,int,...>\tcomma-separated list of k-mer sizes" \
+                     " (must be odd and" + "\n")
+    sys.stderr.write("\t\t\t\tless than " + str(MAX_K + 1) + ") [default: 'auto']" + "\n")
 
     if mode not in ["rna", "meta"]:
         sys.stderr.write("--cov-cutoff\t<float>\t\tcoverage cutoff value (a positive float number, "
@@ -340,23 +338,15 @@ def usage(spades_version, show_hidden=False, mode=None):
         sys.stderr.write("--save-gp\tEnables saving graph pack before repeat resolution (even without --debug) \n")
         sys.stderr.write("--hidden-cov-cutoff\t<float>\t\tcoverage cutoff value deeply integrated in simplification"\
                             " (a positive float number). Base coverage! Will be adjusted depending on K and RL! \n")
+        sys.stderr.write("--read-cov-threshold\t<int>\t\tread median coverage threshold (non-negative integer)\n")
         sys.stderr.write("--help-hidden\tprints this usage message with all hidden options" + "\n")
-
-    if show_hidden and mode == "dip":
-        sys.stderr.write("" + "\n")
-        sys.stderr.write("HIDDEN dipSPAdes options:" + "\n")
-        sys.stderr.write("--dsK\t\t<int>\t\tk value used in dipSPAdes [default: '55']" + '\n')
-        sys.stderr.write("--dsdebug\t\t\tmakes saves and draws pictures" + '\n')
-        sys.stderr.write("--saves\t<directory>\tdirectory with saves which will be used for graph loading" + '\n')
-        sys.stderr.write("--start-from\t<start_point>\tstart point of dipSPAdes:" + '\n')
-        sys.stderr.write("    pbr: polymorphic bulge remover\n    kmg: gluer of equal k-mers\n    cc: consensus constructor\n    ha: haplotype assembly" + '\n')
 
     sys.stderr.flush()
 
 
 def auto_K_allowed():
-    return not k_mers and not single_cell and not iontorrent and not rna and not meta
-    # kmers were set by default, not SC, not IonTorrent data and not rna and temporary not meta
+    return not k_mers and not single_cell and not iontorrent and not meta
+    # kmers were set by default, not SC, not IonTorrent data and temporary not meta
 
 
 def set_default_values():
@@ -371,7 +361,6 @@ def set_default_values():
     global qvoffset
     global cov_cutoff
     global tmp_dir
-    global fast
 
     if threads is None:
         threads = THREADS
@@ -398,9 +387,6 @@ def set_default_values():
         cov_cutoff = 'off'
     if tmp_dir is None:
         tmp_dir = os.path.join(output_dir, TMP_DIR)
-    if fast is None:
-        fast = False
-
 
 def set_test_options():
     global output_dir
@@ -427,7 +413,7 @@ def save_restart_options(log):
         support.error("you cannot specify --only-assembler with --restart-from option!", log)
     if only_error_correction:
         support.error("you cannot specify --only-error-correction with --restart-from option!", log)
-    if strand_specific is not None:
+    if strand_specificity is not None:
         support.error("you cannot specify strand specificity (--ss-rf or --ss-fr) with --restart-from option!", log)
 
     global restart_k_mers
@@ -444,7 +430,6 @@ def save_restart_options(log):
     global restart_reference
     global restart_configs_dir
     global restart_read_buffer_size
-    global restart_fast
 
     restart_k_mers = k_mers
     restart_careful = careful
@@ -460,7 +445,6 @@ def save_restart_options(log):
     restart_reference = reference
     restart_configs_dir = configs_dir
     restart_read_buffer_size = read_buffer_size
-    restart_fast = fast
 
 
 def load_restart_options():
@@ -479,7 +463,6 @@ def load_restart_options():
     global configs_dir
     global read_buffer_size
     global original_k_mers
-    global fast
 
     if restart_k_mers:
         original_k_mers = k_mers
@@ -513,8 +496,6 @@ def load_restart_options():
         configs_dir = restart_configs_dir
     if restart_read_buffer_size is not None:
         read_buffer_size = restart_read_buffer_size
-    if restart_fast is not None:
-        fast = restart_fast
 
 
 def enable_truseq_mode():
@@ -533,6 +514,14 @@ def enable_truseq_mode():
     correct_scaffolds = True
     run_truseq_postprocessing = True
     only_assembler = True
+
+def enable_rnaseq_mode():
+    global rna
+    global only_assembler
+    global iontorrent
+    rna = True
+    if not iontorrent:
+        only_assembler = True
 
 
 def will_rerun(options):

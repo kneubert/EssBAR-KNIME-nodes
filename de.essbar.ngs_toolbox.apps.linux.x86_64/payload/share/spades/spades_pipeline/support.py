@@ -34,11 +34,9 @@ continue_logfile_offset = None
 current_tmp_dir = None
 
 
-def error(err_str, log=None, dipspades=False, prefix=SPADES_PY_ERROR_MESSAGE):
-    if not dipspades:
-        binary_name = "SPAdes"
-    else:
-        binary_name = "dipSPAdes"
+def error(err_str, log=None, prefix=SPADES_PY_ERROR_MESSAGE):
+    binary_name = "SPAdes"
+
     if log:
         log.info("\n\n" + prefix + " " + err_str)
         log_warnings(log, with_error=True)
@@ -98,26 +96,26 @@ def get_spades_binaries_info_message():
 
 
 def check_binaries(binary_dir, log):
-    for binary in ["hammer", "ionhammer", "spades", "bwa-spades", "dipspades"]:
+    for binary in ["spades-hammer", "spades-ionhammer", "spades-core", "spades-bwa"]:
         binary_path = os.path.join(binary_dir, binary)
         if not os.path.isfile(binary_path):
             error("SPAdes binaries not found: " + binary_path + "\n" + get_spades_binaries_info_message(), log)
 
 
-def check_file_existence(input_filename, message="", log=None, dipspades=False):
+def check_file_existence(input_filename, message="", log=None):
     filename = abspath(expanduser(input_filename))
     check_path_is_ascii(filename, message)
     if not os.path.isfile(filename):
-        error("file not found: %s (%s)" % (filename, message), log=log, dipspades=dipspades)
+        error("file not found: %s (%s)" % (filename, message), log=log)
     options_storage.dict_of_rel2abs[input_filename] = filename
     return filename
 
 
-def check_dir_existence(input_dirname, message="", log=None, dipspades=False):
+def check_dir_existence(input_dirname, message="", log=None):
     dirname = abspath(expanduser(input_dirname))
     check_path_is_ascii(dirname, message)
     if not os.path.isdir(dirname):
-        error("directory not found: %s (%s)" % (dirname, message), log=log, dipspades=dipspades)
+        error("directory not found: %s (%s)" % (dirname, message), log=log)
     options_storage.dict_of_rel2abs[input_dirname] = dirname
     return dirname
 
@@ -510,6 +508,8 @@ def get_data_type(option):
         data_type = 'right reads'
     elif option.endswith('-s') or is_single_read_type(option) or get_long_reads_type(option):
         data_type = 'single reads'
+    elif option.endswith('-m') or option.endswith('-merged'):
+        data_type = 'merged reads'
     else: # -rf, -ff, -fr
         data_type = 'orientation'
     return data_type
@@ -566,7 +566,7 @@ def correct_dataset(dataset_data):
         for key in reads_library.keys():
             if key.endswith('reads'):
                 has_reads = True
-            if key in ['interlaced reads', 'left reads', 'right reads']:
+            if key in ['interlaced reads', 'merged reads', 'left reads', 'right reads']:
                 has_paired_reads = True
                 break
         if not has_reads:
@@ -603,22 +603,25 @@ def relative2abs_paths(dataset_data, dirname):
     return abs_paths_dataset_data
 
 
-def get_reads_length(dataset_data, log, num_checked=10 ** 4, diff_len_allowable=25):
-    max_reads_lenghts = [get_max_reads_length(reads_file, log, num_checked) for reads_file in get_reads_files(dataset_data)]
+def get_reads_length(dataset_data, log, ignored_types, num_checked=10 ** 4, diff_len_allowable=25):
+    max_reads_lenghts = [get_max_reads_length(reads_file, log, num_checked) for reads_file in get_reads_files(dataset_data, log, ignored_types)]
 
     avg_len = sum(max_reads_lenghts) / len(max_reads_lenghts)
     for max_len in max_reads_lenghts:
         if math.fabs(max_len - avg_len) > diff_len_allowable:
             warning('Read lengths differ more than allowable. Length: ' + str(max_len) + '. Avg. length: ' + str(avg_len) + '.', log)
     reads_length = min(max_reads_lenghts)
-    log.info('Reads length: ' + str(reads_length))
+    log.info('\nReads length: ' + str(reads_length) + '\n')
     return reads_length
 
 
-def get_reads_files(dataset_data):
+def get_reads_files(dataset_data, log, ignored_types):
     for reads_library in dataset_data:
         for key, value in reads_library.items():
-            if key.endswith('reads'):
+            if key in ignored_types:
+                log.info('Files with ' + key + ' were ignored.')
+                continue
+            elif key.endswith('reads'):
                 for reads_file in value:
                     yield reads_file
 
@@ -626,10 +629,10 @@ def get_reads_files(dataset_data):
 def get_max_reads_length(reads_file, log, num_checked):
     file_type = SeqIO.get_read_file_type(reads_file)
     if not file_type:
-        error('Incorrect type of reads file: ' + reads_file, log)
+        error('Incorrect extension of reads file: ' + reads_file, log)
 
     max_reads_length = max([len(rec) for rec in itertools.islice(SeqIO.parse(SeqIO.Open(reads_file, "r"), file_type), num_checked)])
-    log.info('Max reads length: ' + str(max_reads_length))
+    log.info(reads_file + ': max reads length: ' + str(max_reads_length))
     return max_reads_length
 
 
@@ -900,7 +903,7 @@ def process_nxmate_reads(dataset_data, dst, log):
 
 
 def pretty_print_reads(dataset_data, log, indent='    '):
-    READS_TYPES = ['left reads', 'right reads', 'interlaced reads', 'single reads']
+    READS_TYPES = ['left reads', 'right reads', 'interlaced reads', 'single reads', 'merged reads']
     for id, reads_library in enumerate(dataset_data):
         log.info(indent + 'Library number: ' + str(id + 1) + ', library type: ' + reads_library['type'])
         if 'orientation' in reads_library:

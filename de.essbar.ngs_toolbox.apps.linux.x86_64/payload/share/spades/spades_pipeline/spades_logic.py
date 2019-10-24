@@ -63,10 +63,6 @@ def prepare_config_spades(filename, cfg, log, additional_contigs_fname, K, stage
         subst_dict["lcer_enabled"] = bool_to_str(True)
         subst_dict["lcer_coverage_threshold"] = cfg.lcer_cutoff
 
-    #TODO: make something about spades.py and config param substitution 
-    if "bwa_paired" in cfg.__dict__:
-        subst_dict["bwa_enable"] = bool_to_str(True)
-    subst_dict["path_to_bwa"] =  os.path.join(execution_home, "bwa-spades")
     if "series_analysis" in cfg.__dict__:
         subst_dict["series_analysis"] = cfg.series_analysis
     process_cfg.substitute_params(filename, subst_dict, log)
@@ -76,8 +72,16 @@ def prepare_config_rnaspades(filename, log):
     if not options_storage.rna:
         return
     subst_dict = dict()
-    subst_dict["ss_enabled"] = bool_to_str(options_storage.strand_specific is not None)
-    subst_dict["antisense"] = bool_to_str(options_storage.strand_specific)
+    subst_dict["ss_enabled"] = bool_to_str(options_storage.strand_specificity is not None)
+    subst_dict["antisense"] = bool_to_str(options_storage.strand_specificity == 'rf')
+    process_cfg.substitute_params(filename, subst_dict, log)
+
+
+def prepare_config_construction(filename, log):
+    if options_storage.read_cov_threshold is None:
+        return
+    subst_dict = dict()
+    subst_dict["read_cov_threshold"] = options_storage.read_cov_threshold
     process_cfg.substitute_params(filename, subst_dict, log)
 
 
@@ -91,10 +95,8 @@ def get_read_length(output_dir, K, ext_python_modules_home, log):
         elif sys.version.startswith('3.'):
             import pyyaml3 as pyyaml
         est_params_data = pyyaml.load(open(est_params_filename, 'r'))
-        for reads_library in est_params_data:
-            if reads_library['type'] in READS_TYPES_USED_IN_CONSTRUCTION:
-                if int(reads_library["read length"]) > max_read_length:
-                    max_read_length = int(reads_library["read length"])
+        max_read_length = int(est_params_data['nomerge max read length'])
+        log.info("Max read length detected as %d" % max_read_length)
     if max_read_length == 0:
         support.error("Failed to estimate maximum read length! File with estimated params: " + est_params_filename, log)
     return max_read_length
@@ -140,9 +142,8 @@ def add_configs(command, configs_dir):
                            ("truseq_mode", "moleculo_mode"),
                            ("rna", "rna_mode"),
                            ("large_genome", "large_genome_mode"),
-                           ("plasmid", "plasmid_mode"),
+                           ("plasmid", "plasmid_mode")]
                            #("careful", "careful_mode"),
-                           ("diploid_mode", "diploid_mode")]
     for (mode, config) in mode_config_mapping:
         if options_storage.__dict__[mode]:
             if mode == "rna" or mode == "meta":
@@ -154,10 +155,6 @@ def add_configs(command, configs_dir):
         else:
             command.append(os.path.join(configs_dir, "careful_mode.info"))
 
-    # special case: extra config
-    if options_storage.rna and options_storage.fast:
-        command.append(os.path.join(configs_dir, "rna_fast_mode.info"))
-    
 
 def run_iteration(configs_dir, execution_home, cfg, log, K, prev_K, last_one):
     data_dir = os.path.join(cfg.output_dir, "K%d" % K)
@@ -166,7 +163,7 @@ def run_iteration(configs_dir, execution_home, cfg, log, K, prev_K, last_one):
     dst_configs = os.path.join(data_dir, "configs")
 
     if options_storage.continue_mode:
-        if os.path.isfile(os.path.join(data_dir, "final_contigs.fasta")) and not (options_storage.restart_from and
+        if os.path.isfile(os.path.join(data_dir, "simplified_contigs.fasta")) and not (options_storage.restart_from and
             (options_storage.restart_from == ("k%d" % K) or options_storage.restart_from.startswith("k%d:" % K))):
             log.info("\n== Skipping assembler: " + ("K%d" % K) + " (already processed)")
             return
@@ -202,10 +199,11 @@ def run_iteration(configs_dir, execution_home, cfg, log, K, prev_K, last_one):
         process_cfg.substitute_params(os.path.join(dst_configs, "pe_params.info"), {"scaffolding_mode": cfg.scaffolding_mode}, log)
 
     prepare_config_rnaspades(os.path.join(dst_configs, "rna_mode.info"), log)
+    prepare_config_construction(os.path.join(dst_configs, "construction.info"), log)
     cfg_fn = os.path.join(dst_configs, "config.info")
     prepare_config_spades(cfg_fn, cfg, log, additional_contigs_fname, K, stage, saves_dir, last_one, execution_home)
 
-    command = [os.path.join(execution_home, "spades"), cfg_fn]
+    command = [os.path.join(execution_home, "spades-core"), cfg_fn]
 
     add_configs(command, dst_configs)
 
@@ -253,7 +251,7 @@ def run_scaffold_correction(configs_dir, execution_home, cfg, log, latest, K):
         process_cfg.substitute_params(construction_cfg_file_name, {"read_buffer_size": cfg.read_buffer_size}, log)
     process_cfg.substitute_params(os.path.join(dst_configs, "moleculo_mode.info"), {"scaffolds_file": scaffolds_file}, log)
     prepare_config_scaffold_correction(cfg_file_name, cfg, log, saves_dir, K)
-    command = [os.path.join(execution_home, "scaffold_correction"), cfg_file_name]
+    command = [os.path.join(execution_home, "spades-truseq-scfcorrection"), cfg_file_name]
     add_configs(command, dst_configs)
     log.info(str(command))
     support.sys_call(command, log)
@@ -270,7 +268,7 @@ def run_spades(configs_dir, execution_home, cfg, dataset_data, ext_python_module
         processed_K = []
         for k in range(options_storage.MIN_K, options_storage.MAX_K, 2):
             cur_K_dir = os.path.join(cfg.output_dir, "K%d" % k)
-            if os.path.isdir(cur_K_dir) and os.path.isfile(os.path.join(cur_K_dir, "final_contigs.fasta")):
+            if os.path.isdir(cur_K_dir) and os.path.isfile(os.path.join(cur_K_dir, "simplified_contigs.fasta")):
                 processed_K.append(k)
         if processed_K:
             RL = get_read_length(cfg.output_dir, processed_K[0], ext_python_modules_home, log)
@@ -398,15 +396,16 @@ def run_spades(configs_dir, execution_home, cfg, dataset_data, ext_python_module
                 if os.path.isfile(os.path.join(latest, "scaffolds.paths")):
                     if not os.path.isfile(cfg.result_scaffolds_paths) or not options_storage.continue_mode:
                         shutil.copyfile(os.path.join(latest, "scaffolds.paths"), cfg.result_scaffolds_paths)
-            if os.path.isfile(os.path.join(latest, "assembly_graph_with_scaffolds.gfa")):
-                if not os.path.isfile(cfg.result_graph_gfa) or not options_storage.continue_mode:
-                    shutil.copyfile(os.path.join(latest, "assembly_graph_with_scaffolds.gfa"), cfg.result_graph_gfa)
-            if os.path.isfile(os.path.join(latest, "assembly_graph.fastg")):
-                if not os.path.isfile(cfg.result_graph) or not options_storage.continue_mode:
-                    shutil.copyfile(os.path.join(latest, "assembly_graph.fastg"), cfg.result_graph)
             if os.path.isfile(os.path.join(latest, "final_contigs.paths")):
                 if not os.path.isfile(cfg.result_contigs_paths) or not options_storage.continue_mode:
                     shutil.copyfile(os.path.join(latest, "final_contigs.paths"), cfg.result_contigs_paths)
+
+        if os.path.isfile(os.path.join(latest, "assembly_graph_with_scaffolds.gfa")):
+            if not os.path.isfile(cfg.result_graph_gfa) or not options_storage.continue_mode:
+                shutil.copyfile(os.path.join(latest, "assembly_graph_with_scaffolds.gfa"), cfg.result_graph_gfa)
+        if os.path.isfile(os.path.join(latest, "assembly_graph.fastg")):
+            if not os.path.isfile(cfg.result_graph) or not options_storage.continue_mode:
+                shutil.copyfile(os.path.join(latest, "assembly_graph.fastg"), cfg.result_graph)
 
 
     if cfg.developer_mode:

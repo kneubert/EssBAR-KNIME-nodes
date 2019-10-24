@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool name="SPAdes" version="3.11.1" docurl="http://cab.spbu.ru/files/release3.11.1/manual.html" category="Assembly" >
+<tool name="SPAdes" version="3.13.1" docurl="http://cab.spbu.ru/files/release3.11.1/manual.html" category="Assembly" >
 	<executableName>spades.py</executableName>
 	<description>St. Petersburg genome assembler</description>
 	<manual></manual>
