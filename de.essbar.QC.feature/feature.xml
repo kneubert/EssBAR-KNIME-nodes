@@ -35,6 +35,10 @@ all of the licenses to use this package.
     QUAST = GNU GENERAL PUBLIC LICENSE (v3)
    </license>
 
+   <url>
+      <update label="EssB.A.R. update site" url="https://www.mi.fu-berlin.de/ess-bar/update_site.p2"/>
+   </url>
+
    <plugin
          id="de.essbar.ngs_toolbox.QC"
          download-size="0"

@@ -4,6 +4,7 @@
       label="NGS Toolbox"
       version="1.0.0.qualifier"
       provider-name="FU Berlin"
+      plugin="de.essbar.ngs_toolbox.apps"
       os="linux"
       arch="x86_64">
 
@@ -1130,18 +1131,22 @@ necessarily state or reflect those of the United States Government or Lawrence L
 National Security, LLC, and shall not be used for advertising or product endorsement purposes.
    </license>
 
+   <url>
+      <update label="EssB.A.R. update site" url="https://www.mi.fu-berlin.de/ess-bar/update_site.p2"/>
+   </url>
+
    <plugin
          id="de.essbar.ngs_toolbox.apps"
          download-size="0"
          install-size="0"
-         version="0.1.0"
+         version="0.1.1"
          unpack="false"/>
 
    <plugin
          id="de.essbar.ngs_toolbox.apps.linux.x86_64"
          download-size="0"
          install-size="0"
-         version="0.1.0"
+         version="0.1.1"
          fragment="true"/>
 
 </feature>

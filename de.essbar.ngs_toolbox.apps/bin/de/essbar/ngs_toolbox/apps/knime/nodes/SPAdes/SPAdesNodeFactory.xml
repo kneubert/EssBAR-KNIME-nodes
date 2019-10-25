@@ -38,12 +38,11 @@
     
     <ports>
 		<inPort index="0" name="paired_read_lib [fastq,fq]">File with interlaced reads for paired-read library [fastq,fq]</inPort>
-		<inPort index="1" name="paired_read_lib_unpaired [fastq,fq]">File with interlaced reads with unpaired reads from paired-end library [fastq,fq]</inPort>
+		<inPort index="1" name="unpaired [fastq,fq]">File with with unpaired reads[fastq,fq]</inPort>
 		<inPort index="2" name="mate_pair_lib [fastq,fq]">File with interlaced reads for mate-pair library [fastq,fq]</inPort>
-		<inPort index="3" name="single_read_lib [fastq,fq,bam]">File for single-read library [fastq,fq,bam]</inPort>
-		<inPort index="4" name="pacbio [fastq,fq]"> File with PacBio CLR reads for hybrid assembly [fastq,fq]</inPort>
-		<inPort index="5" name="nanopore [fastq,fq]">File with Oxford Nanopore reads for hybrid assembly [fastq,fq]</inPort>
-		<inPort index="6" name="sanger [fastq,fq]">File with Sanger reads for hybrid assembly [fastq,fq]</inPort>
+		<inPort index="3" name="pacbio [fastq,fq]"> File with PacBio CLR reads for hybrid assembly [fastq,fq]</inPort>
+		<inPort index="4" name="nanopore [fastq,fq]">File with Oxford Nanopore reads for hybrid assembly [fastq,fq]</inPort>
+		<inPort index="5" name="sanger [fastq,fq]">File with Sanger reads for hybrid assembly [fastq,fq]</inPort>
 		<outPort index="0" name="output">Assembly results.[*]</outPort>
  </ports>
     <views>
