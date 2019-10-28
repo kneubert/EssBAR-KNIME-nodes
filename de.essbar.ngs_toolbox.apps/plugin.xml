@@ -199,18 +199,10 @@
   </extension> 
    <extension
       point="com.genericworkflownodes.knime.mime.filesuffix.Checker">
-   <index-type name="Kraken database">
+   <index-type name="bowtie2 large">
       <suffix
-            suffix_string="kdb">
-      </suffix>
-      <suffix
-            suffix_string="idx">
+            suffix_string="bt2l">
       </suffix>
    </index-type>   
-   <index-type name="Kraken2 database">
-      <suffix 
-      		suffix_string="k2d">
-      </suffix>
-   </index-type>
    </extension>  
 </plugin>
