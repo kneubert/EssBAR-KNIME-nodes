@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="kSNP3" version="3.1" category="Phylogeny"
+      docurl="http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf">
+	<executableName>kSNP3_wrapper.sh</executableName>
+	<description>kSNP3 estimates phylogenetic trees based upon pan-genome SNPs.</description>
+	<manual>kSNP3 identifies the pan-genome SNPs in a set of genome sequences, and estimates phylogenetic trees based upon those SNPs. SNP discovery is based on k-mer analysis, and requires no multiple sequence alignment or the selection of a reference genome, so kSNP can take 100's of microbial genomes as input. A SNP locus is defined by an oligo of length k surrounding a central SNP allele.></manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="-a" isList="false">
+            <mapping referenceName="kSNP3.genome_dir" />
+        </clielement>
+        <clielement optionIdentifier="-r" isList="false">
+            <mapping referenceName="kSNP3.reference_dir" />
+        </clielement>
+        <clielement optionIdentifier="-g" isList="false">
+            <mapping referenceName="kSNP3.genbank_file" />
+        </clielement>
+        <clielement optionIdentifier="-s" isList="false">
+            <mapping referenceName="kSNP3.SNPs_all" />
+        </clielement>
+        <clielement optionIdentifier="-o" isList="false">
+            <mapping referenceName="kSNP3.outdir" />
+        </clielement>
+        <clielement optionIdentifier="-t" isList="false">
+            <mapping referenceName="kSNP3.tree" />
+        </clielement>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. -->    
+        <clielement optionIdentifier="--kmer_length" isList="false">
+            <mapping referenceName="kSNP3.kmer_length" />
+        </clielement>
+        <clielement optionIdentifier="--min_frac" isList="false">
+            <mapping referenceName="kSNP3.min_frac" />
+        </clielement>
+        <clielement optionIdentifier="--CPU" isList="false">
+            <mapping referenceName="kSNP3.p" />
+        </clielement>
+        <clielement optionIdentifier="--core" isList="false">
+            <mapping referenceName="kSNP3.core" />
+        </clielement>
+        <clielement optionIdentifier="--ml" isList="false">
+            <mapping referenceName="kSNP3.ml" />
+        </clielement>
+        <clielement optionIdentifier="--NJ" isList="false">
+            <mapping referenceName="kSNP3.nj" />
+        </clielement>
+        <clielement optionIdentifier="--vcf" isList="false">
+            <mapping referenceName="kSNP3.vcf" />
+        </clielement>
+        <clielement optionIdentifier="--all" isList="false">
+            <mapping referenceName="kSNP3.all" />
+        </clielement>
+	</cli>
+ <PARAMETERS version="1.4"
+  xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NODE name="kSNP3" description="kSNP3 estimates phylogenetic trees based upon pan-genome SNPs.">
+    <!-- Following clielements are arguments.-->    
+    <ITEM name="genome_dir" value="" type="input-prefix" description="Path to folder that contains genome fasta files for analysis." required="true" advanced="false" />
+    <ITEM name="reference_dir" value="" type="input-prefix" description="Path to folder that contains genome fasta files to use as references for gene annotation of SNPs." required="false" advanced="false" />
+    <ITEM name="genbank_file" value="" type="input-file" description="Genbank file to use as reference for gene annotation of SNPs." supported_formats="*.gbk,*.gbff" required="false" advanced="false" />
+    <ITEM name="SNPs_all" value="" type="input-file" description="Path to SNPs all file from a prior run." supported_formats="*.*" required="false" advanced="false" />
+    <ITEM name="outdir" value="" type="output-prefix" description="Directory for output files." supported_formats="*.*" required="true" advanced="false" />            
+    <ITEM name="tree" value="" type="output-file" description="kSNP3 parsimony tree that is estimated is a consensus of up to 100 equally parsimonious trees." supported_formats="*.tre" required="false" advanced="false" />   
+    <ITEM name="kmer_length" value="13" type="int" required="true" description="Kmer size, which must be an odd number, defines the length of the oligonucleotides that kSNP3 identifies in all of the sequences. If kmer size is set too low, e.g. 5 bp, then there will be many such kmers that are identical by chance alone within a genome and between genomes. If kmer size is set too high, e.g. 51 bp, then because of frequent sequence variation at multiple sites within the oligo, many SNPs will be missed, since a SNP locus is defined by the conserved sequence surrounding the central base of the kmer."/>
+    <ITEM name="min_frac" value="0.5" type="float" required="false" restrictions="0:1" description="Minimum fraction of genomes with locus." />
+    <ITEM name="p" value="1" type="int" required="false" restrictions="1:" description="Number of CPUs to use." />
+    <ITEM name="core" value="false" type="string" required="false" restrictions="true,false" description="Calculate core SNPs and core parsimony tree." />
+    <ITEM name="ml" value="false" type="string" required="false" restrictions="true,false" description="Estimate maximum likelihood tree." />
+    <ITEM name="nj" value="false" type="string" required="false" restrictions="true,false" description="Estimate Neighbor Joining tree." />
+    <ITEM name="vcf" value="false" type="string" required="false" restrictions="true,false" description="Generate VCF (Variant Call Format) files." />
+    <ITEM name="all" value="false" type="string" required="false" restrictions="true,false" description="Annotate each locus exhaustively with all the annotations in any of the annotated genomes. Without this option it only provides the first annotation it comes to for a given locus, checking in the order genomes are listed." />
+   </NODE>
+</PARAMETERS>
+</tool>

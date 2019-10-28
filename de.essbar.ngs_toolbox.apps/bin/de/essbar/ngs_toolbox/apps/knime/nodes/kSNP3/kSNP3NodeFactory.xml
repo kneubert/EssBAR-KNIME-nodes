@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>kSNP3</name>
+    
+    <shortDescription>
+        kSNP3 estimates phylogenetic trees based upon pan-genome SNPs.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro>
+        kSNP3 identifies the pan-genome SNPs in a set of genome sequences, and estimates phylogenetic trees based upon those SNPs. 
+        SNP discovery is based on k-mer analysis, and requires no multiple sequence alignment or the selection of a reference genome, so kSNP can take 100's of microbial genomes as input. 
+        A SNP locus is defined by an oligo of length k surrounding a central SNP allele.        
+		<p>
+			<a href="http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf">Web Documentation for kSNP3</a>
+		</p>
+
+        </intro>
+        
+		<option name="kmer_length">Kmer size, which must be an odd number, defines the length of the oligonucleotides that kSNP3 identifies in all of the sequences. If kmer size is set too low, e.g. 5 bp, then there will be many such kmers that are identical by chance alone within a genome and between genomes. If kmer size is set too high, e.g. 51 bp, then because of frequent sequence variation at multiple sites within the oligo, many SNPs will be missed, since a SNP locus is defined by the conserved sequence surrounding the central base of the kmer.</option>
+		<option name="min_frac">Minimum fraction of genomes with locus.</option>
+		<option name="p">Number of CPUs to use.</option>
+		<option name="core">Calculate core SNPs and core parsimony tree.</option>
+		<option name="ml">Estimate maximum likelihood tree.</option>
+		<option name="nj">Estimate Neighbor Joining tree.</option>
+		<option name="vcf">Generate VCF (Variant Call Format) files.</option>
+		<option name="all">Annotate each locus exhaustively with all the annotations in any of the annotated genomes. Without this option it only provides the first annotation it comes to for a given locus, checking in the order genomes are listed.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="genome_dir []">Path to folder that contains genome fasta files for analysis. []</inPort>
+		<inPort index="1" name="reference_dir []">Path to folder that contains genome fasta files to use as references for gene annotation of SNPs. [,opt.]</inPort>
+		<inPort index="2" name="genbank_file [gbk,gbff]">Genbank file to use as reference for gene annotation of SNPs. [gbk,opt.]</inPort>
+		<inPort index="3" name="SNPs_all [*]">Path to SNPs all file from a prior run. [*,opt.]</inPort>
+		<outPort index="0" name="outdir [*]">Directory for output files. [*]</outPort>
+		<outPort index="1" name="tree [tre]">kSNP3 parsimony tree that is estimated is a consensus of up to 100 equally parsimonious trees. [tre]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="kSNP3 Std Output">The text sent to standard out during the execution of kSNP3.</view>
+        <view index="1" name="kSNP3 Error Output">The text sent to standard error during the execution of kSNP3. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>MIRA</name>
+    
+    <shortDescription>
+        MIRA is a whole genome shotgun and EST sequence assembler for Sanger, 454, Solexa (Illumina) and IonTorrent data. It can be seen as a Swiss army knife of sequence assembly developed and used in the past 16 years to get assembly jobs done efficiently - and especially accurately. That is, without actually putting too much manual work into finishing the assembly.
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>Sequence assembly with MIRA 5</p>
+		<p>
+			<a href="http://mira-assembler.sourceforge.net/docs/DefinitiveGuideToMIRA.html">Web Documentation for MIRA</a>
+		</p>
+
+        </intro>
+        
+		<option name="threads">Number of threads.</option>
+		<option name="num_of_passes">Defines how many iterations of the whole assembly process are done.</option>
+		<option name="kmer">Number of threads.</option>
+		<option name="rmb_break">Defines the maximum number of times a contig can be rebuilt during a main assembly pass if misassemblies due to possible repeats are found. integer &gt; 0.</option>
+		<option name="repeat_detect">Automatically detect repeates.</option>
+		<option name="cov">Default is 2.0 for all sequencing technologies in most assembly cases. float &gt; 1.0.</option>
+		<option name="min_length">Minimum length. integer &gt; 1.</option>
+		<option name="min_read_length">Defines the minimum length that reads must have to be considered for the assembly. Shorter sequences will be filtered out at the beginning of the process and won't be present in the final project. integer at least 20.</option>
+		<option name="min_reads_per_contig">Defines the minimum number of reads a contig must have before it is built or saved by MIRA. integer at least 1.</option>
+		<option name="rename_prefix">Rename given read prefix of Illumina data to shorten read names (long read names &gt;40 character will result in stop of mira).</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="illumina [fq,fastq]">Illumina paired-end reads. [fq,fastq]</inPort>
+		<inPort index="1" name="iontorrent [fq,fastq]">Iontorrent single-end reads. [fq,fastq,opt.]</inPort>
+		<inPort index="2" name="roche [fq,fastq]">Roche 454 data. [fq,fastq,opt.]</inPort>
+		<inPort index="3" name="sanger [fq,fastq]">Sanger data. [fq,fastq,opt.]</inPort>
+		<outPort index="0" name="output [fa,fasta]">Assembly result unpadded. [fa,fasta]</outPort>
+		<outPort index="1" name="large [fa,fasta]">Assembly unpadded with only large contigs. [fa,fasta]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="MIRA Std Output">The text sent to standard out during the execution of MIRA.</view>
+        <view index="1" name="MIRA Error Output">The text sent to standard error during the execution of MIRA. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>
