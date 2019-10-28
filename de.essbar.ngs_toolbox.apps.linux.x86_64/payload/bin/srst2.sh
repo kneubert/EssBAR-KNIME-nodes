@@ -77,10 +77,11 @@ for ((i=1; i<=$#; i++)); do
   printf "%d\t%s\n" $i "${!i}"
 done
 
-# run SRST2
-cmd=(srst2 "$*" "$flag" "${reads[@]}" --mlst_db "$mlstfasta_file" --mlst_definitions "$mlstdef_file")
-echo "${cmd[@]}"
-#srst2 $* "$flag" "$reads" --mlst_db "$mlstfasta_file" --mlst_definitions "$mlstdef_file"
-eval "${cmd[@]}"
+srst2_args=`echo $* | sed 's/Workflow Manage/Workflow\\\ Manage/'`
+echo $srst2_args
 
+# run SRST2
+cmd=(srst2 "$srst2_args" "$flag" "${reads[@]}" --mlst_db "$mlstfasta_file" --mlst_definitions "$mlstdef_file")
+echo "${cmd[@]}"
+eval "${cmd[@]}"
 
