@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Bowtie2" version="2.3.5.1" category="Metagenomics"
+      docurl="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml">
+	<executableName>bowtie2-2.3.5.sh</executableName>
+	<description>Bowtie2</description>
+	<manual>Bowtie 2 is an ultrafast and memory-efficient tool for aligning sequencing reads to long reference sequences.</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="--phred33" isList="false">
+            <mapping referenceName="bowtie2.phred33" />
+        </clielement>
+        <clielement optionIdentifier="--phred64" isList="false">
+            <mapping referenceName="bowtie2.phred64" />
+        </clielement>
+        <clielement optionIdentifier="--very-fast" isList="false">
+            <mapping referenceName="bowtie2.very-fast" />
+        </clielement>
+        <clielement optionIdentifier="--fast" isList="false">
+            <mapping referenceName="bowtie2.fast" />
+        </clielement>
+        <clielement optionIdentifier="--sensitive" isList="false">
+            <mapping referenceName="bowtie2.sensitive" />
+        </clielement>
+        <clielement optionIdentifier="--very-sensitive" isList="false">
+            <mapping referenceName="bowtie2.very-sensitive" />
+        </clielement>
+        <clielement optionIdentifier="--very-fast-local" isList="false">
+            <mapping referenceName="bowtie2.very-fast-local" />
+        </clielement>
+        <clielement optionIdentifier="--fast-local" isList="false">
+            <mapping referenceName="bowtie2.fast-local" />
+        </clielement>
+        <clielement optionIdentifier="--sensitive-local" isList="false">
+            <mapping referenceName="bowtie2.sensitive-local" />
+        </clielement>
+        <clielement optionIdentifier="--very-sensitive-local" isList="false">
+            <mapping referenceName="bowtie2.very-sensitive-local" />
+        </clielement>
+        <clielement optionIdentifier="-N" isList="false">
+            <mapping referenceName="bowtie2.max_mismatches_seed" />
+        </clielement>
+        <clielement optionIdentifier="-L" isList="false">
+            <mapping referenceName="bowtie2.length_seed" />
+        </clielement>
+        <clielement optionIdentifier="-i" isList="false">
+            <mapping referenceName="bowtie2.interval" />
+        </clielement>
+        <clielement optionIdentifier="--n-ceil" isList="false">
+            <mapping referenceName="bowtie2.n-ceil" />
+        </clielement>
+        <clielement optionIdentifier="--dpad" isList="false">
+            <mapping referenceName="bowtie2.dpad" />
+        </clielement>
+        <clielement optionIdentifier="--gbar" isList="false">
+            <mapping referenceName="bowtie2.gbar" />
+        </clielement>
+        <clielement optionIdentifier="--end-to-end" isList="false">
+            <mapping referenceName="bowtie2.end-to-end" />
+        </clielement>
+        <clielement optionIdentifier="--local" isList="false">
+            <mapping referenceName="bowtie2.local" />
+        </clielement>
+        <clielement optionIdentifier="--ma" isList="false">
+            <mapping referenceName="bowtie2.ma" />
+        </clielement>
+        <clielement optionIdentifier="--mp" isList="false">
+            <mapping referenceName="bowtie2.mp" />
+        </clielement>
+        <clielement optionIdentifier="--np" isList="false">
+            <mapping referenceName="bowtie2.np" />
+        </clielement>
+        <clielement optionIdentifier="--rdg" isList="false">
+            <mapping referenceName="bowtie2.rdg" />
+        </clielement>
+        <clielement optionIdentifier="--rfg" isList="false">
+            <mapping referenceName="bowtie2.rfg" />
+        </clielement>
+        <clielement optionIdentifier="--score-min" isList="false">
+            <mapping referenceName="bowtie2.score-min" />
+        </clielement>
+        <clielement optionIdentifier="-k" isList="false">
+            <mapping referenceName="bowtie2.k" />
+        </clielement>
+        <clielement optionIdentifier="-a" isList="false">
+            <mapping referenceName="bowtie2.all" />
+        </clielement>
+        <clielement optionIdentifier="-D" isList="false">
+            <mapping referenceName="bowtie2.D" />
+        </clielement>
+        <clielement optionIdentifier="-R" isList="false">
+            <mapping referenceName="bowtie2.R" />
+        </clielement>
+        <clielement optionIdentifier="--minins" isList="false">
+            <mapping referenceName="bowtie2.minins" />
+        </clielement>
+        <clielement optionIdentifier="--maxins" isList="false">
+            <mapping referenceName="bowtie2.maxins" />
+        </clielement>
+        <clielement optionIdentifier="--no-mixed" isList="false">
+            <mapping referenceName="bowtie2.no-mixed" />
+        </clielement>
+        <clielement optionIdentifier="--no-discordant" isList="false">
+            <mapping referenceName="bowtie2.no-discordant" />
+        </clielement>
+        <clielement optionIdentifier="--threads" isList="false">
+            <mapping referenceName="bowtie2.threads" />
+        </clielement>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. --> 
+        <clielement optionIdentifier="-x" isList="false">
+            <mapping referenceName="bowtie2.index" />
+        </clielement>
+        <clielement optionIdentifier="-1" isList="true">
+            <mapping referenceName="bowtie2.m1" />
+        </clielement>
+        <clielement optionIdentifier="-2" isList="true">
+            <mapping referenceName="bowtie2.m2" />
+        </clielement>
+        <clielement optionIdentifier="-r" isList="true">
+            <mapping referenceName="bowtie2.unpaired" />
+        </clielement>
+        <clielement optionIdentifier="--interleaved" isList="true">
+            <mapping referenceName="bowtie2.interleaved" />
+        </clielement>
+        <clielement optionIdentifier="-S" isList="true">
+            <mapping referenceName="bowtie2.sam" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="bowtie2" description="Compute index for genome sequences.">
+            <!-- Following clielements are arguments.-->    
+            <ITEM name="phred33" value="true" type="string" description="Qualities are Phred+33 (default)." restrictions="true,false" required="false" advanced="false" />    
+            <ITEM name="phred64" value="false" type="string" description="Qualities are Phred+64." restrictions="true,false" required="false" advanced="false" />
+            <ITEM name="very-fast" value="false" type="string" description="For --end-to-end: same as -D 5 -R 1 -N 0 -L 22 -i S,0,2.50." restrictions="true,false" required="false" advanced="false" />            
+            <ITEM name="fast" value="false" type="string" description="For --end-to-end: same as -D 10 -R 2 -N 0 -L 22 -i S,0,2.50." restrictions="true,false" required="false" advanced="false" />    
+            <ITEM name="sensitive" value="false" type="string" description="For --end-to-end: same as -D 15 -R 2 -N 0 -L 22 -i S,1,1.15 (default)." restrictions="true,false" required="false" advanced="false" />  
+            <ITEM name="very-sensitive" value="false" type="string" description="For --end-to-end: same as -D 20 -R 3 -N 0 -L 20 -i S,1,0.50." restrictions="true,false" required="false" advanced="false" /> 
+            <ITEM name="very-fast-local" value="false" type="string" description="For --local: same as -D 5 -R 1 -N 0 -L 25 -i S,1,2.00." restrictions="true,false" required="false" advanced="false" />            
+            <ITEM name="fast-local" value="false" type="string" description="For --local: same as -D 10 -R 2 -N 0 -L 22 -i S,1,1.75." restrictions="true,false" required="false" advanced="false" />    
+            <ITEM name="sensitive-local" value="false" type="string" description="For --local: same as -D 15 -R 2 -N 0 -L 20 -i S,1,0.75 (default)." restrictions="true,false" required="false" advanced="false" />  
+            <ITEM name="very-sensitive-local" value="false" type="string" description="For --local: same as -D 20 -R 3 -N 0 -L 20 -i S,1,0.50." restrictions="true,false" required="false" advanced="false" />                        
+            <ITEM name="max_mismatches_seed" value="0" type="int" description="Max # mismatches in seed alignment; can be 0 or 1 (0)." restrictions="0:1" required="false" advanced="true" /> 
+            <ITEM name="length_seed" value="22" type="int" description="Length of seed substrings." restrictions="4:31" required="false" advanced="true" />      
+            <ITEM name="interval" value="S,1,1.15" type="string" description="Interval between seed substrings w/r/t read len." required="false" advanced="true" />         
+            <ITEM name="n-ceil" value="L,0,0.15" type="string" description="Func for max # non-A/C/G/Ts permitted in aln."  required="false" advanced="true" />  
+            <ITEM name="dpad" value="15" type="int" description="Include this number of extra ref chars on sides of DP table." restrictions="1:" required="false" advanced="true" />   
+            <ITEM name="gbar" value="4" type="int" description="Disallow gaps within this number of nucs of read extremes." restrictions="1:" required="false" advanced="true" /> 
+            <ITEM name="end-to-end" value="true" type="string" description="Entire read must align; no clipping." restrictions="true,false" required="false" advanced="false"/> 
+            <ITEM name="local" value="false" type="string" description="Local alignment; ends might be soft clipped." restrictions="true,false" required="false" advanced="false"/> 
+            <ITEM name="ma" value="0" type="int" description="match bonus (0 for --end-to-end, 2 for --local)." restrictions="0:" required="false" advanced="true" /> 
+            <ITEM name="mp" value="6" type="int" description="max penalty for mismatch; lower qual = lower penalty." restrictions="1:" required="false" advanced="true" /> 
+            <ITEM name="np" value="1" type="int" description="penalty for non-A/C/G/Ts in read/ref." restrictions="1:" required="false" advanced="true" /> 
+            <ITEM name="rdg" value="5,3" type="string" description="Read gap open, extend penalties." required="false" advanced="true" /> 
+            <ITEM name="rfg" value="5,3" type="string" description="Reference gap open, extend penalties." required="false" advanced="true" />     
+            <ITEM name="score-min" value="L,-0.6,-0.6" type="string" description="Min acceptable alignment score w/r/t read length (G,20,8 for local, L,-0.6,-0.6 for end-to-end)." required="false" advanced="true" /> 
+            <ITEM name="k" value="1" type="int" description="Report up to this number of alignments per read." restrictions="1:" required="false" advanced="false" /> 
+            <ITEM name="all" value="false" type="string" description="Report all alignments; very slow." restrictions="true,false" required="false" advanced="false" />
+            <ITEM name="D" value="15" type="int" description="Give up extending after this number of failed extends in a row ." restrictions="1:" required="false" advanced="true" />              
+            <ITEM name="R" value="2" type="int" description="For reads w/ repetitive seeds, try this number of sets of seeds." restrictions="1:" required="false" advanced="true" />              
+            <ITEM name="minins" value="0" type="int" description="Minimum fragment length for paired-end reads." required="false" restrictions="0:" advanced="true" />     
+            <ITEM name="maxins" value="500" type="int" description="Maximum fragment length for paired-end reads." required="false" restrictions="250:" advanced="true" />      
+            <ITEM name="no-mixed" value="false" type="string" description="Suppress unpaired alignments for paired reads." restrictions="true,false" required="false" advanced="false" />  
+            <ITEM name="no-discordant" value="false" type="string" description="Suppress discordant alignments for paired reads." restrictions="true,false" required="false" advanced="false" />
+            <ITEM name="threads" value="1" type="int" description="Number of alignment threads to launch." required="false" restrictions="1:" advanced="false" />  
+            <ITEM name="index" value="" type="input-prefix" required="true" description="Index filename prefix (minus trailing .X.bt2)."  supported_formats="*.bt2,*.bt2l"/>
+            <ITEMLIST name="m1" value="" type="input-file" required="false" description="Files with #1 mates, paired with files in m2."  supported_formats="*.fq,*.fastq,*.gz,*.bz2"/>
+            <ITEMLIST name="m2" value="" type="input-file" required="false" description="Files with #2 mates, paired with files in m1."  supported_formats="*.fq,*.fastq,*.gz,*.bz2"/>
+            <ITEMLIST name="unpaired" value="" type="input-file" required="false" description="Files with unpaired reads."  supported_formats="*.fq,*.fastq,*.gz,*.bz2"/>
+            <ITEMLIST name="interleaved" value="" type="input-file" required="false" description="Files with interleaved paired-end reads."  supported_formats="*.fq,*.fastq,*.gz,*.bz2"/>
+            <ITEM name="sam" value="" type="output-file" required="true" description="File for SAM output."  supported_formats="*.sam"/>            
+        </NODE>
+    </PARAMETERS>
+</tool>

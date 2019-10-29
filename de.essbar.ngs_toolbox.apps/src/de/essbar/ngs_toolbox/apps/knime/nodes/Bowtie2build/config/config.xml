@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="Bowtie2build" version="2.3.5.1" category="Metagenomics"
+      docurl="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml">
+	<executableName>bowtie2-2.3.5-build.sh</executableName>
+	<description>Bowtie2</description>
+	<manual>Bowtie 2 is an ultrafast and memory-efficient tool for aligning sequencing reads to long reference sequences.</manual>
+	<docurl>Direct links in docs</docurl>
+	<cli>
+        <clielement optionIdentifier="--large-index" isList="false">
+            <mapping referenceName="bowtie2-build.large" />
+        </clielement>
+        <clielement optionIdentifier="--debug" isList="false">
+            <mapping referenceName="bowtie2-build.debug" />
+        </clielement>
+        <clielement optionIdentifier="--sanitized" isList="false">
+            <mapping referenceName="bowtie2-build.sanitized" />
+        </clielement>
+        <clielement optionIdentifier="--verbose" isList="false">
+            <mapping referenceName="bowtie2-build.verbose" />
+        </clielement>
+        <clielement optionIdentifier="--noauto" isList="false">
+            <mapping referenceName="bowtie2-build.noauto" />
+        </clielement>
+        <clielement optionIdentifier="--packed" isList="false">
+            <mapping referenceName="bowtie2-build.packed" />
+        </clielement>
+        <clielement optionIdentifier="--bmax" isList="false">
+            <mapping referenceName="bowtie2-build.bmax" />
+        </clielement>
+        <clielement optionIdentifier="--bmaxdivn" isList="false">
+            <mapping referenceName="bowtie2-build.bmaxdivn" />
+        </clielement>
+        <clielement optionIdentifier="--dcv" isList="false">
+            <mapping referenceName="bowtie2-build.dcv" />
+        </clielement>
+        <clielement optionIdentifier="--nodc" isList="false">
+            <mapping referenceName="bowtie2-build.nodc" />
+        </clielement>
+        <clielement optionIdentifier="--noref" isList="false">
+            <mapping referenceName="bowtie2-build.noref" />
+        </clielement>
+        <clielement optionIdentifier="--justref" isList="false">
+            <mapping referenceName="bowtie2-build.justref" />
+        </clielement>
+        <clielement optionIdentifier="--offrate" isList="false">
+            <mapping referenceName="bowtie2-build.offrate" />
+        </clielement>
+        <clielement optionIdentifier="--ftabchars" isList="false">
+            <mapping referenceName="bowtie2-build.ftabchars" />
+        </clielement>
+        <clielement optionIdentifier="--threads" isList="false">
+            <mapping referenceName="bowtie2-build.threads" />
+        </clielement>
+        <clielement optionIdentifier="--seed" isList="false">
+            <mapping referenceName="bowtie2-build.seed" />
+        </clielement>
+        <!-- Following clielements are arguments. You should consider
+        providing a help text to ease understanding. --> 
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="bowtie2-build.input" />
+        </clielement>
+        <clielement optionIdentifier="" isList="false">
+            <mapping referenceName="bowtie2-build.output" />
+        </clielement>
+	</cli>
+	<PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="bowtie2-build" description="Compute index for genome sequences.">
+            <!-- Following clielements are arguments.-->    
+            <ITEM name="large" value="false" type="string" description="Force generated index to be 'large', even if ref has fewer than 4 billion nucleotides." restrictions="true,false" required="false" advanced="false" />    
+            <ITEM name="debug" value="false" type="string" description="Use the debug binary; slower, assertions enabled." restrictions="true,false" required="false" advanced="false" />
+            <ITEM name="sanitized" value="false" type="string" description="Use sanitized binary; slower, uses ASan and/or UBSan." restrictions="true,false" required="false" advanced="false" />            
+            <ITEM name="verbose" value="false" type="string" description="Log the issued command." restrictions="true,false" required="false" advanced="false" />    
+            <ITEM name="noauto" value="false" type="string" description="Disable automatic -p/--bmax/--dcv memory-fitting." restrictions="true,false" required="false" advanced="false" />  
+            <ITEM name="packed" value="false" type="string" description="Use packed strings internally; slower, less memory." restrictions="true,false" required="false" advanced="false" /> 
+            <ITEM name="bmax" value="4" type="int" description="The maximum number of suffixes allowed in a block. Allowing more suffixes per block makes indexing faster, but increases peak memory usage." restrictions="1:" required="false" advanced="true" /> 
+            <ITEM name="bmaxdivn" value="4" type="int" description="The maximum number of suffixes allowed in a block, expressed as a fraction of the length of the reference." restrictions="1:" required="false" advanced="true" />      
+            <ITEM name="dcv" value="1024" type="int" description="Use this number as the period for the difference-cover sample. A larger period yields less memory overhead, but may make suffix sorting slower, especially if repeats are present." restrictions="4:4096" required="false" advanced="true" />         
+            <ITEM name="nodc" value="false" type="string" description="Disable diff-cover (algorithm becomes quadratic)." restrictions="true,false" required="false" advanced="false" />             
+            <ITEM name="noref" value="false" type="string" description="Don't build .3/.4 index files." restrictions="true,false" required="false" advanced="false" />                 
+            <ITEM name="justref" value="false" type="string" description="Just build .3/.4 index files." restrictions="true,false" required="false" advanced="false" />             
+            <ITEM name="offrate" value="5" type="int" description="SA is sampled every 2^x BWT chars." restrictions="1:" required="false" advanced="true" />              
+            <ITEM name="ftabchars" value="10" type="int" description="# of chars consumed in initial lookup." restrictions="1:" required="false" advanced="true" />              
+            <ITEM name="threads" value="1" type="int" description="Number of threads." required="false" restrictions="1:" advanced="false" />     
+            <ITEM name="seed" value="1" type="int" description="Seed for random number generator." required="false" restrictions="1:" advanced="true" />            
+            <ITEM name="input" value="" type="input-file" required="true" description="FASTA file with reference sequences."  supported_formats="*.fa,*.fasta"/>
+            <ITEM name="output" value="" type="output-prefix" required="true" description="Write bt2 data to files with this dir/basename."  supported_formats="*.bt2,*.bt2l"/>
+        </NODE>
+    </PARAMETERS>
+</tool>

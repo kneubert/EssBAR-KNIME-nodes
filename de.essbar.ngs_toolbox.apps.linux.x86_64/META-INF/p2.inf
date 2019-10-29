@@ -610,5 +610,9 @@ instructions.install=\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/spades-truseq-scfcorrection,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/spades_init.py,permissions:755);
+	targetFile:payload/bin/spades_init.py,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/bowtie2-2.3.5-build.sh,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/bowtie2-2.3.5.sh,permissions:755);
 	

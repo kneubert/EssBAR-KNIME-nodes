@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="generic_node.png" type="Manipulator">
+    <name>Bowtie2build</name>
+    
+    <shortDescription>
+        Bowtie2
+    </shortDescription>
+    
+    <fullDescription>
+        <intro><p>Bowtie 2 is an ultrafast and memory-efficient tool for aligning sequencing reads to long reference sequences.</p>
+		<p>
+			<a href="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml">Web Documentation for Bowtie2build</a>
+		</p>
+
+        </intro>
+        
+		<option name="large">Force generated index to be 'large', even if ref has fewer than 4 billion nucleotides.</option>
+		<option name="debug">Use the debug binary; slower, assertions enabled.</option>
+		<option name="sanitized">Use sanitized binary; slower, uses ASan and/or UBSan.</option>
+		<option name="verbose">Log the issued command.</option>
+		<option name="noauto">Disable automatic -p/--bmax/--dcv memory-fitting.</option>
+		<option name="packed">Use packed strings internally; slower, less memory.</option>
+		<option name="bmax">The maximum number of suffixes allowed in a block. Allowing more suffixes per block makes indexing faster, but increases peak memory usage.</option>
+		<option name="bmaxdivn">The maximum number of suffixes allowed in a block, expressed as a fraction of the length of the reference.</option>
+		<option name="dcv">Use this number as the period for the difference-cover sample. A larger period yields less memory overhead, but may make suffix sorting slower, especially if repeats are present.</option>
+		<option name="nodc">Disable diff-cover (algorithm becomes quadratic).</option>
+		<option name="noref">Don't build .3/.4 index files.</option>
+		<option name="justref">Just build .3/.4 index files.</option>
+		<option name="offrate">SA is sampled every 2^x BWT chars.</option>
+		<option name="ftabchars"># of chars consumed in initial lookup.</option>
+		<option name="threads">Number of threads.</option>
+		<option name="seed">Seed for random number generator.</option>
+
+    </fullDescription>
+    
+    <ports>
+		<inPort index="0" name="input [fa,fasta]">FASTA file with reference sequences. [fa,fasta]</inPort>
+		<outPort index="0" name="output [bt2,bt2l]">Write bt2 data to files with this dir/basename. [bt2,bt2l]</outPort>
+ </ports>
+    <views>
+        <view index="0" name="Bowtie2build Std Output">The text sent to standard out during the execution of Bowtie2build.</view>
+        <view index="1" name="Bowtie2build Error Output">The text sent to standard error during the execution of Bowtie2build. (If it appears in gray, it's the output of a previously failing run which is preserved for your trouble shooting.)</view>
+    </views>    
+</knimeNode>

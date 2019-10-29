@@ -27,7 +27,9 @@
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.KrakenSummary.KrakenSummaryNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken.KrakenNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken2.Kraken2NodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>    
-    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken2DB.Kraken2DBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>    
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Kraken2DB.Kraken2DBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>  
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Bowtie2.Bowtie2NodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
+    <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Bowtie2build.Bowtie2buildNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>  
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm.SlimmNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.SlimmDB.SlimmDBNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
     <node factory-class="de.essbar.ngs_toolbox.apps.knime.nodes.Slimm2Krona.Slimm2KronaNodeFactory" category-path="/community/EssBAR/NGSTools/Metagenomics"/>
@@ -199,10 +201,35 @@
   </extension> 
    <extension
       point="com.genericworkflownodes.knime.mime.filesuffix.Checker">
-   <index-type name="bowtie2 large">
+      <index-type name="bowtie2 large"> 
       <suffix
-            suffix_string="bt2l">
+            suffix_string="1.bt2l">            
       </suffix>
+      <suffix
+            suffix_string="2.bt2l">            
+      </suffix>
+      <suffix
+            suffix_string="3.bt2l">            
+      </suffix>
+      <suffix
+            suffix_string="4.bt2l">            
+      </suffix>         
    </index-type>   
    </extension>  
+      <mimetype name="application/bowtie2-index">
+      <fileextension name="bt2"/>
+      <fileextension name="1.bt2"/>
+      <fileextension name="2.bt2"/>
+      <fileextension name="3.bt2"/>
+      <fileextension name="4.bt2"/>
+      <fileextension name="rev.1.bt2"/>
+      <fileextension name="rev.2.bt2"/>
+      <fileextension name="bt2l"/>
+      <fileextension name="1.bt2l"/>
+      <fileextension name="2.bt2l"/>
+      <fileextension name="3.bt2l"/>
+      <fileextension name="4.bt2l"/>
+      <fileextension name="rev.1.bt2l"/>
+      <fileextension name="rev.2.bt2l"/>
+    </mimetype>
 </plugin>
