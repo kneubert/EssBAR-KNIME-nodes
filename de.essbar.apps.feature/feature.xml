@@ -9,45 +9,47 @@
       arch="x86_64">
 
    <description url="http://www.example.com/description">
-      This feature contains a collection of tools to analyse sequence data. 
- It bundles SeqAn nodes and several NGS tools.
- 
- Flexbar = https://github.com/seqan/flexbar/wiki
- FLASH2 = http://ccb.jhu.edu/software/FLASH/index.shtml
- Kraken = http://ccb.jhu.edu/software/kraken/MANUAL.html
- Kraken2 = https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual
- Slimm = https://github.com/seqan/slimm/wiki
- Parsnp = http://harvest.readthedocs.io/en/latest/content/parsnp.html
- kSNP3 = http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf
- SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
- Pilon = https://github.com/broadinstitute/pilon/wiki
- Prokka = https://github.com/tseemann/prokka
- SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
- SRST2 = https://github.com/katholt/srst2
- stringMLST = https://github.com/jordanlab/stringMLST
- ContigMLST = https://github.com/tseemann/mlst
- MLVA = https://github.com/dpchris/MLVA
+      This feature contains a collection of tools to analyse sequence
+data. 
+It bundles SeqAn nodes and several NGS tools.
+Flexbar = https://github.com/seqan/flexbar/wiki
+FLASH2 = http://ccb.jhu.edu/software/FLASH/index.shtml
+Kraken = http://ccb.jhu.edu/software/kraken/MANUAL.html
+Kraken2 = https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual
+Bowtie2 = http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+Slimm = https://github.com/seqan/slimm/wiki
+Parsnp = http://harvest.readthedocs.io/en/latest/content/parsnp.html
+kSNP3 = http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf
+SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
+Pilon = https://github.com/broadinstitute/pilon/wiki
+Prokka = https://github.com/tseemann/prokka
+SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
+SRST2 = https://github.com/katholt/srst2
+stringMLST = https://github.com/jordanlab/stringMLST
+ContigMLST = https://github.com/tseemann/mlst
+MLVA = https://github.com/dpchris/MLVA
    </description>
 
    <copyright url="http://www.example.com/copyright">
-      The copyright of the contained tools belongs to the original authors. 
- Please check the corresponding web-sites for details.
- 
- Flexbar = https://github.com/seqan/flexbar/wiki
- FLASH2 = http://ccb.jhu.edu/software/FLASH/index.shtml
- Kraken = http://ccb.jhu.edu/software/kraken/MANUAL.html
- Kraken2 = https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual
- Slimm = https://github.com/seqan/slimm/wiki
- Parsnp = http://harvest.readthedocs.io/en/latest/content/parsnp.html
- kSNP3 = http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf
- SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
- Pilon = https://github.com/broadinstitute/pilon/wiki
- Prokka = https://github.com/tseemann/prokka
- SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
- SRST2/PubMLST = https://github.com/katholt/srst2
- stringMLST = https://github.com/jordanlab/stringMLST
- ContigMLST = https://github.com/tseemann/mlst
- MLVA = https://github.com/dpchris/MLVA
+      The copyright of the contained tools belongs to the original
+authors. 
+Please check the corresponding web-sites for details.
+Flexbar = https://github.com/seqan/flexbar/wiki
+FLASH2 = http://ccb.jhu.edu/software/FLASH/index.shtml
+Kraken = http://ccb.jhu.edu/software/kraken/MANUAL.html
+Kraken2 = https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual
+Bowtie2 = http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+Slimm = https://github.com/seqan/slimm/wiki
+Parsnp = http://harvest.readthedocs.io/en/latest/content/parsnp.html
+kSNP3 = http://gensoft.pasteur.fr/docs/kSNP3/01/kSNP3.01%20User%20Guide%20.pdf
+SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
+Pilon = https://github.com/broadinstitute/pilon/wiki
+Prokka = https://github.com/tseemann/prokka
+SPAdes = http://cab.spbu.ru/files/release3.11.1/manual.html
+SRST2/PubMLST = https://github.com/katholt/srst2
+stringMLST = https://github.com/jordanlab/stringMLST
+ContigMLST = https://github.com/tseemann/mlst
+MLVA = https://github.com/dpchris/MLVA
    </copyright>
 
    <license url="http://www.example.com/license">
@@ -59,6 +61,7 @@
  FLASH2 = GNU GENERAL PUBLIC LICENSE (v3)
  Kraken = GNU GENERAL PUBLIC LICENSE (v3)
  Kraken2 = The MIT License (MIT)
+ Bowtie2 = GNU GENERAL PUBLIC LICENSE (v3)
  Slimm = BSD 3-CLAUSE LICENCE
  Parsnp = Parsnp Copyright LICENSE
  kSNP3 = THE BSD OPENSOURCE LICENSE
@@ -1139,14 +1142,14 @@ National Security, LLC, and shall not be used for advertising or product endorse
          id="de.essbar.ngs_toolbox.apps"
          download-size="0"
          install-size="0"
-         version="0.1.4"
+         version="0.1.5"
          unpack="false"/>
 
    <plugin
          id="de.essbar.ngs_toolbox.apps.linux.x86_64"
          download-size="0"
          install-size="0"
-         version="0.1.4"
+         version="0.1.5"
          fragment="true"/>
 
 </feature>
