@@ -28,8 +28,19 @@ __all__ = ["A", "ASCII", "B", "BESTMATCH", "D", "DEBUG", "E", "ENHANCEMATCH",
 
 # The regex exception.
 class error(Exception):
+    """Exception raised for invalid regular expressions.
+
+    Attributes:
+
+        msg: The unformatted error message
+        pattern: The regular expression pattern
+        pos: The position in the pattern where compilation failed, or None
+        lineno: The line number where compilation failed, unless pos is None
+        colno: The column number where compilation failed, unless pos is None
+    """
+
     def __init__(self, message, pattern=None, pos=None):
-        newline = '\n' if isinstance(pattern, str) else b'\n'
+        newline = u'\n' if isinstance(pattern, unicode) else '\n'
         self.msg = message
         self.pattern = pattern
         self.pos = pos
@@ -37,11 +48,10 @@ class error(Exception):
             self.lineno = pattern.count(newline, 0, pos) + 1
             self.colno = pos - pattern.rfind(newline, 0, pos)
 
-            message = "{} at position {}".format(message, pos)
+            message = "%s at position %d" % (message, pos)
 
             if newline in pattern:
-                message += " (line {}, column {})".format(self.lineno,
-                  self.colno)
+                message += " (line %d, column %d)" % (self.lineno, self.colno)
 
         Exception.__init__(self, message)
 
@@ -126,10 +136,6 @@ CASE_FLAGS_COMBINATIONS = {0: 0, FULLCASE: 0, IGNORECASE: IGNORECASE,
 
 # The number of digits in hexadecimal escapes.
 HEX_ESCAPES = {"x": 2, "u": 4, "U": 8}
-
-# A singleton which indicates a comment within a pattern.
-COMMENT = object()
-FLAGS = object()
 
 # The names of the opcodes.
 OPCODES = """
@@ -219,10 +225,11 @@ STRING_SET_FLD_REV
 STRING_SET_IGN
 STRING_SET_IGN_REV
 STRING_SET_REV
+FUZZY_EXT
 """
 
 # Define the opcodes in a namespace.
-class Namespace:
+class Namespace(object):
     pass
 
 OP = Namespace()
@@ -389,66 +396,98 @@ def _parse_pattern(source, info):
 
 def parse_sequence(source, info):
     "Parses a sequence, eg. 'abc'."
-    sequence = []
-    applied = False
+    sequence = [None]
+    case_flags = make_case_flags(info)
     while True:
-        # Get literal characters followed by an element.
-        characters, case_flags, element = parse_literal_and_element(source,
-          info)
-        if not element:
-            # No element, just a literal. We've also reached the end of the
-            # sequence.
-            append_literal(characters, case_flags, sequence)
-            break
-
-        if element is COMMENT or element is FLAGS:
-            append_literal(characters, case_flags, sequence)
-        elif type(element) is tuple:
-            # It looks like we've found a quantifier.
-            ch, saved_pos = element
-
-            counts = parse_quantifier(source, info, ch)
-            if counts:
-                # It _is_ a quantifier.
-                apply_quantifier(source, info, counts, characters, case_flags,
-                  ch, saved_pos, applied, sequence)
-                applied = True
-            else:
-                # It's not a quantifier. Maybe it's a fuzzy constraint.
-                constraints = parse_fuzzy(source, ch)
-                if constraints:
-                    # It _is_ a fuzzy constraint.
-                    apply_constraint(source, info, constraints, characters,
-                      case_flags, saved_pos, applied, sequence)
-                    applied = True
+        saved_pos = source.pos
+        ch = source.get()
+        if ch in SPECIAL_CHARS:
+            if ch in ")|":
+                # The end of a sequence. At the end of the pattern ch is "".
+                source.pos = saved_pos
+                break
+            elif ch == "\\":
+                # An escape sequence outside a set.
+                sequence.append(parse_escape(source, info, False))
+            elif ch == "(":
+                # A parenthesised subpattern or a flag.
+                element = parse_paren(source, info)
+                if element is None:
+                    case_flags = make_case_flags(info)
                 else:
-                    # The element was just a literal.
-                    characters.append(ord(ch))
-                    append_literal(characters, case_flags, sequence)
-                    applied = False
+                    sequence.append(element)
+            elif ch == ".":
+                # Any character.
+                if info.flags & DOTALL:
+                    sequence.append(AnyAll())
+                elif info.flags & WORD:
+                    sequence.append(AnyU())
+                else:
+                    sequence.append(Any())
+            elif ch == "[":
+                # A character set.
+                sequence.append(parse_set(source, info))
+            elif ch == "^":
+                # The start of a line or the string.
+                if info.flags & MULTILINE:
+                    if info.flags & WORD:
+                        sequence.append(StartOfLineU())
+                    else:
+                        sequence.append(StartOfLine())
+                else:
+                    sequence.append(StartOfString())
+            elif ch == "$":
+                # The end of a line or the string.
+                if info.flags & MULTILINE:
+                    if info.flags & WORD:
+                        sequence.append(EndOfLineU())
+                    else:
+                        sequence.append(EndOfLine())
+                else:
+                    if info.flags & WORD:
+                        sequence.append(EndOfStringLineU())
+                    else:
+                        sequence.append(EndOfStringLine())
+            elif ch in "?*+{":
+                # Looks like a quantifier.
+                counts = parse_quantifier(source, info, ch)
+                if counts:
+                    # It _is_ a quantifier.
+                    apply_quantifier(source, info, counts, case_flags, ch,
+                      saved_pos, sequence)
+                    sequence.append(None)
+                else:
+                    # It's not a quantifier. Maybe it's a fuzzy constraint.
+                    constraints = parse_fuzzy(source, info, ch)
+                    if constraints:
+                        # It _is_ a fuzzy constraint.
+                        apply_constraint(source, info, constraints, case_flags,
+                          saved_pos, sequence)
+                        sequence.append(None)
+                    else:
+                        # The element was just a literal.
+                        sequence.append(Character(ord(ch),
+                          case_flags=case_flags))
+            else:
+                # A literal.
+                sequence.append(Character(ord(ch), case_flags=case_flags))
         else:
-            # We have a literal followed by something else.
-            append_literal(characters, case_flags, sequence)
-            sequence.append(element)
-            applied = False
+            # A literal.
+            sequence.append(Character(ord(ch), case_flags=case_flags))
 
-    return make_sequence(sequence)
+    sequence = [item for item in sequence if item is not None]
+    return Sequence(sequence)
 
-def apply_quantifier(source, info, counts, characters, case_flags, ch,
-  saved_pos, applied, sequence):
-    if characters:
-        # The quantifier applies to the last character.
-        append_literal(characters[ : -1], case_flags, sequence)
-        element = Character(characters[-1], case_flags=case_flags)
-    else:
-        # The quantifier applies to the last item in the sequence.
-        if applied:
+def apply_quantifier(source, info, counts, case_flags, ch, saved_pos,
+  sequence):
+    element = sequence.pop()
+    if element is None:
+        if sequence:
             raise error("multiple repeat", source.string, saved_pos)
+        raise error("nothing to repeat", source.string, saved_pos)
 
-        if not sequence:
-            raise error("nothing to repeat", source.string, saved_pos)
-
-        element = sequence.pop()
+    if isinstance(element, (GreedyRepeat, LazyRepeat, PossessiveRepeat)):
+        raise error("multiple repeat", source.string, saved_pos)
 
     min_count, max_count = counts
     saved_pos = source.pos
@@ -471,36 +510,19 @@ def apply_quantifier(source, info, counts, characters, case_flags, ch,
 
     sequence.append(element)
 
-def apply_constraint(source, info, constraints, characters, case_flags,
-  saved_pos, applied, sequence):
-    if characters:
-        # The constraint applies to the last character.
-        append_literal(characters[ : -1], case_flags, sequence)
-        element = Character(characters[-1], case_flags=case_flags)
-        sequence.append(Fuzzy(element, constraints))
+def apply_constraint(source, info, constraints, case_flags, saved_pos,
+  sequence):
+    element = sequence.pop()
+    if element is None:
+        raise error("nothing for fuzzy constraint", source.string, saved_pos)
+
+    # If a group is marked as fuzzy then put all of the fuzzy part in the
+    # group.
+    if isinstance(element, Group):
+        element.subpattern = Fuzzy(element.subpattern, constraints)
+        sequence.append(element)
     else:
-        # The constraint applies to the last item in the sequence.
-        if applied or not sequence:
-            raise error("nothing for fuzzy constraint", source.string,
-              saved_pos)
-
-        element = sequence.pop()
-
-        # If a group is marked as fuzzy then put all of the fuzzy part in the
-        # group.
-        if isinstance(element, Group):
-            element.subpattern = Fuzzy(element.subpattern, constraints)
-            sequence.append(element)
-        else:
-            sequence.append(Fuzzy(element, constraints))
-
-def append_literal(characters, case_flags, sequence):
-    if characters:
-        sequence.append(Literal(characters, case_flags=case_flags))
-
-def PossessiveRepeat(element, min_count, max_count):
-    "Builds a possessive repeat."
-    return Atomic(GreedyRepeat(element, min_count, max_count))
+        sequence.append(Fuzzy(element, constraints))
 
 _QUANTIFIERS = {"?": (0, 1), "*": (0, None), "+": (1, None)}
 
@@ -553,7 +575,7 @@ def parse_limited_quantifier(source):
 
     return min_count, max_count
 
-def parse_fuzzy(source, ch):
+def parse_fuzzy(source, info, ch):
     "Parses a fuzzy setting, if present."
     saved_pos = source.pos
 
@@ -568,6 +590,9 @@ def parse_fuzzy(source, ch):
     except ParseError:
         source.pos = saved_pos
         return None
+
+    if source.match(":"):
+        constraints["test"] = parse_fuzzy_test(source, info)
 
     if not source.match("}"):
         raise error("expected }", source.string, source.pos)
@@ -715,81 +740,35 @@ def parse_cost_term(source, cost):
 
     cost[ch] = int(coeff or 1)
 
+def parse_fuzzy_test(source, info):
+    saved_pos = source.pos
+    ch = source.get()
+    if ch in SPECIAL_CHARS:
+        if ch == "\\":
+            # An escape sequence outside a set.
+            return parse_escape(source, info, False)
+        elif ch == ".":
+            # Any character.
+            if info.flags & DOTALL:
+                return AnyAll()
+            elif info.flags & WORD:
+                return AnyU()
+            else:
+                return Any()
+        elif ch == "[":
+            # A character set.
+            return parse_set(source, info)
+        else:
+            raise error("expected character set", source.string, saved_pos)
+    elif ch:
+        # A literal.
+        return Character(ord(ch), case_flags=case_flags)
+    else:
+        raise error("expected character set", source.string, saved_pos)
+
 def parse_count(source):
     "Parses a quantifier's count, which can be empty."
     return source.get_while(DIGITS)
-
-def parse_literal_and_element(source, info):
-    """Parses a literal followed by an element. The element is FLAGS if it's an
-    inline flag or None if it has reached the end of a sequence.
-    """
-    characters = []
-    case_flags = make_case_flags(info)
-    while True:
-        saved_pos = source.pos
-        ch = source.get()
-        if ch in SPECIAL_CHARS:
-            if ch in ")|":
-                # The end of a sequence. At the end of the pattern ch is "".
-                source.pos = saved_pos
-                return characters, case_flags, None
-            elif ch == "\\":
-                # An escape sequence outside a set.
-                element = parse_escape(source, info, False)
-                return characters, case_flags, element
-            elif ch == "(":
-                # A parenthesised subpattern or a flag.
-                element = parse_paren(source, info)
-                if element and element is not COMMENT:
-                    return characters, case_flags, element
-            elif ch == ".":
-                # Any character.
-                if info.flags & DOTALL:
-                    element = AnyAll()
-                elif info.flags & WORD:
-                    element = AnyU()
-                else:
-                    element = Any()
-
-                return characters, case_flags, element
-            elif ch == "[":
-                # A character set.
-                element = parse_set(source, info)
-                return characters, case_flags, element
-            elif ch == "^":
-                # The start of a line or the string.
-                if info.flags & MULTILINE:
-                    if info.flags & WORD:
-                        element = StartOfLineU()
-                    else:
-                        element = StartOfLine()
-                else:
-                    element = StartOfString()
-
-                return characters, case_flags, element
-            elif ch == "$":
-                # The end of a line or the string.
-                if info.flags & MULTILINE:
-                    if info.flags & WORD:
-                        element = EndOfLineU()
-                    else:
-                        element = EndOfLine()
-                else:
-                    if info.flags & WORD:
-                        element = EndOfStringLineU()
-                    else:
-                        element = EndOfStringLine()
-
-                return characters, case_flags, element
-            elif ch in "?*+{":
-                # Looks like a quantifier.
-                return characters, case_flags, (ch, saved_pos)
-            else:
-                # A literal.
-                characters.append(ord(ch))
-        else:
-            # A literal.
-            characters.append(ord(ch))
 
 def parse_paren(source, info):
     """Parses a parenthesised subpattern or a flag. Returns FLAGS if it's an
@@ -919,10 +898,20 @@ def parse_extension(source, info):
 
 def parse_comment(source):
     "Parses a comment."
-    source.skip_while(set(")"), include=False)
+    while True:
+        saved_pos = source.pos
+        c = source.get()
+
+        if not c or c == ")":
+            break
+
+        if c == "\\":
+            c = source.get()
+
+    source.pos = saved_pos
     source.expect(")")
 
-    return COMMENT
+    return None
 
 def parse_lookaround(source, info, behind, positive):
     "Parses a lookaround."
@@ -1097,7 +1086,7 @@ def parse_subpattern(source, info, flags_on, flags_off):
 def parse_flags_subpattern(source, info):
     """Parses a flags subpattern. It could be inline flags or a subpattern
     possibly with local flags. If it's a subpattern, then that's returned;
-    if it's a inline flags, then FLAGS is returned.
+    if it's a inline flags, then None is returned.
     """
     flags_on, flags_off = parse_flags(source, info)
 
@@ -1125,7 +1114,7 @@ def parse_flags_subpattern(source, info):
 
     if source.match(")"):
         parse_positional_flags(source, info, flags_on, flags_off)
-        return FLAGS
+        return None
 
     raise error("unknown extension", source.string, source.pos)
 
@@ -1162,11 +1151,22 @@ def parse_name(source, allow_numeric=False, allow_group_0=False):
             raise error("bad character in group name", source.string,
               source.pos)
     else:
-        if not name.isidentifier():
+        if not is_identifier(name):
             raise error("bad character in group name", source.string,
               source.pos)
 
     return name
+
+def is_identifier(name):
+    if not name:
+        return False
+
+    if name[0] not in ALPHA and name[0] != "_":
+        return False
+
+    name = name.replace("_", "")
+
+    return not name or all(c in ALNUM for c in name)
 
 def is_octal(string):
     "Checks whether a string is octal."
@@ -1605,20 +1605,30 @@ def numeric_to_rational(numeric):
     else:
         raise ValueError()
 
-    result = "{}{}/{}".format(sign, num, den)
+    result = "%s%s/%s" % (sign, num, den)
     if result.endswith("/1"):
         return result[ : -2]
 
     return result
+
+upper_trans = string.maketrans(string.ascii_lowercase, string.ascii_uppercase)
+def ascii_upper(s):
+    "Uppercases a bytestring in a locale-insensitive way within the ASCII range."
+    if isinstance(s, str):
+        return s.translate(upper_trans)
+
+    return s.upper()
 
 def standardise_name(name):
     "Standardises a property or value name."
     try:
         return numeric_to_rational("".join(name))
     except (ValueError, ZeroDivisionError):
-        return "".join(ch for ch in name if ch not in "_- ").upper()
+        return ascii_upper("".join(ch for ch in name if ch not in "_- "))
 
-_posix_classes = set('ALNUM DIGIT PUNCT XDIGIT'.split())
+_POSIX_CLASSES = set('ALNUM DIGIT PUNCT XDIGIT'.split())
+
+_BINARY_VALUES = set('YES Y NO N TRUE T FALSE F'.split())
 
 def lookup_property(property, value, positive, source=None, posix=False):
     "Looks up a property."
@@ -1629,7 +1639,7 @@ def lookup_property(property, value, positive, source=None, posix=False):
     if (property, value) == ("GENERALCATEGORY", "ASSIGNED"):
         property, value, positive = "GENERALCATEGORY", "UNASSIGNED", not positive
 
-    if posix and not property and value.upper() in _posix_classes:
+    if posix and not property and ascii_upper(value) in _POSIX_CLASSES:
         value = 'POSIX' + value
 
     if property:
@@ -1649,9 +1659,6 @@ def lookup_property(property, value, positive, source=None, posix=False):
 
             raise error("unknown property value", source.string, source.pos)
 
-        if "YES" in value_dict and val_id == 0:
-            positive, val_id = not positive, 1
-
         return Property((prop_id << 16) | val_id, positive)
 
     # Only the value is provided.
@@ -1666,9 +1673,10 @@ def lookup_property(property, value, positive, source=None, posix=False):
     prop = PROPERTIES.get(value)
     if prop:
         prop_id, value_dict = prop
-
-        if "YES" in value_dict:
+        if set(value_dict) == _BINARY_VALUES:
             return Property((prop_id << 16) | 1, positive)
+
+        return Property(prop_id << 16, not positive)
 
     # It might be the name of a binary property starting with a prefix.
     if value.startswith("IS"):
@@ -1717,7 +1725,7 @@ def _compile_replacement(source, pattern, is_unicode):
 
         return False, [ord("\\"), ord(ch)]
 
-    if isinstance(source.sep, bytes):
+    if isinstance(source.sep, str):
         octal_mask = 0xFF
     else:
         octal_mask = 0x1FF
@@ -1831,7 +1839,7 @@ def make_sequence(items):
     return Sequence(items)
 
 # Common base class for all nodes.
-class RegexBase:
+class RegexBase(object):
     def __init__(self):
         self._key = self.__class__
 
@@ -1922,8 +1930,8 @@ class ZeroWidthBase(RegexBase):
         return [(self._opcode, flags)]
 
     def dump(self, indent, reverse):
-        print("{}{} {}".format(INDENT * indent, self._op_name,
-          POS_TEXT[self.positive]))
+        print "%s%s %s" % (INDENT * indent, self._op_name,
+          POS_TEXT[self.positive])
 
     def max_width(self):
         return 0
@@ -1942,7 +1950,7 @@ class Any(RegexBase):
         return [(self._opcode[reverse], flags)]
 
     def dump(self, indent, reverse):
-        print("{}{}".format(INDENT * indent, self._op_name))
+        print "%s%s" % (INDENT * indent, self._op_name)
 
     def max_width(self):
         return 1
@@ -1995,7 +2003,7 @@ class Atomic(RegexBase):
           [(OP.END, )])
 
     def dump(self, indent, reverse):
-        print("{}ATOMIC".format(INDENT * indent))
+        print "%sATOMIC" % (INDENT * indent)
         self.subpattern.dump(indent + 1, reverse)
 
     def is_empty(self):
@@ -2106,10 +2114,10 @@ class Branch(RegexBase):
         return code
 
     def dump(self, indent, reverse):
-        print("{}BRANCH".format(INDENT * indent))
+        print "%sBRANCH" % (INDENT * indent)
         self.branches[0].dump(indent + 1, reverse)
         for b in self.branches[1 : ]:
-            print("{}OR".format(INDENT * indent))
+            print "%sOR" % (INDENT * indent)
             b.dump(indent + 1, reverse)
 
     @staticmethod
@@ -2380,7 +2388,7 @@ class Branch(RegexBase):
               i.case_flags):
                 return False
 
-        folded = "".join(chr(i.value) for i in items)
+        folded = u"".join(unichr(i.value) for i in items)
         folded = _regex.fold_case(FULL_CASE_FOLDING, folded)
 
         # Get the characters which expand to multiple codepoints on folding.
@@ -2436,7 +2444,7 @@ class CallGroup(RegexBase):
         return [(OP.GROUP_CALL, self.call_ref)]
 
     def dump(self, indent, reverse):
-        print("{}GROUP_CALL {}".format(INDENT * indent, self.group))
+        print "%sGROUP_CALL %s" % (INDENT * indent, self.group)
 
     def __eq__(self, other):
         return type(self) is type(other) and self.group == other.group
@@ -2470,9 +2478,9 @@ class Character(RegexBase):
 
         if (self.positive and (self.case_flags & FULLIGNORECASE) ==
           FULLIGNORECASE):
-            self.folded = _regex.fold_case(FULL_CASE_FOLDING, chr(self.value))
+            self.folded = _regex.fold_case(FULL_CASE_FOLDING, unichr(self.value))
         else:
-            self.folded = chr(self.value)
+            self.folded = unichr(self.value)
 
         self._key = (self.__class__, self.value, self.positive,
           self.case_flags, self.zerowidth)
@@ -2509,9 +2517,9 @@ class Character(RegexBase):
         return code.compile(reverse, fuzzy)
 
     def dump(self, indent, reverse):
-        display = ascii(chr(self.value)).lstrip("bu")
-        print("{}CHARACTER {} {}{}".format(INDENT * indent,
-          POS_TEXT[self.positive], display, CASE_TEXT[self.case_flags]))
+        display = repr(unichr(self.value)).lstrip("bu")
+        print "%sCHARACTER %s %s%s" % (INDENT * indent,
+          POS_TEXT[self.positive], display, CASE_TEXT[self.case_flags])
 
     def matches(self, ch):
         return (ch == self.value) == self.positive
@@ -2597,10 +2605,10 @@ class Conditional(RegexBase):
         return code
 
     def dump(self, indent, reverse):
-        print("{}GROUP_EXISTS {}".format(INDENT * indent, self.group))
+        print "%sGROUP_EXISTS %s" % (INDENT * indent, self.group)
         self.yes_item.dump(indent + 1, reverse)
         if not self.no_item.is_empty():
-            print("{}OR".format(INDENT * indent))
+            print "%sOR" % (INDENT * indent)
             self.no_item.dump(indent + 1, reverse)
 
     def is_empty(self):
@@ -2728,6 +2736,13 @@ class Fuzzy(RegexBase):
         if reverse:
             flags |= REVERSE_OP
 
+        test = self.constraints.get("test")
+
+        if test:
+            return ([(OP.FUZZY_EXT, flags) + tuple(arguments)] +
+              test.compile(reverse, True) + [(OP.NEXT,)] +
+              self.subpattern.compile(reverse, True) + [(OP.END,)])
+
         return ([(OP.FUZZY, flags) + tuple(arguments)] +
           self.subpattern.compile(reverse, True) + [(OP.END,)])
 
@@ -2735,7 +2750,7 @@ class Fuzzy(RegexBase):
         constraints = self._constraints_to_string()
         if constraints:
             constraints = " " + constraints
-        print("{}FUZZY{}".format(INDENT * indent, constraints))
+        print "%sFUZZY%s" % (INDENT * indent, constraints)
         self.subpattern.dump(indent + 1, reverse)
 
     def is_empty(self):
@@ -2743,7 +2758,7 @@ class Fuzzy(RegexBase):
 
     def __eq__(self, other):
         return (type(self) is type(other) and self.subpattern ==
-          other.subpattern)
+          other.subpattern and self.constraints == other.constraints)
 
     def max_width(self):
         return UNLIMITED
@@ -2759,12 +2774,12 @@ class Fuzzy(RegexBase):
             con = ""
 
             if min > 0:
-                con = "{}<=".format(min)
+                con = "%s<=" % min
 
             con += name
 
             if max is not None:
-                con += "<={}".format(max)
+                con += "<=%s" % max
 
             constraints.append(con)
 
@@ -2772,11 +2787,11 @@ class Fuzzy(RegexBase):
         for name in "ids":
             coeff = self.constraints["cost"][name]
             if coeff > 0:
-                cost.append("{}{}".format(coeff, name))
+                cost.append("%s%s" % (coeff, name))
 
         limit = self.constraints["cost"]["max"]
         if limit is not None and limit > 0:
-            cost = "{}<={}".format("+".join(cost), limit)
+            cost = "%s<=%s" % ("+".join(cost), limit)
             constraints.append(cost)
 
         return ",".join(constraints)
@@ -2791,7 +2806,7 @@ class Grapheme(RegexBase):
         return grapheme_matcher.compile(reverse, fuzzy)
 
     def dump(self, indent, reverse):
-        print("{}GRAPHEME".format(INDENT * indent))
+        print "%sGRAPHEME" % (INDENT * indent)
 
     def max_width(self):
         return UNLIMITED
@@ -2860,8 +2875,8 @@ class GreedyRepeat(RegexBase):
             limit = "INF"
         else:
             limit = self.max_count
-        print("{}{} {} {}".format(INDENT * indent, self._op_name,
-          self.min_count, limit))
+        print "%s%s %s %s" % (INDENT * indent, self._op_name, self.min_count,
+          limit)
 
         self.subpattern.dump(indent + 1, reverse)
 
@@ -2891,6 +2906,36 @@ class GreedyRepeat(RegexBase):
 
         w = self.subpattern.max_width() * max_count
         return min(w, UNLIMITED), None
+
+class PossessiveRepeat(GreedyRepeat):
+    def is_atomic(self):
+        return True
+
+    def _compile(self, reverse, fuzzy):
+        subpattern = self.subpattern.compile(reverse, fuzzy)
+        if not subpattern:
+            return []
+
+        repeat = [self._opcode, self.min_count]
+        if self.max_count is None:
+            repeat.append(UNLIMITED)
+        else:
+            repeat.append(self.max_count)
+
+        return ([(OP.ATOMIC, ), tuple(repeat)] + subpattern + [(OP.END, ),
+          (OP.END, )])
+
+    def dump(self, indent, reverse):
+        print("%sATOMIC" % (INDENT * indent))
+
+        if self.max_count is None:
+            limit = "INF"
+        else:
+            limit = self.max_count
+        print("%s%s %s %s" % (INDENT * (indent + 1), self._op_name,
+          self.min_count, limit))
+
+        self.subpattern.dump(indent + 2, reverse)
 
 class Group(RegexBase):
     def __init__(self, info, group, subpattern):
@@ -2945,7 +2990,7 @@ class Group(RegexBase):
             public_group = self.info.private_groups[private_group]
             private_group = self.info.group_count - private_group
 
-        code += ([(OP.GROUP, private_group, public_group)] +
+        code += ([(OP.GROUP, int(not reverse), private_group, public_group)] +
           self.subpattern.compile(reverse, fuzzy) + [(OP.END, )])
 
         if ref is not None:
@@ -2957,7 +3002,7 @@ class Group(RegexBase):
         group = self.group
         if group < 0:
             group = private_groups[group]
-        print("{}GROUP {}".format(INDENT * indent, group))
+        print "%sGROUP %s" % (INDENT * indent, group)
         self.subpattern.dump(indent + 1, reverse)
 
     def __eq__(self, other):
@@ -3013,13 +3058,27 @@ class LookAround(RegexBase):
     def contains_group(self):
         return self.subpattern.contains_group()
 
+    def get_firstset(self, reverse):
+        if self.positive and self.behind == reverse:
+            return self.subpattern.get_firstset(reverse)
+
+        return set([None])
+
     def _compile(self, reverse, fuzzy):
-        return ([(OP.LOOKAROUND, int(self.positive), int(not self.behind))] +
+        flags = 0
+        if self.positive:
+            flags |= POSITIVE_OP
+        if fuzzy:
+            flags |= FUZZY_OP
+        if reverse:
+            flags |= REVERSE_OP
+
+        return ([(OP.LOOKAROUND, flags, int(not self.behind))] +
           self.subpattern.compile(self.behind) + [(OP.END, )])
 
     def dump(self, indent, reverse):
-        print("{}LOOK{} {}".format(INDENT * indent,
-          self._dir_text[self.behind], POS_TEXT[self.positive]))
+        print "%sLOOK%s %s" % (INDENT * indent, self._dir_text[self.behind],
+          POS_TEXT[self.positive])
         self.subpattern.dump(indent + 1, self.behind)
 
     def is_empty(self):
@@ -3079,10 +3138,6 @@ class LookAroundConditional(RegexBase):
         return (self.subpattern.contains_group() or
           self.yes_item.contains_group() or self.no_item.contains_group())
 
-    def get_firstset(self, reverse):
-        return (self.subpattern.get_firstset(reverse) |
-          self.no_item.get_firstset(reverse))
-
     def _compile(self, reverse, fuzzy):
         code = [(OP.CONDITIONAL, int(self.positive), int(not self.behind))]
         code.extend(self.subpattern.compile(self.behind, fuzzy))
@@ -3098,13 +3153,13 @@ class LookAroundConditional(RegexBase):
         return code
 
     def dump(self, indent, reverse):
-        print("{}CONDITIONAL {} {}".format(INDENT * indent,
+        print("%sCONDITIONAL %s %s" % (INDENT * indent,
           self._dir_text[self.behind], POS_TEXT[self.positive]))
         self.subpattern.dump(indent + 1, self.behind)
-        print("{}EITHER".format(INDENT * indent))
+        print("%sEITHER" % (INDENT * indent))
         self.yes_item.dump(indent + 1, reverse)
         if not self.no_item.is_empty():
-            print("{}OR".format(INDENT * indent))
+            print("%sOR" % (INDENT * indent))
             self.no_item.dump(indent + 1, reverse)
 
     def is_empty(self):
@@ -3171,8 +3226,8 @@ class Property(RegexBase):
     def dump(self, indent, reverse):
         prop = PROPERTY_NAMES[self.value >> 16]
         name, value = prop[0], prop[1][self.value & 0xFFFF]
-        print("{}PROPERTY {} {}:{}{}".format(INDENT * indent,
-          POS_TEXT[self.positive], name, value, CASE_TEXT[self.case_flags]))
+        print "%sPROPERTY %s %s:%s%s" % (INDENT * indent,
+          POS_TEXT[self.positive], name, value, CASE_TEXT[self.case_flags])
 
     def matches(self, ch):
         return _regex.has_property_value(self.value, ch) == self.positive
@@ -3251,11 +3306,10 @@ class Range(RegexBase):
           self.upper)]
 
     def dump(self, indent, reverse):
-        display_lower = ascii(chr(self.lower)).lstrip("bu")
-        display_upper = ascii(chr(self.upper)).lstrip("bu")
-        print("{}RANGE {} {} {}{}".format(INDENT * indent,
-          POS_TEXT[self.positive], display_lower, display_upper,
-          CASE_TEXT[self.case_flags]))
+        display_lower = repr(unichr(self.lower)).lstrip("bu")
+        display_upper = repr(unichr(self.upper)).lstrip("bu")
+        print "%sRANGE %s %s %s%s" % (INDENT * indent, POS_TEXT[self.positive],
+          display_lower, display_upper, CASE_TEXT[self.case_flags])
 
     def matches(self, ch):
         return (self.lower <= ch <= self.upper) == self.positive
@@ -3303,8 +3357,8 @@ class RefGroup(RegexBase):
         return [(self._opcode[self.case_flags, reverse], flags, self.group)]
 
     def dump(self, indent, reverse):
-        print("{}REF_GROUP {}{}".format(INDENT * indent, self.group,
-          CASE_TEXT[self.case_flags]))
+        print "%sREF_GROUP %s%s" % (INDENT * indent, self.group,
+          CASE_TEXT[self.case_flags])
 
     def max_width(self):
         return UNLIMITED
@@ -3453,7 +3507,7 @@ class Sequence(RegexBase):
         # and chunks that can use simple case-folding, which is faster.
         expanded = [_regex.fold_case(FULL_CASE_FOLDING, c) for c in
           _regex.get_expand_on_folding()]
-        string = _regex.fold_case(FULL_CASE_FOLDING, ''.join(chr(c)
+        string = _regex.fold_case(FULL_CASE_FOLDING, u''.join(unichr(c)
           for c in characters)).lower()
         chunks = []
 
@@ -3568,8 +3622,8 @@ class SetBase(RegexBase):
         return code
 
     def dump(self, indent, reverse):
-        print("{}{} {}{}".format(INDENT * indent, self._op_name,
-          POS_TEXT[self.positive], CASE_TEXT[self.case_flags]))
+        print "%s%s %s%s" % (INDENT * indent, self._op_name,
+          POS_TEXT[self.positive], CASE_TEXT[self.case_flags])
         for i in self.items:
             i.dump(indent + 1, reverse)
 
@@ -3817,7 +3871,7 @@ class String(RegexBase):
         if (self.case_flags & FULLIGNORECASE) == FULLIGNORECASE:
             folded_characters = []
             for char in self.characters:
-                folded = _regex.fold_case(FULL_CASE_FOLDING, chr(char))
+                folded = _regex.fold_case(FULL_CASE_FOLDING, unichr(char))
                 folded_characters.extend(ord(c) for c in folded)
         else:
             folded_characters = self.characters
@@ -3848,9 +3902,9 @@ class String(RegexBase):
           len(self.folded_characters)) + self.folded_characters]
 
     def dump(self, indent, reverse):
-        display = ascii("".join(chr(c) for c in self.characters)).lstrip("bu")
-        print("{}STRING {}{}".format(INDENT * indent, display,
-          CASE_TEXT[self.case_flags]))
+        display = repr("".join(unichr(c) for c in self.characters)).lstrip("bu")
+        print "%sSTRING %s%s" % (INDENT * indent, display,
+          CASE_TEXT[self.case_flags])
 
     def max_width(self):
         return len(self.folded_characters)
@@ -3860,10 +3914,10 @@ class String(RegexBase):
 
 class Literal(String):
     def dump(self, indent, reverse):
-        literal = ''.join(chr(c) for c in self.characters)
-        display = ascii(literal).lstrip("bu")
-        print("{}LITERAL MATCH {}{}".format(INDENT * indent, display,
-          CASE_TEXT[self.case_flags]))
+        literal = ''.join(unichr(c) for c in self.characters)
+        display = repr(literal).lstrip("bu")
+        print "%sLITERAL MATCH %s%s" % (INDENT * indent, display,
+          CASE_TEXT[self.case_flags])
 
 class StringSet(RegexBase):
     _opcode = {(NOCASE, False): OP.STRING_SET, (IGNORECASE, False):
@@ -3921,14 +3975,14 @@ class StringSet(RegexBase):
               max_len)]
 
     def dump(self, indent, reverse):
-        print("{}STRING_SET {}{}".format(INDENT * indent, self.name,
-          CASE_TEXT[self.case_flags]))
+        print "%sSTRING_SET %s%s" % (INDENT * indent, self.name,
+          CASE_TEXT[self.case_flags])
 
     def _folded(self, fold_flags, item):
-        if isinstance(item, str):
+        if isinstance(item, unicode):
             return [ord(c) for c in _regex.fold_case(fold_flags, item)]
         else:
-            return list(item)
+            return [ord(c) for c in item]
 
     def _flatten(self, s):
         # Flattens the branches.
@@ -3962,15 +4016,15 @@ class StringSet(RegexBase):
         else:
             return max(len(i) for i in self.info.kwargs[self.name])
 
-class Source:
+class Source(object):
     "Scanner for the regular expression source string."
     def __init__(self, string):
-        if isinstance(string, str):
+        if isinstance(string, unicode):
+            self.string = string
+            self.char_type = unichr
+        else:
             self.string = string
             self.char_type = chr
-        else:
-            self.string = string.decode("latin-1")
-            self.char_type = lambda c: bytes([c])
 
         self.pos = 0
         self.ignore_space = False
@@ -4160,7 +4214,7 @@ class Source:
 
     def expect(self, substring):
         if not self.match(substring):
-            raise error("missing {}".format(substring), self.string, self.pos)
+            raise error("missing %s" % substring, self.string, self.pos)
 
     def at_end(self):
         string = self.string
@@ -4184,7 +4238,7 @@ class Source:
             # The comment extended to the end of the string.
             return True
 
-class Info:
+class Info(object):
     "Info about the regular expression."
 
     def __init__(self, flags=0, char_type=None, kwargs={}):
@@ -4417,7 +4471,7 @@ for prop_name, (prop_id, values) in PROPERTIES.items():
 
     for val_name, val_id in values.items():
         prop_values[val_id] = max(prop_values.get(val_id, ""), val_name,
-      key=len)
+          key=len)
 
 # Character escape sequences.
 CHARACTER_ESCAPES = {
