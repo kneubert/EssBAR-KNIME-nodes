@@ -12,6 +12,8 @@ minimizer_spaces_flag=""
 max_db_size_flag=""
 ftp_flag=""
 
+echo "kraken2-build.sh $*"
+
 optspec=":hv-:"
 while getopts "$optspec" optchar; do
     case "${optchar}" in

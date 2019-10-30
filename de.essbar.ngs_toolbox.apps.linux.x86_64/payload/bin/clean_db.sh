@@ -1,37 +1,18 @@
 #!/bin/bash
 
-# Copyright 2013-2015, Derrick Wood <dwood@cs.jhu.edu>
+# Copyright 2013-2019, Derrick Wood <dwood@cs.jhu.edu>
 #
-# This file is part of the Kraken taxonomic sequence classification system.
-#
-# Kraken is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Kraken is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Kraken.  If not, see <http://www.gnu.org/licenses/>.
+# This file is part of the Kraken 2 taxonomic sequence classification system.
 
-# Clean unneeded files from a database
+# Removes intermediate files from a database directory,
+# such as reference library FASTA files and taxonomy data from NCBI.
 
 set -u  # Protect against uninitialized vars.
 set -e  # Stop on error
 
-cd "$KRAKEN_DB_NAME"
-
-[ -e "database.kdb" ] || (echo "Incomplete database, clean aborted."; exit 1)
-[ -e "database.idx" ] || (echo "Incomplete database, clean aborted."; exit 1)
-[ -e "taxonomy/nodes.dmp" ] || (echo "Incomplete database, clean aborted."; exit 1)
-[ -e "taxonomy/names.dmp" ] || (echo "Incomplete database, clean aborted."; exit 1)
-
-rm -rf library
-rm -f database.jdb* database_* *.map lca.complete 
-mkdir newtaxo
-mv taxonomy/{nodes,names}.dmp newtaxo
-rm -rf taxonomy
-mv newtaxo taxonomy
+cd $KRAKEN2_DB_NAME
+previous_usage=$(du -sh | cut -f1)
+1>&2 echo "Database disk usage: $previous_usage"
+rm -rf library/ taxonomy/ seqid2taxid.map
+current_usage=$(du -sh | cut -f1)
+1>&2 echo "After cleaning, database uses $current_usage"

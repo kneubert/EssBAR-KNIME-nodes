@@ -1,50 +1,71 @@
 #!/bin/bash
 
-# Copyright 2013-2017, Derrick Wood <dwood@cs.jhu.edu>
+# Copyright 2013-2019, Derrick Wood <dwood@cs.jhu.edu>
 #
-# This file is part of the Kraken taxonomic sequence classification system.
+# This file is part of the Kraken 2 taxonomic sequence classification system.
 
-# Download NCBI taxonomy information for Kraken.
-# Designed to be called by kraken-build
+# Download NCBI taxonomy information for Kraken 2.
+# Designed to be called by kraken2-build
 
 set -u  # Protect against uninitialized vars.
 set -e  # Stop on error
 
-TAXONOMY_DIR="$KRAKEN_DB_NAME/taxonomy"
+TAXONOMY_DIR="$KRAKEN2_DB_NAME/taxonomy"
 NCBI_SERVER="ftp.ncbi.nlm.nih.gov"
+RSYNC_SERVER="rsync://$NCBI_SERVER"
 FTP_SERVER="ftp://$NCBI_SERVER"
 
 mkdir -p "$TAXONOMY_DIR"
 cd "$TAXONOMY_DIR"
 
-if [ ! -e "accmap.dlflag" ]
+function download_file() {
+  file="$1"
+  if [ -n "$KRAKEN2_USE_FTP" ]
+  then
+    wget -q ${FTP_SERVER}${file}
+  else
+    rsync --no-motd ${RSYNC_SERVER}${file} .
+  fi
+}
+
+if [ ! -e "accmap.dlflag" ] && [ -z "$KRAKEN2_SKIP_MAPS" ]
 then
-  wget $FTP_SERVER/pub/taxonomy/accession2taxid/nucl_est.accession2taxid.gz
-  wget $FTP_SERVER/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz
-  wget $FTP_SERVER/pub/taxonomy/accession2taxid/nucl_gss.accession2taxid.gz
-  wget $FTP_SERVER/pub/taxonomy/accession2taxid/nucl_wgs.accession2taxid.gz
+  if [ -z "$KRAKEN2_PROTEIN_DB" ]
+  then
+    for subsection in gb wgs
+    do
+      1>&2 echo -n "Downloading nucleotide ${subsection} accession to taxon map..."
+      download_file "/pub/taxonomy/accession2taxid/nucl_${subsection}.accession2taxid.gz"
+      1>&2 echo " done."
+    done
+  else
+    1>&2 echo -n "Downloading protein accession to taxon map..."
+    download_file "/pub/taxonomy/accession2taxid/prot.accession2taxid.gz"
+    1>&2 echo " done."
+  fi
   touch accmap.dlflag
-  echo "Downloaded accession to taxon map(s)"
+  1>&2 echo "Downloaded accession to taxon map(s)"
 fi
 
 if [ ! -e "taxdump.dlflag" ]
 then
-  wget $FTP_SERVER/pub/taxonomy/taxdump.tar.gz
+  1>&2 echo -n "Downloading taxonomy tree data..."
+  download_file "/pub/taxonomy/taxdump.tar.gz"
   touch taxdump.dlflag
-  echo "Downloaded taxonomy tree data"
+  1>&2 echo " done."
 fi
 
 if ls | grep -q 'accession2taxid\.gz$'
 then
-  echo -n "Uncompressing taxonomy data... "
+  1>&2 echo -n "Uncompressing taxonomy data..."
   gunzip *accession2taxid.gz
-  echo "done."
+  1>&2 echo " done."
 fi
 
 if [ ! -e "taxdump.untarflag" ]
 then
-  echo -n "Untarring taxonomy tree data... "
+  1>&2 echo -n "Untarring taxonomy tree data..."
   tar zxf taxdump.tar.gz
   touch taxdump.untarflag
-  echo "done."
+  1>&2 echo " done."
 fi

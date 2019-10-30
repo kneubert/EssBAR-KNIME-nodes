@@ -21,7 +21,7 @@
 		<clielement optionIdentifier="--classified-out" isList="false">
 			<mapping referenceName="kraken2.classified-output" />
 		</clielement>
-		<clielement optionIdentifier="--unclassified-output" isList="false">
+		<clielement optionIdentifier="--unclassified-out" isList="false">
 			<mapping referenceName="kraken2.unclassified-output" />
 		</clielement>
 		<!-- Options for the app -->
