@@ -10,8 +10,8 @@ shift
 shift
 output_dir=`dirname $MLVA_file`
 
-echo "python3 $DIR/MLVA_finder.py $* -o $output_dir"
-python3 $DIR/MLVA_finder.py $* -o $output_dir
+echo "$DIR/MLVA_finder.py $* -o $output_dir"
+$DIR/MLVA_finder.py $* -o $output_dir
 
 MLVA_output=$(echo "${output_dir}/MLVA_analysis*.csv")
 Sequence_output=$(echo "${output_dir}/*_output.csv")

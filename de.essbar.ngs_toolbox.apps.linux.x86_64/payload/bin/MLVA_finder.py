@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import re, regex, math, sys, os.path, getopt, csv, itertools
 
