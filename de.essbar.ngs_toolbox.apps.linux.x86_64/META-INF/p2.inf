@@ -102,8 +102,6 @@ instructions.install=\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/build_kraken_db.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/build_kraken2_db.sh,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/kraken-report,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/classify,permissions:755);\
@@ -120,8 +118,6 @@ instructions.install=\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/shrink_db.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/download_taxonomy.sh,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/standard_installation.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/kraken-report.sh,permissions:755);\
@@ -134,13 +130,9 @@ instructions.install=\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/make_seqid_to_taxid_map,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/clean_db.sh,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/add_to_library.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/kraken-translate,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/download_genomic_library.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/krakenlib.pm,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
@@ -181,7 +173,7 @@ instructions.install=\
 	targetFile:payload/bin/slimm_db.py,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/slimm2krona.py,permissions:755);\
-    org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+    	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/bcftools,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/bowtie2,permissions:755);\
@@ -369,14 +361,6 @@ instructions.install=\
 	targetFile:payload/bin/MLVA_finder.py,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/MLVA_wrapper.sh,permissions:755); \
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/kraken2-build,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/kraken2-inspect,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/kraken2-build.sh,permissions:755);\
-	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
-	targetFile:payload/bin/kraken2,permissions:755); \
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/flash2,permissions:755); \
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
@@ -615,4 +599,51 @@ instructions.install=\
 	targetFile:payload/bin/bowtie2-2.3.5-build.sh,permissions:755);\
 	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
 	targetFile:payload/bin/bowtie2-2.3.5.sh,permissions:755);
-	
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-build.sh,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/build_kraken2_db.sh,permissions:755);\	
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/kraken2-build,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/kraken2-inspect,permissions:755);\
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/kraken2,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/add_to_library.sh,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/build_db,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/build_gg_taxonomy.pl,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/classify,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/clean_db.sh,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/cp_into_tmpfile.pl,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/download_genomic_library.sh,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/downlaod_taxonomy.sh,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/dump_table,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/add_to_library.sh,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/estimate_capacity,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/kraken2lib.pm,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/lookup_accession_numbers,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/lookup_accession_numbers.pl,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/make_seqid2taxid_map.pl,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/mask_low_complexity.sh,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/rsync_from_ncbi.pl,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2-2.0.8-beta/scan_fasta_file.pl,permissions:755); \
+	org.eclipse.equinox.p2.touchpoint.eclipse.chmod(targetDir:@artifact,\
+	targetFile:payload/bin/kraken2.sh,permissions:755); \

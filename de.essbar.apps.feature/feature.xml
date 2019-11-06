@@ -1142,14 +1142,14 @@ National Security, LLC, and shall not be used for advertising or product endorse
          id="de.essbar.ngs_toolbox.apps"
          download-size="0"
          install-size="0"
-         version="0.1.5"
+         version="0.1.6"
          unpack="false"/>
 
    <plugin
          id="de.essbar.ngs_toolbox.apps.linux.x86_64"
          download-size="0"
          install-size="0"
-         version="0.1.5"
+         version="0.1.6"
          fragment="true"/>
 
 </feature>

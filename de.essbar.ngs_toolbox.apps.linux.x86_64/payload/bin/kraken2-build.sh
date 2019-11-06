@@ -1,7 +1,8 @@
 #!/bin/bash
 # Wrapper script for kraken2-build
+echo "kraken2-build.sh $*"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-kraken2_bin=$DIR
+kraken2_bin=$DIR/kraken2-2.0.8-beta
 
 db_flag=("archaea" "bacteria" "plasmid" "viral" "human" "fungi" "plant" "protozoa" "nt" "env_nt" "UniVec" "UniVecCore")
 db_set=(0 0 0 0 0 0 0 0 0 0 0 0)
@@ -12,7 +13,6 @@ minimizer_spaces_flag=""
 max_db_size_flag=""
 ftp_flag=""
 
-echo "kraken2-build.sh $*"
 
 optspec=":hv-:"
 while getopts "$optspec" optchar; do
@@ -142,6 +142,7 @@ then
  exit 2
 fi
 
+mkdir -p $db_prefix
 
 if [[ "$total" -eq 0 && ! -d "$fasta_directory" ]];
 then
@@ -152,22 +153,22 @@ fi
 if [ -n "$standard_db" ]
 then
   # Build Kraken2 standard db (default)
-  echo kraken2-build --standard --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
-  kraken2-build --standard --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
-  echo kraken2-build --clean --db $db_prefix
-  kraken2-build --clean --db $db_prefix
+  echo $kraken2_bin/kraken2-build --standard --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
+  $kraken2_bin/kraken2-build --standard --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
+  echo $kraken2_bin/kraken2-build --clean --db $db_prefix
+  $kraken2_bin/kraken2-build --clean --db $db_prefix
 else
   # 1. downlaod taxonomy
-  echo kraken2-build --download-taxonomy --db $db_prefix $threads_flag
-  kraken2-build --download-taxonomy --db $db_prefix $threads_flag
+  echo $kraken2_bin/kraken2-build --download-taxonomy --db $db_prefix $threads_flag
+  $kraken2_bin/kraken2-build --download-taxonomy --db $db_prefix $threads_flag
   # 2. download one or more reference libraries
   # pre-defined references
   for ((i=0; i<${#db_flag[@]}; i++));
   do
     if [[ "${db_set[$i]}" -eq 1 ]];
     then
-       echo kraken2-build --download-library ${db_flag[$i]} --db $db_prefix $threads_flag
-       kraken2-build --download-library ${db_flag[$i]} --db $db_prefix $threads_flag
+       echo $kraken2_bin/kraken2-build --download-library ${db_flag[$i]} --db $db_prefix $threads_flag
+       $kraken2_bin/kraken2-build --download-library ${db_flag[$i]} --db $db_prefix $threads_flag
     fi
   done
   # user-defined references (fasta input)
@@ -175,15 +176,15 @@ else
   then 
     for file in ${fasta_directory}/*.fa ${fasta_directory}/*.fasta;
     do 
-      echo kraken2-build --add-to-library $file --db $db_prefix $threads_flag
-      kraken2-build --add-to-library $file --db $db_prefix $threads_flag
+      echo $kraken2_bin/kraken2-build --add-to-library $file --db $db_prefix $threads_flag
+      $kraken2_bin/kraken2-build --add-to-library $file --db $db_prefix $threads_flag
     done
   fi
   # 3. Build the database
-  echo kraken2-build --build --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
-  kraken2-build --build --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
+  echo $kraken2_bin/kraken2-build --build --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
+  $kraken2_bin/kraken2-build --build --db $db_prefix $threads_flag $kmer_length_flag $minimizer_length_flag $minimizer_spaces_flag $max_db_size_flag $ftp_flag
   # 4. Cleanup
-  echo kraken2-build --clean --db $db_prefix
-  kraken2-build --clean --db $db_prefix
+  echo $kraken2_bin/kraken2-build --clean --db $db_prefix
+  $kraken2_bin/kraken2-build --clean --db $db_prefix
 fi
 

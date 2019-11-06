@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tool name="Kraken2" version="1.0" docurl="https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual" category="Metagenomics" >
-	<executableName>kraken2</executableName>
+	<executableName>kraken2.sh</executableName>
 	<description>Kraken taxonomic sequence classification system</description>
 	<manual></manual>
 	<cli>

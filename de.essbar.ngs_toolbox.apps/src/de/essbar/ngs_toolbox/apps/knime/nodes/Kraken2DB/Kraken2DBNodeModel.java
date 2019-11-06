@@ -13,6 +13,6 @@ import com.genericworkflownodes.knime.custom.config.IPluginConfiguration;
 public class Kraken2DBNodeModel extends GenericKnimeNodeModel {  
     protected Kraken2DBNodeModel(INodeConfiguration nodeConfig,
             IPluginConfiguration pluginConfig) {
-        super(nodeConfig, pluginConfig, new String[][]{{"" },}, new String[][]{{"k2d" },});
+        super(nodeConfig, pluginConfig, new String[][]{{"" },}, new String[][]{{"k2d"},});
     }
 }
